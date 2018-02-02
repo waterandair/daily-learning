@@ -69,6 +69,20 @@ println(res2)  // 2
 val res3 = list.fold(10)(_ * _)
 println(res3)  // 10 * 1 * 2 * 3 = 60
 
+/**
+  * sortWith 对元素进行两两对比
+  */
+println(Array(3, 2, 5, 4, 10, 1).sortWith(_ < _))
+
+/**
+  * zip 把连个集合关联起来, 组成一个 tuple 的集合
+  */
+List("Leo", "Jen", "Peter", "Jack").zip(List(100, 90, 75, 83))  // List[(String, Int)] = List((Leo,100), (Jen,90), (Peter,75), (Jack,83))
+Array("Leo", "Jen", "Peter", "Jack").zip(Array(100, 90, 75, 83))  // Array("Leo", "Jen", "Peter", "Jack").zip(Array(100, 90, 75, 83))
+List("Leo", "Jen", "Peter", "Jack").zip(Array(100, 90, 75, 83))  // List[(String, Int)] = List((Leo,100), (Jen,90), (Peter,75), (Jack,83))
+
+
+
 
 
 

@@ -19,6 +19,31 @@ for (i <- 0 to 2) println(intValueArr2(i))
 println("-"*30)
 
 /**
+  * 变长数组 ArrayBuffer
+  */
+import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
+val arrayBuffer = ArrayBuffer[Int]()
+// 使用 += 操作符,可以添加一个或多个元素
+arrayBuffer += 1
+arrayBuffer += (2, 3, 4, 5)
+// 使用 ++= 操作符, 可以添加其他集合里的所有元素
+arrayBuffer ++= Array(6, 7, 8, 9)
+println("arrayBuffer " + arrayBuffer)
+// 使用 trimEnd() 可以从尾部截断指定个数的元素, 直接修改原数组,不会生成新数组
+arrayBuffer.trimEnd(5)
+println("arrayBuffer.trimEnd(5) " + arrayBuffer)
+// Array 和 ArrayBuffer 可以相互转换 .toArray .toBuffer
+
+/**
+  * 数组常见操作
+  * 求和 array.sum
+  * 最大值 array.max
+  * 排序 scala.util.Sorting.quickSort(a)
+  * 获取数组中所有元素内容 array.mkString  参数可以传入元素之间的间隔符, 默认为空
+  */
+
+/**
   *  List 列表
   */
 val intList = List(1, 2, 3)
@@ -40,6 +65,14 @@ println(intList3)
 val sum = intList.sum  //求和
 println(sum)
 
+/**
+  * LinkedList 可变列表
+  * scala.collection.mutable.LinkedList(1, 2, 3, 4, 5)
+  * 获取第一个元素  linkedList.elem
+  * 获取第一个元素后面的所有元素组成的列表, linkedList.next
+  *
+  */
+
 println("-"*30)
 
 /**
@@ -50,6 +83,13 @@ println(tuple._1)
 println(tuple._2)
 println(tuple._3)
 println("-"*30)
+
+// zip 操作
+val names = Array("leo", "jack", "mike")
+val ages2 = Array(30, 24, 26)
+val nameAges = names.zip(ages2)
+println("zip操作" + nameAges)
+for ((name, age) <- nameAges) println("zip操作" + name + ": " + age)
 
 /**
   * Set 集
@@ -65,6 +105,11 @@ import scala.collection.mutable.Set
 val myMutableSet = Set("Database", "BigData")
 myMutableSet += "Cloud Computing"
 println(myMutableSet)    //Set(BigData, Cloud Computing, Database)
+
+/**
+  * scala.collection.mutable.LinkedHashSet 会用一个链表维护插入顺序
+  * scala.collection.mutable.SortedSet  会自动根据 key 进行排序
+  */
 println("-"*30)
 
 /**
@@ -72,8 +117,11 @@ println("-"*30)
   * 映射包括可变和不可变.默认是不可变映射,创建可变映射,需要引入 scala.collection.mutable.Map
   */
 val university = Map("XMU" -> "Xiamen University", "THU" -> "Tsinghua University", "PKU" -> "Peking University")
+// 另一种方式:
+val map2 = Map(("a", "A"), ("b", "B"), ("c", "C"))
 println(university("XMU"))  // 根据键获取映射中的值
 println(university.contains("XMU"))  // 判断键是否存在
+println(university.getOrElse("hello", "not found"))
 
 // 可变的映射
 import scala.collection.mutable.Map
@@ -91,6 +139,15 @@ for (k <- university2.keys) println(k)
 for (v <- university2.values) println(v)
 println("-"*30)
 
+// Map 排序 scala.collection.immutable.SortedMap(map)
+
+// LinkedHashMap 可以记住插入 entry 的顺序
+val ages = new scala.collection.mutable.LinkedHashMap[String, Int]
+ages("leo") = 30
+ages("alice") = 15
+ages("jen") = 25
+println()
+
 /**
   * 迭代器 (iterator)
   * 不是一个集合,但是提供了访问集合的一种方法.当构建一个集合需要很多的开销时,迭代器可以发挥很好的性能
@@ -107,6 +164,11 @@ val iter2 = Iterator("Hadoop", "Spark", "Scala")
 for (elem <- iter2) {
   println(elem)
 }
+
+/**
+  * Seq 序列
+  * seq 下包含了 Range, ArrayBuffer, List 等子 trait .
+  */
 
 
 
