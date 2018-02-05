@@ -98,6 +98,8 @@ object TransformationOperation {
 
   /**
     * 对每个key对应的value进行reduce操作。
+    * 其实RDD里是没有reduceByKey的，因此对RDD调用reduceByKey()方法的时候，会触发scala的隐式转换；
+    * 此时就会在作用域内，寻找隐式转换，会在RDD中找到rddToPairRDDFunctions()隐式转换，然后将RDD转换为PairRDDFunctions。
     */
   def reduceByKey(): Unit = {
     val conf = new SparkConf()
