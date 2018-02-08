@@ -276,14 +276,35 @@ abstract class RDD[T: ClassTag](
   }
 
   /**
+    * 先 persist() 再 checkpoint()
+    * 那么首先执行到该 rdd 的 iterator() 之后,会发现, storageLevel != StorageLevel.NONE
+    * 那么就会通过 cache 去获取数据,此时会发现,通过 BlockManager 获取不到数据(因为是第一次执行)
+    * 那么第一次还是会计算一次该 rdd 的数据,然后通过 cache 将其通过 BlockManager 进行持久化
+    *
+    * rdd 所在的 job 运行结束了,然后启动单独 job 进行 checkpoint 操作,此时又会执行到该 rdd 的 iterator() 方法
+    * 那么就会发现,持久化级别不为空,默认从 BlockManager 中直接读取持久化数据(正常情况下,应该是可以的)
+    * 但是,如果非正常情况下,持久化数据丢失了
+    * 那么此时会 调用 computeOrReadCheckpoint(split, context)
+    * 判断如果 rdd 是 isCheckpoint 为 true, 那么就会用它的父 rdd 的 iterator() 方法,其实就是从 checkpoint 外部文件系统中读取数据
+    */
+
+  /**
    * Internal method to this RDD; will read from cache if applicable, or otherwise compute it.
    * This should ''not'' be called by users directly, but is available for implementors of custom
    * subclasses of RDD.
    */
   final def iterator(split: Partition, context: TaskContext): Iterator[T] = {
+    /**
+      * 如果 StorageLevel 不为 NONE, 就是说,之前持久化过RDD
+      * 那么就不要直接去从 父RDD 执行算子了,计算新的 RDD 的 Partition了
+      * 优先尝试使用 CacheManager, 去获取持久化的数据
+      */
     if (storageLevel != StorageLevel.NONE) {
       getOrCompute(split, context)
     } else {
+      /**
+        * 进行 rdd partition 的计算
+        */
       computeOrReadCheckpoint(split, context)
     }
   }
