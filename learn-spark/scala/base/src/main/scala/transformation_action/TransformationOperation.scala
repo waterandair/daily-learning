@@ -10,7 +10,8 @@ object TransformationOperation {
     //groupByKey()
     //reduceByKey()
     //sortByKey()
-    join()
+    //join()
+    mapPartition()
   }
 
   /**
@@ -167,6 +168,44 @@ object TransformationOperation {
       println("student socre: " + studentScore._2._2)
       println("=======================================")
     })
+  }
+
+  def mapPartition(): Unit = {
+    val conf = new SparkConf()
+      .setAppName("mapPartition")
+      .setMaster("local[2]")
+    val sc = new SparkContext(conf)
+
+    val studentNames = List("张三", "李四", "王二", "麻子")
+    val studentNamesRDD = sc.parallelize(studentNames, 2)
+    val studentScoreMap = Map(
+      "张三" -> 278.5,
+      "李四" -> 290.0,
+      "王二" -> 301.0,
+      "麻子" -> 205.0
+    )
+
+    /**
+      * mapPartition 类似 map, 不同之处在于 map 算子, 一次就处理一个 partition 中的一条数据
+      * mapPartitions 算子, 一次处理一个 partition 中所有的数据
+      *
+      * 推荐使用的场景
+      * 如果 RDD 数据量不是特别大,那么建议采用 mapPartitions 算子替代 map 算子,可以加快处理速度
+      * 但是如果 RDD 的数据量特别大,比如说 10 亿, 不建议用 mapPartitions, 可能会内存溢出
+      */
+
+    val studentScoresRDD = studentNamesRDD.mapPartitions(iter =>  {
+      var res = List[Double]()
+      while (iter.hasNext) {
+        val studentName = iter.next()
+        val studentScore: Double = studentScoreMap.getOrElse(studentName, 0)
+        res = res :+ studentScore
+      }
+      res.iterator
+    })
+
+    studentScoresRDD.foreach(println(_))
+
   }
 
 }
