@@ -9,12 +9,13 @@ object Wordcount {
 
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()
-      .setMaster("local")
+      .setMaster("local[2]")
       .setAppName("Wordcount")
 
     var ssc = new StreamingContext(conf, Seconds(1))
 
     val lines = ssc.socketTextStream("localhost", 9999)
+    println(lines)
     val wordcount = lines.flatMap(_.split(" "))
       .map(word => (word, 1))
       .reduceByKey(_ + _)
