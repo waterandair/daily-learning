@@ -1,0 +1,44 @@
+### 关于调节的本地化的时长的说明
+Spark 在 driver 上,对 Application 的每一个 stage 的 task,进行分配之前,都会计算出每个task要计算的是哪个分片数据,优先会希望每个task正好
+分配到它要计算的数据所在的节点,这样的话,就不用在网络间传输数据
+但是,有时事与愿违,可能 task 没有机会分配到它的数据所在的节点,可能是因为那个节点的计算资源和计算能力都满了,这种时候,spark 会等待一段时间,默认
+情况下是 3s(不是绝对的,还有很多中情况,对不同的本地化级别,都会去等待),到最后,实在等不下去了,就会选择一个比较差的本地化级别,比如,将 task 分配
+到靠它要计算的数据所在节点,比较近的一个节点,然后进行计算
+
+对于第二种情况,通常来说,肯定是会发生数据传输,task 会通过其所在节点的 BlockManager 来获取数据.BlockManager 发现自己本地没有数据,会通过一个
+getRemote() 方法,通过 TransferService(网络数据传输组件)从数据所在节点的BlockManager中,获取数据,通过网络传输回 task 所在节点
+
+应该尽量避免第二种情况发生,最好的情况,当然是task和数据在一个节点上,直接从本地 executor 的 BlockManager 中获取数据,纯内存,或者带一点磁盘IO,
+如果要通过网络传输数据的话,大量的网络传输以及磁盘IO,都是性能杀手.
+
+### 如果调节等待时长参数
+观察日志,在测试的时候,先用 client 模式,再本地就可以看到比较全的日志.
+日志里面会显示 starting task..., PROCESS LOCAL, NODE LOCAL
+观察大部分 task 的数据本地化级别
+如果大多数都是 PROCESS LOCAL, 那就不用调节了
+如果是发现,好多的级别都是 NODE LOCAL,ANY,那么最好就去调节一下数据本地化的等待时长
+调节完,应该是要反复调节,每次调节完后,再来运行,继续观察日志,看看大部分的task的本地化级别有没有提升,看看整个spark作业的运行时间有没有缩短
+
+注意不要本末倒置,造成本地化级别提高了,但是因为增加了本地化等待的时长,spark 作业的运行时间反而着增加了.
+
+```
+spark.locality.wait.process
+spark.locality.wait.node
+spark.locality.wait.rack
+
+new SparkConf()
+  .set("spark.locality.wait", "10")
+```
+
+### 本地化级别介绍
+#### PROCESS_LOCAL
+进程本地化,代码和数据在如同一个进程中,也就是在同一个executor中,计算数据的task由executor执行,数据在executor的BlockManager中,性能最好
+#### NONE_LOCAL
+节点本地化, 代码和数据在同一个节点上;比如说,数据作为一个 HDFS block 块,就在节点上,而 task 在节点上某个 executor中运行;或者是数据和task在
+一个节点上的不同 executor中,数据需要在进程间进行传输
+#### NO_PREF
+对于 task 来说,数据从哪里获取都一样,没有好坏之分
+#### RACK_LOCAL
+机架本地化,数据和task在一个机架的两个节点上,数据需要通过网络在节点之间进行传输
+#### ANY
+数据和task可能在集群中的任何地方,而且不在一个机架中,性能最差

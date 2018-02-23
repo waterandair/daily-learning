@@ -1,0 +1,25 @@
+```
+spark.shuffle.manager：hash、sort、tungsten-sort（自己实现内存管理）
+spark.shuffle.sort.bypassMergeThreshold：200
+#自己可以设定一个阈值，默认是200，当reduce task数量少于等于200；map task创建的输出文件小于等于200的；最后会将所有的输出文件合并为一份文件。
+#这样做的好处，就是避免了sort排序，节省了性能开销。而且还能将多个reduce task的文件合并成一份文件。节省了reduce task拉取数据的时候的磁盘IO
+#的开销。
+```
+
+### 三种shuffleManager
+
+1. SortShuffleManager 会对每个 reduce task 要处理的数据,进行排序(默认)
+2. SortShuffleManager 会避免像 HashShuffleManager 那样,默认就去创建多份磁盘文件.一个task,只会写入一个磁盘文件,不同 reduce task的数据,
+用 offset 来划分界定
+3. tungsten-sort Manager 效果和 SortShuffleManager 差不多,但是 tungsten-sort Manager 自己实现了一套内存管理机制,性能上有很大的提升,
+而且可以避免 shuffle 过程中产生的大量 OOM , GC.
+
+consolidateFiles机制、map端缓冲、reduce端内存占比。这些对任何shuffle manager都是有用的。
+
+### 总结
+1. 需不需要数据默认就让 spark 进行排序?如果不需要的话,建议就使用最基本的 HashShuffleManager
+2. 如果需要数据按 key 排序了,就选择 SortShuffleManager,要注意,reduce task 数量应该是超过 200 的,这个 sort, merge(多个文件合并成一个)
+的机制,才能生效.
+3. 如果不排序,希望每个task输出的文件最终会是合并成一份的,可以去调节 spark.shuffle.sort.bypassMergeThreshold,比如 reduce task 数量是 
+500, 默认阈值是 200,所以默认还是会进行 sort 和直接 merge 的,可以将阈值调节成 550,不会进行sort,按照 hash 的做法,每个 reduce task 创建
+一份输出文件,最后合并成一份文件(通常很少调节这个参数)

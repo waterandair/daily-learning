@@ -1,0 +1,44 @@
+### executor 堆外内存以及为什么会出现堆外内存溢出
+
+
+Spark的shuffle部分使用了netty框架进行网络传输，但netty会申请堆外内存缓存（PooledByteBufAllocator ，AbstractByteBufAllocator）；
+Shuffle时，每个Reduce都需要获取每个map对应的输出，当一个reduce需要获取的一个map数据比较大（比如1G），这时候就会申请一个1G的堆外内存，
+而堆外内存是有限制的，这时候就出现了堆外内存溢出。
+
+有时候,如果 spark 作业处理的数据量特别大,几亿,时不时的报错,shuffle file cannot find,executor,task lost,out of memory(内存溢出)
+可能是因为 executor 的堆外内存不够用,导致executor 在运行的时候,内存溢出,然后导致后续的 stage 的 task 在运行的时候,可能要从一些 executor 
+中去拉取 shuffle map output 文件,但是 executor 可能已经挂掉了,关联的 blockmanager 也没有了.所有可能会报 shuffle output file not found;
+resubmitting;executor lost;
+
+### 调节堆外内存
+上述情况发生,就可以考虑调节一下 executor 的堆外内存,增加堆外内存,对性能也会带来一定的提升.
+```$xslt
+# 必须要在 spark-submit 脚本里面用 --conf 的方式添加才能生效,写在SparkConf().set() 中是没有用的
+spark.yarn.executor.memoryOverhead=2048
+```
+默认情况下,堆外内存的上限大概是 300M , 真正处理大数据时,这里通常会出现问题,导致 spark 作业反复崩溃,无法运行,此时就会去调节这个参数
+
+### 无法建立网络连接的问题
+当数据本地化模式需要建立远程网络连接,并且拉取数据时,可能会出现无法建立网络连接的问题
+
+如果处于垃圾回收过程中,所有的工作线程全部停止,相当于只要进行垃圾回收,spark/executor 停止工作,无法提供响应.
+
+spark 默认网络连接的超时时长是 60s, 如果卡住60s都无法建立连接,就会宣告失败
+
+有的时候会碰到一种情况,某某file。一串file id。uuid（dsfsfd-2342vs--sdf--sdfsd）。not found。file lost,这种情况很有可能会那份数据的
+executor 在 jvm gc.所以拉取数据的时候建立不了连接,超过默认的 60s 之后,直接宣告是失败.报错几次,几次都拉取不到数据的话,可能导致 spark 作业
+崩溃,也可能会导致 DAGScheduler,反复提交几次 task.大大延长spark作业的运行时间
+
+可以考虑调节连接的超时时长
+```$xslt
+# 必须要在 spark-submit 脚本里面用 --conf 的方式添加才能生效,写在SparkConf().set() 中是没有用的
+--conf spark.core.connection.ack.wait.timeout=300
+```
+
+### 总结
+这两个参数很实用,再真正处理大数据的时候,很容易碰到 executor堆外内存,以及 gc 引起的连接超时的问题,file not found,executor lost,task lost
+调节上面两个参数,很有帮助
+
+
+
+

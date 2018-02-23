@@ -1,0 +1,9 @@
+默认情况下,task算子中,如果使用了外部变量,每个 task 都会获取一份变量的副本.这样就会造成
+大量的网络传输,降低性能
+
+广播变量的好处,不是每个task一份变量副本,而是变成每个节点的 executor 才一份副本.
+
+task 在运行的时候,想要使用广播变量中的数据,此时首先会在自己本地的 executor 对应的 BlockManager中,
+尝试获取变量副本;如果本地没有,那么就从dirver远程俺俩去变量副本,并保存再 BlockManager中.
+
+executor 的 BlockManager 除了从 dirver 上拉取,也可能从其他节点的 BlockManager 中拉取副本,距离越近越好

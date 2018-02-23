@@ -3,21 +3,14 @@ package sessionApp.utils
 import java.text.SimpleDateFormat
 import java.util.Date
 
+import org.joda.time.DateTime
+
 class DateUtils
 object DateUtils {
   val DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd")
   val TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
   val DATEKEY_FORMAT = new SimpleDateFormat("yyyyMMdd")
 
-  /**
-    * 获取年月日和小时
-    */
-  def getDateHour(datetime: String): String ={
-    val date = datetime.split(" ")(0)
-    val hourMinuteSecond = datetime.split(" ")(1)
-    val hour = hourMinuteSecond.split(" ")(0)
-    date + "_" + hour
-  }
 
   /**
     * 获取今天的日期
@@ -40,5 +33,17 @@ object DateUtils {
       case ex: Exception => println(ex)
     }
     date
+  }
+
+  /**
+    * 获取年月日和小时
+    * @param dateTime yyyy-MM-dd HH:mm:ss
+    * @return yyyy-MM-dd_HH
+    */
+  def getDateHour(dateTime: String): String ={
+    val date = dateTime.split(" ")(0)
+    val hourMinuteSecond = dateTime.split(" ")(1)
+    val hour = hourMinuteSecond.split(":")(0)
+    date + "_" + hour
   }
 }

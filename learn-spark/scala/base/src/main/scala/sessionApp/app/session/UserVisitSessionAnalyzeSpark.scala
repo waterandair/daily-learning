@@ -8,11 +8,13 @@ import sessionApp.conf.ConfigurationManager
 import sessionApp.constant.Constant
 import sessionApp.factory.DAOFactory
 import sessionApp.test.MockData
-import sessionApp.utils.{DateUtils, ParamUtils, StringUtils, ValidUtils, NumberUtils}
+import sessionApp.utils.{DateUtils, NumberUtils, ParamUtils, StringUtils, ValidUtils}
 import sessionApp.domain.SessionAggrStat
 
 import scala.collection.mutable.ArrayBuffer
 import java.util.Date
+
+import scala.util.Random
 /**
   * 用户访问 session 分析
   *
@@ -531,5 +533,101 @@ object UserVisitSessionAnalyzeSpark {
     sessionAggrStatDAO.insert(sessionAggrStat)
   }
 
-  
+  /**
+    * 随机抽取 session
+    */
+  def randomExtractSession(sessionid2AggrInfoRDD:RDD[(String, String)]): Unit ={
+    import scala.collection.mutable.Map
+    import scala.collection.mutable.ListBuffer
+    // 第一步,计算每天每小时的 session 数量, 获取 <yyyy-MM-dd_HH, sessionid> 格式的RDD
+    val time2SessionidRDD = sessionid2AggrInfoRDD.map(tuple => {
+      val aggrInfo = tuple._2
+      val startTime = StringUtils.getFieldFromConcatString(aggrInfo, "\\|", Constant.FIELD_START_TIME)
+      val dateHour = DateUtils.getDateHour(startTime)
+      (dateHour, aggrInfo)
+
+    })
+
+    // 得到每天每小时的 session 数量
+    val countMap = time2SessionidRDD.countByKey()
+
+    /**
+      * 第二步,使用按时间比例随机抽取算法,计算出每天每小时要抽取的 session 的索引
+      * 将<yyyy-MM-dd_HH,count>格式的map，转换成<yyyy-MM-dd,<HH,count>>的格式
+      */
+    var dateHourCountMap: Map[String, Map[String, Long]] = Map()
+    for (countEntry <- countMap){
+      val dateHour = countEntry._1
+      val date = dateHour.split("_")(0)
+      val hour = dateHour.split("_")(1)
+      val count = countEntry._2
+
+      var hourCountMap = dateHourCountMap.getOrElse(date, null)
+      if (hourCountMap == null){
+        hourCountMap = Map()
+        dateHourCountMap += (date -> hourCountMap)
+      }
+
+      hourCountMap += (hour -> count)
+    }
+
+    // 开始实现按时间比例随机抽取算法
+    // 总共要抽取 100 个session, 先按照天数,进行平分
+    val extractNumberPerDay = 100 / dateHourCountMap.size
+
+    var dateHourExtractMap: Map[String, Map[String, ListBuffer[Int]]] = Map()
+
+    val random = new Random()
+
+    for(dateHourCountEntry <- dateHourCountMap){
+      val date = dateHourCountEntry._1
+      var hourCountMap = dateHourCountEntry._2
+
+      // 计算出这一天的session 总数
+      var sessionCount = 0L
+      for (hourCount <- hourCountMap.values) {
+        sessionCount += hourCount
+      }
+
+      var hourExtractMap = dateHourExtractMap.getOrElse(date, null)
+      if(hourExtractMap == null){
+        hourExtractMap = Map()
+        dateHourExtractMap += (date -> hourExtractMap)
+      }
+
+      // 遍历每个小时
+      for (hourCountEntry <- hourCountMap){
+        val hour = hourCountEntry._1
+        val count = hourCountEntry._2
+        // 计算每个小时的 session 数量,占据当天总 session 数量的比例,直接乘以每天要抽取的数量
+        var hourExtractNumber = (count.toDouble / sessionCount.toDouble * extractNumberPerDay)
+        if(hourExtractNumber > count){
+          // 不能超过当天当前小时的总数
+          hourExtractNumber = count
+        }
+
+        // 现获取当前小时的存放随机数的listBuffer
+        var extractIndexList = hourExtractMap.getOrElse(hour, null)
+        if(extractIndexList == null){
+          extractIndexList = ListBuffer()
+          hourExtractMap += (hour -> extractIndexList)
+        }
+
+        // 生成上面计算出来的数量的随机数
+        for(i <- 0 until hourExtractNumber){
+          var extractIndex = random.nextInt(count.toInt)
+          while(extractIndexList.contains(count.toInt)){
+            extractIndex = random.nextInt(count.toInt)
+          }
+          extractIndexList += extractIndex
+        }
+      }
+
+
+
+    }
+
+  }
+
+
 }

@@ -1,0 +1,11 @@
+### 并行度
+Spark 作业中,各个 stage 的 task 数量,也就代表了 Spark 作业的各个阶段 (stage)的并行度.
+合理的调节并行度,可以充分利用集群的计算资源,并且减少每个 task 要处理的数据量,很好的提升 spark 
+作业的性能和运行速度
+### 调节并行度 
+task数量,至少设置成与 spark application 总 CPUcore 数量相同,官方推荐设置成 CPUcore 的 2~3 倍
+
+```$xslt
+SparkConf conf = new SparkConf()
+  .set("spark.default.parallelism", "500")
+``` 

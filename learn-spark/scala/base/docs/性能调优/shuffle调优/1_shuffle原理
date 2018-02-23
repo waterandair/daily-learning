@@ -1,0 +1,36 @@
+### 什么情况下会发生 shuffle 调优
+在 spark 算子中,主要是以下几个算子会发生 shuffle
+- groupByKey
+- reduceByKey
+- countByKey
+- join
+
+#### groupByKey
+要把分布在集群各个节点上的数据中的同一个Key,对应的values,都集中到同一个节点上,更严密的说,就是集中到一个节点的一个 executor 的一个 task 中.
+然后才能进行处理.<key, iterable<value>>
+#### reduceByKey
+算子函数去对values集合进行 reduce 操作,最后变成一个value
+#### countByKey
+需要在一个task中,获取一个key对应的所有value,然后进行计数,统计总共有多少个value
+#### join
+RDD<key,value> , RDD<key,value> 只要是两个 RDD 中,key相同对应的 2 个 value,都能到一个节点的 executor 的task 中,进行处理
+
+### shuffle 过程
+shuffle, 一定是分为两个 stage 来完成的,因为这其实是个逆向的过程,不是 stage 决定 shuffle ,而是 shuffle 决定 stage
+reduceByKey(_+_).在某个 action 触发 job 的时候,DAGScheduler,会负责划分 job 为多个 stage.划分的依据,就是,如果发现会触发shuffle操作的
+算子,比如 reduceByKey.就将这个操作的前半部分,以及之前所有的RDD和transformation 操作,划分为一个 stage;shuffle 操作的后半福分,以及后面的,
+直到action 为止的 RDD 和 transformation 操作,划分为另一个 stage.
+
+每一个 shuffle 的前半部分 stage 的 task, 都会创建下一个 stage 的 task 数量相同的文件.比如下一个 stage 会有 100 个 task.那么
+当前 stage 每个 task 都会创建 100 份文件,会将同一个 key 对应的 values, 一定是写入到同一个文件中的,不同节点上的task,也一定会将同一个key
+对应的 values 写入下一个 stage 同一个 task 对应的文件中.(shuffle前半部分的task在写入数据到磁盘文件之前,都会先写入一个一个的内存缓冲,内存缓冲
+满溢之后,再 spill 到磁盘文件中)
+
+shuffle 的后半部分 stage 的 task, 每个 task 都会从各个节点上的 task 写的属于自己的那一份文件中,拉取 key, value对,然后 task 会有一个内
+存缓冲区,会用 hashMap 进行key, values的汇聚
+
+task 会用自定义的聚合函数,比如 reduceByKey(_+_),把所有 values 进行一对一的累加,聚合出来最终的值,就完成了 shuffle
+
+
+
+

@@ -1,0 +1,37 @@
+### 介绍
+默认情况下,shuffle 的 map task,输出到磁盘文件的时候,同意都会先写入每个 task 自己关联的一个内存缓冲区,这个缓冲区默认是 32kb.每一次,当内存
+缓冲区满溢之后,才会进行 spill 操作,溢写操作,溢写到磁盘文件中去.
+
+reduce 端 task,在拉取到数据之后,会用 hashmap 的数据格式,来对各个 key 对应的 values 进行汇聚.针对每个 key 对应的 values.执行我们自定义
+的聚合函数的代码,比如 _ + _(把所有values累加起来).reduce task, 在进行汇聚,聚合等操作的时候,实际上,使用的就是自己对应的 executor 的内存,
+executor(jvm 进程堆),默认 executor 内存中划分给 reduce task 进行聚合的比例,默认 0.2. 所以理论上,很有可能会出现,拉取过来的数据很多,在内
+存中放不下,将放不下的数据,都 spill (溢写) 到磁盘文件中去
+
+### 默认情况
+默认 map 端内存缓冲是每个task 32kb
+默认 reduce 端聚合内存比例是 0.2, 也就是 20 %
+
+在 map task 处理的数据量比较大的情况下,而你的 task 的内存缓冲默认是比较小的.可能会造成多次的 map 端往磁盘文件的 spill 溢写操作,发生大量的
+磁盘IO 
+
+reduce 端聚合内存.如果数据量比较大,reduce task 拉取过来的数据很多,那么就会频繁发生 reduce 端聚合内存不够用,频繁发生 spill 操作,溢写到磁
+盘上去.而且,更糟糕的是,磁盘上溢写的数据量越大,后面在进行聚合操作的时候,很可能会多次读取磁盘中的数据,进行聚合
+
+数据量大,map端和reduce端都会出问题,都是磁盘 IO 频繁
+
+### 调优  
+```
+spark.shuffle.file.buffer=32kb
+spark.shuffle.memoryFraction=0.2
+```
+看 spark UI, 如果是 standalone 模式,会显示一个 spark UI 地址,点进去,可以看到每个 stage 的详情,有哪些 executor,有哪些 task,每个 task
+的 shuffle write 和 shuffle read 的量,shuffle 的磁盘和内存,读写的数据量.如果是yarn模式来提交,从 yarn 界面进去,点击对应的 application
+进入 spark UI,查看详情
+
+如果发现 shuffle 磁盘的 write 和 read, 很大,就意味着最好调节一些 shuffle 的参数
+spark.shuffle.file.buffer 每次扩大一倍, spark.shuffle.memoryFraction 每次提高 0.1, 观察效果
+
+不能调节的过大,因为内存资源是有限的,这里调节的过大,其他环节的内存使用就会出问题了
+
+调节以后,map task 内存缓冲变大,减少了 spill 到磁盘文件的次数;reduce 端聚合内存变大了,减少 spill 到磁盘的次数,而且减少了后面聚合读取磁盘文
+件的数量
