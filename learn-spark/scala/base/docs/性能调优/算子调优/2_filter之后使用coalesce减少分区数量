@@ -1,0 +1,18 @@
+### 说明
+默认情况下,经过了 filter 操作后, RDD 每个 partition 的数据量,可能都不太一样了
+出现的问题:  
+1. 每个 partition 数据量变少了,但是在后面进行处理的时候,还是要跟 partition 数量一样数量的task,来进行处理,有点浪费 task 计算资源
+2. 每个 partition 数据量不一样,会导致后面的每个 task 处理每个 partition 的时候,每个 task 要处理的数据来个就不同,这个时候很容易发生数据倾斜
+
+比如说,第二个 partition 的数据量才 100, 但是第三个 partition 的数据量是 900;那么在后面的 task 处理逻辑一样的情况下,不同的 task 要处理的
+数据量可能差别达到了 9 倍,同样也就导致了速度差别 9 倍,这样,就会导致有些 task 运行的速度很快,有些 task 运行的速度很慢,造成数据倾斜
+### 优化
+1. 针对第一个问题,可以进行 partition 压缩,因为数量量变少了,那么 partition 其实完全可以对应的变少.比如原来是 4个 partition ,现在完全可以
+变成 2 个 partition,那么就只要用到后面 2 个 task 来处理即可,就不会造成 task 计算资源浪费(不必要针对只有一点点数据的 partition,还去启动一
+个 task 来计算)
+
+2. 针对第二个问题,解决方案和第一个问题是一样的;也是去压缩 partition, 尽量让每个 partition 的数据量差不多.
+
+#### coalesce 算子
+在 filter 操作之后,针对每个 partition 的数据量各不相同的情况,来压缩 partition 的数量,减少 partition 的数量,而且让每个 partition 的数
+据量都尽量均匀紧凑.

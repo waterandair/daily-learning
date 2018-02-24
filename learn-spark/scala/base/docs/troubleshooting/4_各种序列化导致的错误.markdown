@@ -1,0 +1,27 @@
+### 现象
+如果出现了类似于Serializable、Serialize等等字眼，就碰到了序列化问题导致的报错
+### 解决
+序列化报错主要注意三点
+**1. 在算子函数里面,如果使用到了外部自定义类型的变量,那么就要求自定义变量必须是可序列化的**
+```scala
+case class Teacher(name: String) extends Serializable
+val teacher = new Teacher("zj")
+
+studentsRDD.foreach( val teacherName = teacher.name)
+```
+
+**2. 如果要将自定义的类型,作为RDD的元素类型,那么自定义的类型也必须是可以序列化的**
+```scala
+
+case class Teacher(name: String) extends Serializable
+val teacherRDD: RDD[Int, Teacher] = ???
+```
+
+**3. 不能在上述两种情况下,去使用一些第三方的,不支持序列化的类型**
+```scala
+
+val conn: Connection = ??? 
+
+studentsRDD.foreach( conn )
+```
+Connection 是不支持序列化的

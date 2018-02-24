@@ -13,7 +13,7 @@ executor, cpu per executor, memory per executor,driver memory
 
 ### 调节到多大
 #### Spark Standalone
-评估每天机器还能够使用的内存和CPUcore,比如每台机器能提供4G内存,2个CPUcore,20台机器就可以分配 20 个 executor,平均每个
+评估每台机器还能够使用的内存和CPUcore,比如每台机器能提供4G内存,2个CPUcore,20台机器就可以分配 20 个 executor,平均每个
 executor 4G 内存,2个 CPUcore,并行度是40
 #### Yarn
 评估要提交到的资源队列,大概有多少资源.
@@ -30,6 +30,6 @@ executor 的数量与可以并行执行的 task 数量正相关.
 (2)对于 shuffle 操作, reduce 端,会需要内存来存放拉取过来的数据并进行聚合.如果内存不够,也会写入磁盘.
 (3)对于 task 执行,可能会创建很多对象.如果内存比较小,可能会导致频繁的 GC
 
-#### 3. 增加每个 executor 的CPUcore
+#### 3. 增加每个 executor 的 CPUcore
 可以增加执行的并行能力,并行能力与 executor 数量和 cpucore 数量线性相关
 
