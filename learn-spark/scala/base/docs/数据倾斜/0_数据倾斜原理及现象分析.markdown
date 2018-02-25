@@ -1,0 +1,15 @@
+### 原理
+执行 shuffle 操作的时候,按照 key 进行 values 的数据输出,拉取和聚合,这里就有可能有的 reduce task 聚合了大部分的数据,造成数据倾斜
+
+### 现象
+1. 大部分的task,都执行的特别特别快(使用 client 模式,便于看清日志),剩下几个task执行的特别慢,这时大概就可以判断是出现了数据倾斜的问题
+2. 运行的时候,其他 task 都执行完了,但是有的 task 会报OOM, task failed, task lost, resubmitting task.反复执行几次都是到了某个 task
+就跑不通.这种情况,基本上就是数据倾斜了
+
+### 定位原因和出现问题的位置(根据 log 去定位)
+出现数据倾斜的原因,基本只可能是因为发生了 shuffle 操作,在 shuffle 的过程中,出现了数据倾斜的问题,因为某个或者某些key对应的数据,远远高于其他key
+
+1. 在程序里面找找,那些地方用了会产生 shuffle 的算子: groupByKey,countByKey,reduceByKey
+2. 看log
+
+log 会报是在哪一行代码,导致了 OOM 异常,或者看看是执行到了哪个 stage 

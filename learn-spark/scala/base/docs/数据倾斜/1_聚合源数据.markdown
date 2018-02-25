@@ -1,0 +1,25 @@
+spark 作业的数据来源,通常是 hive表 或 hdfs 上存储的大数据
+
+hive 适合做 ETL(extract transform load, 数据的采集,清洗,导入)
+
+### 1
+数据倾斜,是某个 key 对应大部分数据造成的,针对这种情况,可以直接在生成 hive 表的 hive etl 中,对数据进行聚合.比如按 key 分组,将 key 对应的所
+有 values, 全部用一种特殊的格式,拼接到一个字符串中,比如:“key=sessionid, value: action_seq=1|user_id=1|search_keyword=火锅|
+category_id=001;action_seq=2|user_id=1|search_keyword=涮肉|category_id=001”。
+
+对 key 进行 group, 在 spark 中,拿到key=sessionid，values<Iterable>；因为已经在 hive etl 中直接对 key 进行了聚合,那么也就意味着,每个
+key 就只对应一条数据,在 spark 中就不需要做 groupByKey + map 操作了, 直接对每个 key 对应的 value, 执行 map 操作.这样就不会有 shuffle 
+过程,就不会发生数据倾斜了
+
+或者是,对每个 key 在 hive etl 中进行聚合,对所有 values 聚合一下,不一定拼接起来,可能是直接进行计算
+
+### 2
+
+可能没有办法对每个key, 都聚合出来一条数据
+也可以做一个妥协,对每个 key 对应的数据, 10万条;有好几个粒度,比如 10万条里面包含了几个城市,几天,几个地区,现在放粗粒度;直接就按照城市粒度,做一
+下聚合
+
+尽量去聚合,减少每个 key 对应的数量,也许聚合到比较粗的粒度之后,原先有 10 万条value数据量的 key ,现在只有 1万 条数据量,就可以减轻数据倾斜的问题
+
+
+
