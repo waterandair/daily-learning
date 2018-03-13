@@ -132,9 +132,6 @@ object UserVisitSessionAnalyzeSpark {
       *
       *
       */
-
-
-
   }
 
   /**
@@ -536,7 +533,7 @@ object UserVisitSessionAnalyzeSpark {
   /**
     * 随机抽取 session
     */
-  def randomExtractSession(sessionid2AggrInfoRDD:RDD[(String, String)]): Unit ={
+  /*def randomExtractSession(sessionid2AggrInfoRDD:RDD[(String, String)]): Unit ={
     import scala.collection.mutable.Map
     import scala.collection.mutable.ListBuffer
     // 第一步,计算每天每小时的 session 数量, 获取 <yyyy-MM-dd_HH, sessionid> 格式的RDD
@@ -622,12 +619,27 @@ object UserVisitSessionAnalyzeSpark {
           extractIndexList += extractIndex
         }
       }
-
-
-
     }
+  }*/
 
-  }
+  /*def getTop10Category(filterSesssionid2AggrinfoRDD:RDD[(String, String)], sessionid2actionRDD: RDD[(String, Row)])={
 
+    /**
+      * 第一步,获取符合条件的 session 访问过的所有品类
+      */
+    // 获取符合条件的 session 的访问明细
+    val session2detailRDD = filterSesssionid2AggrinfoRDD
+      .join(session2detailRDD)
+      .map(tuple => (tuple._1, tuple._2._2))
+
+    // 获取session 访问过的所有品类id
+    // 访问过是指,点击过,下单过,支付过的品类
+    val category = session2detailRDD.flatMap(tuple => {
+      val row: Row = tuple._2
+      val list: List[(Long, Long)] = Array(Tuple2(Long, Long))
+
+
+    })
+  }*/
 
 }
