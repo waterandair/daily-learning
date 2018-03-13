@@ -81,6 +81,32 @@ List("Leo", "Jen", "Peter", "Jack").zip(List(100, 90, 75, 83))  // List[(String,
 Array("Leo", "Jen", "Peter", "Jack").zip(Array(100, 90, 75, 83))  // Array("Leo", "Jen", "Peter", "Jack").zip(Array(100, 90, 75, 83))
 List("Leo", "Jen", "Peter", "Jack").zip(Array(100, 90, 75, 83))  // List[(String, Int)] = List((Leo,100), (Jen,90), (Peter,75), (Jack,83))
 
+/*
+col :+ ele			将元素添加到集合尾部		Seq
+ele +: col			将元素添加到集合头部		Seq
+col + ele			在集合尾部添加元素			Set、Map
+col + (ele1, ele2)	将其他集合添加到集合的尾部	Set、Map
+col - ele			将元素从集合中删除			Set、Map、ArrayBuffer
+col - (ele1, ele2)	将子集合从集合中删除		Set、Map、ArrayBuffer
+col1 ++ col2		将其他集合添加到集合尾部	Iterable
+col2 ++: col1		将其他集合添加到集合头部	Iterable
+ele :: list			将元素添加到list的头部		List
+list2 ::: list1		将其他list添加到list的头部		List
+list1 ::: list2		将其他list添加到list的尾部		List
+set1 | set2			取两个set的并集			Set
+set1 & set2			取两个set的交集			Set
+set1 &~ set2		取两个set的diff				Set
+col += ele			给集合添加一个元素			可变集合
+col += (ele1, ele2)	给集合添加一个集合			可变集合
+col ++= col2		给集合添加一个集合			可变集合
+col -= ele			从集合中删除一个元素		可变集合
+col -= (ele1, ele2)	从集合中删除一个子集合		可变集合
+col —= col2			从集合中删除一个子集合		可变集合
+ele +=: col			向集合头部添加一个元素		ArrayBuffer
+col2 ++=: col		向集合头部添加一个集合		ArrayBuffer
+
+*/
+
 
 
 

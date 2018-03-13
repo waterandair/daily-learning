@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>详细页</title>
+</head>
+<body>
+<h1>{{book.btitle}}</h1>
+<ul>
+  {%for hero in book.heroinfo_set.all%}
+  <li>{{hero.hname}}---{{hero.hcontent}}</li>
+  {%endfor%}
+</ul>
+</body>
+</html>
