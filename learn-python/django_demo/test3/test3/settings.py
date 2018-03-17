@@ -31,23 +31,23 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django_demo.contrib.admin',
+    'django_demo.contrib.auth',
+    'django_demo.contrib.contenttypes',
+    'django_demo.contrib.sessions',
+    'django_demo.contrib.messages',
+    'django_demo.contrib.staticfiles',
     'booktest'
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_demo.middleware.security.SecurityMiddleware',
+    'django_demo.contrib.sessions.middleware.SessionMiddleware',
+    'django_demo.middleware.common.CommonMiddleware',
+    'django_demo.middleware.csrf.CsrfViewMiddleware',
+    'django_demo.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_demo.contrib.messages.middleware.MessageMiddleware',
+    'django_demo.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'test3.urls'
@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'test3.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django_demo.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
@@ -87,16 +87,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django_demo.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django_demo.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django_demo.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django_demo.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 

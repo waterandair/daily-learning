@@ -1,4 +1,4 @@
-from myapp.models import Blog, Entry, Author
+from django_demo.mysite.myapp.models import Blog, Entry, Author
 
 
 # # 创建对象
@@ -90,7 +90,7 @@ Blog.objects.filter(pk__in=[1, 4, 7])
 Blog.objects.filter(pk__gt=1)
 
 
-# #转义LIKE 语句中的百分号和下划线 django 自动转换百分号和下划线
+# #转义LIKE 语句中的百分号和下划线 django_demo 自动转换百分号和下划线
 Entry.objects.filter(headline__contains='%')  # SELECT ... WHERE headline LIKE '%\%%';
 
 # # 缓存和查询集
@@ -102,7 +102,7 @@ print(queryset[5])  # Queries the database again
 
 queryset = Entry.objects.all()
 [entry for entry in queryset]  # Queries the database
-print(queryset[5])  # Uses cache
+print(queryset[5])  # Uses cachep
 print(queryset[5])  # Uses cache
 
 
@@ -112,7 +112,7 @@ from django.db.models import Q
 Q(question__startswith='Who') | Q(question__startswith='What')
 # 相当于  WHERE question LIKE 'Who%' OR question LIKE 'What%'
 # 每个接受关键字参数的查询函数（例如filter()、exclude()、get()）都可以传递一个或多个Q 对象作为位置（不带名的）参数
-from polls.models import Question
+from django_demo.mysite.polls.models import Question
 import datetime
 # SELECT * from polls WHERE question LIKE 'Who%' AND (pub_date = '2005-05-02' OR pub_date = '2005-05-06')
 Question.objects.get(
@@ -127,6 +127,76 @@ Question.objects.get(
 
 
 # # 比较对象
+# 使用标准的Python 比较操作符，即双等于符号：==。在后台，它会比较两个模型主键的值。
+
+# # 删除对象
+# 默认会根据 foreignKey 删除关联的记录,可以通过 ForeignKey 的 on_delete 参数自定义
+# delete() 是唯一没有在管理器 上暴露出来的查询集方法。这是一个安全机制来防止你意外地请求Entry.objects.delete()，而删除所有 的条目
+# e.delete()
+Entry.objects.filter(pub_date__year=2005).delete()
+b = Blog.objects.get(pk=1)
+b.delete()
+
+
+# # 拷贝模型实例
+
+# # 一次更新多个对象 update
+Entry.objects.filter(pub_date__year=2007).update(headline='Everything is the same')
+# 若要更新ForeignKey 字段，需设置新的值为你想指向的新的模型实例
+b = Blog.objects.get(pk=1)
+Entry.objects.all().update(blog=b)
+# update() 方法会立即执行并返回查询匹配的行数（如果有些行已经具有新的值，返回的行数可能和被更新的行数不相等）
+# 果你想保存查询集中的每个条目并确保每个实例的save() 方法都被调用，你不需要使用任何特殊的函数来处理。只需要迭代它们并调用save()
+# 对update 的调用也可以使用F 表达式 来根据模型中的一个字段更新另外一个字段
+Entry.objects.all().update(n_pingbacks=F('n_pingbacks') + 1)
+
+
+# # 关联的对象
+
+# # 一对多关系
+# # 前向查询
+e = Entry.objects.get(id=2)
+e.blog
+# 修改关联的对象
+b = Blog.objects.create(name='zl', tagline='zl')
+e.blog = b
+e.save()  # 必须调用save() 才能保存
+# 如果 ForeignKey 字段有 null = True 设置,可以分配 None 来删除对应的 关联性
+e = Entry.objects.get(id=2)
+e.blog = None
+e.save()  # "UPDATE blog_entry SET blog_id = NULL ...;"
+# 一对多关联关系的前向访问在第一次访问关联的对象时被缓存。以后对同一个对象的外键的访问都使用缓存。
+e = Entry.objects.get(id=2)
+print(e.blog)  # Hits the database to retrieve the associated Blog.
+print(e.blog)  # Doesn't hit the database; uses cached version.
+# # 反向查询
+# 如果模型I有一个ForeignKey，那么该ForeignKey 所指的模型II实例可以通过一个管理器返回前面有ForeignKey的模型I的所有实例。
+# 默认情况下，这个管理器的名字为foo_set，其中foo 是源模型的小写名称。
+b = Blog.objects.get(id=1)
+b.entry_set.all()  # 返回 Entry 中所有关联到 b 的 记录
+# 可以在ForeignKey 定义时设置related_name 参数来覆盖foo_set 的名称
+# Entry model 中 blog = ForeignKey(Blog, related_name='entries')
+# # 处理关联对象的其它方法
+# add(obj1, obj2, ...)  create(**kwargs) remove(obj1, obj2, ...)  clear()
+
+# # 多对多关系
+# 多对多关系的两端都会自动获得访问另一端的API
+# 属性的名称：定义 ManyToManyField 的模型使用该字段的属性名称，而“反向”模型使用源模型的小写名称加上'_set'
+e = Entry.objects.get(id=3)
+e.authors.all()  # Returns all Author objects for this Entry.
+e.authors.count()
+e.authors.filter(name__contains='John')
+a = Author.objects.get(id=5)
+a.entry_set.all()  # Returns all Entry objects for this Author.
+
+# # 一对一关系
+# class EntryDetail(models.Model):
+#     entry = models.OneToOneField(Entry)
+#     details = models.TextField()
+# ed = EntryDetail.objects.get(id=2)
+# ed.entry # Returns the related Entry object.
+# e = Entry.objects.get(id=2)
+# e.entrydetail # returns the related EntryDetail object
 
 
 
