@@ -8,4 +8,4 @@ from contextlib import suppress
 with suppress(FileNotFoundError):
     os.remove('tempfile.1')
     os.remove('tempfile.2')
-    os.remove('tempfile.3')
+    os.remove('tempfile.3_num_date_time')

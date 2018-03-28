@@ -4,7 +4,7 @@
 r'''
 learning.py
 
-A Python 3 tutorial from http://www.liaoxuefeng.com
+A Python 3_num_date_time tutorial from http://www.liaoxuefeng.com
 
 Usage:
 
@@ -17,7 +17,7 @@ def check_version():
     v = sys.version_info
     if v.major == 3 and v.minor >= 4:
         return True
-    print('Your current python is %d.%d. Please use Python 3.4.' % (v.major, v.minor))
+    print('Your current python is %d.%d. Please use Python 3_num_date_time.4.' % (v.major, v.minor))
     return False
 
 if not check_version():

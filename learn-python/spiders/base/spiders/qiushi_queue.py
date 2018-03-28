@@ -135,7 +135,7 @@ if __name__ == '__main__':
 
     # 初始化采集线程
     crawlthreads = []
-    crawlList = ["crawl-1", "crawl-2", "crawl-3"]
+    crawlList = ["crawl-1", "crawl-2", "crawl-3_num_date_time"]
 
     for threadID in crawlList:
         thread = ThreadCrawl(threadID, pageQueue)
@@ -144,7 +144,7 @@ if __name__ == '__main__':
 
     # 初始化解析线程
     parserThreads = []
-    parserList = ["parser-1", "parser-2", "parser-3"]
+    parserList = ["parser-1", "parser-2", "parser-3_num_date_time"]
     # 分别启动
     for threadID in parserList:
         thread = ThreadParser(threadID, data_queue, lock, out_put)

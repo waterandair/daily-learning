@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # 利用递归函数计算阶乘
-# N! = 1 * 2 * 3 * ... * N
+# N! = 1 * 2 * 3_num_date_time * ... * N
 def fact(n):
     if n == 1:
         return 1

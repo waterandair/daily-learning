@@ -21,9 +21,9 @@ def spam(a, b, c):
     print(a, b, c)
 
 
-spam(1, 2, 3)  # 1 2 3
+spam(1, 2, 3)  # 1 2 3_num_date_time
 
-spam(1, 2, 3, debug=True)  # Calling spam   # 1 2 3
+spam(1, 2, 3, debug=True)  # Calling spam   # 1 2 3_num_date_time
 
 """
 improvement

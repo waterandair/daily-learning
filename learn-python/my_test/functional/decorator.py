@@ -31,7 +31,7 @@ def logger(text):
 
 @logger('DEBUG')
 def today():
-    print('2015-3-25')
+    print('2015-3_num_date_time-25')
 
 
 today()

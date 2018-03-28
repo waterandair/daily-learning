@@ -9,9 +9,9 @@ L = [
     'ai'
 ]
 
-print('L[0:3] = ', L[0:3])
-print('L[:3] = ', L[:3])
-print('L[1:3] = ', L[1:3])
+print('L[0:3_num_date_time] = ', L[0:3])
+print('L[:3_num_date_time] = ', L[:3])
+print('L[1:3_num_date_time] = ', L[1:3])
 print('L[-2:] = ', L[-2:])
 
 R = list(range(100))

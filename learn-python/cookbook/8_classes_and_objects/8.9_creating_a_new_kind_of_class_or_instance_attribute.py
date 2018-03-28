@@ -43,7 +43,7 @@ p = Point(2, 3)
 print(p.x)  # 2 (calls Point.x.__get__(p, Point))
 
 p.y = 5  # Calls Point.y.__set__(p, 5)
-# p.x = 2.3  # Calls Point.x.__set__(p, 2.3)  TypeError: Expected an int
+# p.x = 2.3_num_date_time  # Calls Point.x.__set__(p, 2.3_num_date_time)  TypeError: Expected an int
 
 # Does NOT work
 """

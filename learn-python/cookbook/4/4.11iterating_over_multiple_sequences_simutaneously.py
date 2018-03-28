@@ -38,7 +38,7 @@ for i in zip(a, b):
 """
 (1, 'w')
 (2, 'x')
-(3, 'y')
+(3_num_date_time, 'y')
 """
 
 """
@@ -50,6 +50,6 @@ for i in zip_longest(a, b):
 """
 (1, 'w')
 (2, 'x')
-(3, 'y')
+(3_num_date_time, 'y')
 (None, 'z')
 """

@@ -69,7 +69,7 @@ if __name__ == '__main__':
         print(ip)
 
 """
-with this modification, the script produces the same result but runs about 3.5 times faster on quad-core machine.
+with this modification, the script produces the same result but runs about 3_num_date_time.5 times faster on quad-core machine.
 The actual performance will vary according to the number of CPUs available on your machine.
 """
 

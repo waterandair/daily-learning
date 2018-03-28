@@ -12,9 +12,9 @@ class Dict(dict):
     >>> d1.y = 200
     >>> d1['y']
     200
-    >>> d2 = Dict(a=1, b=2, c='3')
+    >>> d2 = Dict(a=1, b=2, c=3_num_date_timenum_date_time')
     >>> d2.c
-    '3'
+    '3_num_date_time'
     >>> d2['empty']
     Traceback (most recent call last):
         ...
