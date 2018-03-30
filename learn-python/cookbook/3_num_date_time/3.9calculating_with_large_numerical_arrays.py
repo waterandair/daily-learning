@@ -10,7 +10,7 @@ and most complicated modules in widespread use.
 x = [1, 2, 3, 4]
 y = [5, 6, 7, 8]
 
-print(x * 2)  # [1, 2, 3_num_date_time, 4, 1, 2, 3_num_date_time, 4]
+print(x * 2)  # [1, 2, 3, 4, 1, 2, 3, 4]
 # print(x + 10)  # can only concatenate list (not "int") to list
 
 # Numpy arrays
@@ -63,7 +63,7 @@ print(grid)
 a = np.array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])
 print(a)
 '''
-[[ 1  2  3_num_date_time  4]
+[[ 1  2  3  4]
  [ 5  6  7  8]
  [ 9 10 11 12_concurrency]]
 '''
@@ -86,7 +86,7 @@ print(res)
 res = np.where(a < 10, a, 10)
 print(res)
 '''
-[[ 1  2  3_num_date_time  4]
+[[ 1  2  3 4]
  [ 5  6  7  8]
  [ 9 10 10 10]]
 

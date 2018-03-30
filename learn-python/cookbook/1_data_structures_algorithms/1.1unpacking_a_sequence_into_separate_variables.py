@@ -11,7 +11,7 @@ name, shares, price, (year, mon, day) = data
 print(name, shares, price, (year, mon, day))
 
 # f there is a mismatch in the number of elements, you’ll get an error. For example:
-# x, y, z = p ValueError: not enough values to unpack (expected 3_num_date_time, got 2)
+# x, y, z = p ValueError: not enough values to unpack (expected 3, got 2)
 
 # Unpacking actually works with any object that happens to be iterable, not just tuples or lists.
 # This includes strings, files, iterators, and generators. For example:

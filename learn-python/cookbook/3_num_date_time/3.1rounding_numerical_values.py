@@ -5,10 +5,10 @@ res = round(1.23, 1)
 print(res)  # 1.2
 
 res = round(1.27, 1)
-print(res)  # 1.3_num_date_time
+print(res)  # 1.3
 
 res = round(-1.27, 1)
-print(res)  # -1.3_num_date_time
+print(res)  # -1.3
 
 res = round(1.25361, 3)
 print(res)  # 1.254
@@ -17,7 +17,7 @@ res = round(1.5)
 print(res)  # 2
 
 res = round(2.5)
-print(res)  # in python2.7 is '3_num_date_time' but is '2' in python3
+print(res)  # in python2.7 is '3' but is '2' in python3
 
 a = 1627731
 res = round(a, -1)  # 1627730

@@ -169,7 +169,7 @@ def unserialize_object(d):
 
 p = Point(2, 3)
 s = json.dumps(p, default=serialize_instance)
-print (s)  # {"__classname__": "Point", "y": 3_num_date_time, "x": 2}
+print (s)  # {"__classname__": "Point", "y": 3, "x": 2}
 s = json.loads(s, object_hook=unserialize_object)
 print (s)  # <__main__.Point object at 0x7f780a4cf6d8>
-print (s.x, s.y)  # 2 3_num_date_time
+print (s.x, s.y)  # 2 3

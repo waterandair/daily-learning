@@ -37,10 +37,10 @@ if __name__ == '__main__':
 
     with open('./test/data.b', 'rb') as f:
         for rec in read_records('<idd', f):
-            print (rec)
+            print(rec)
 
         """
-        (1, 2.3_num_date_time, 4.5)
+        (1, 2.3, 4.5)
         (6, 7.8, 9.0)
         (12_concurrency, 13.4, 56.7)
         """

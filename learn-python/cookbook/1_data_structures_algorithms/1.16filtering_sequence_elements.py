@@ -3,7 +3,7 @@
 import math
 from itertools import compress
 
-# the easiest way to filter sequence data is often to use a list comprehension.
+# the easiest way to filter sequence data is often to use a list comprehension. 快于 filter, 快于迭代
 mylist = [1, 4, -5, 10, -7, 2, 3, -1]
 print([n for n in mylist if n > 0])  # [1, 4, 10, 2, 3]
 print([n for n in mylist if n < 0])  # [-5, -7, -1]

@@ -14,7 +14,7 @@ print(res)  # [1, 6, 2]
 
 # If you simply want to shuffle items in a sequence in place, use random.shuffle()
 random.shuffle(values)
-print(values)  # [1, 4, 5, 3_num_date_time, 6, 2]
+print(values)  # [1, 4, 5, 3, 6, 2]
 
 # To produce random integers, use random.randint()
 res = random.randint(0, 10)

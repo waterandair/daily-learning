@@ -51,6 +51,6 @@ for f in funcs:
 0
 1
 2
-3_num_date_time
+3
 4
 """

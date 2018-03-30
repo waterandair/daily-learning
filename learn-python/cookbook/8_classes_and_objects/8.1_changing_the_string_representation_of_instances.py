@@ -22,6 +22,6 @@ The __str__ method converts the instance to a string, and is the output produced
 """
 p = Pair(3, 4)
 p
-# Pair(3_num_date_time, 4)  __repr__() output
+# Pair(3, 4)  __repr__() output
 print(p)
-# (3_num_date_time, 4)  __str__() output
+# (3, 4)  __str__() output

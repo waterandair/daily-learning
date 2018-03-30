@@ -8,7 +8,7 @@ def spam(a, b, c, d):
     print(a, b, c, d)
 
 s1 = partial(spam, 1)   # a = 1
-s1(2, 3, 4)  # 1, 2, 3_num_date_time, 4
+s1(2, 3, 4)  # 1, 2, 3, 4
 
 s2 = partial(spam, 1, 2, d=42)
-s2(3)  # 1 2 3_num_date_time 42
+s2(3)  # 1 2 3 42

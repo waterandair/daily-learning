@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding utf-8 -*-
 from operator import itemgetter
+import random
 rows = [
     {'fname': 'Brian', 'lname': 'Jones', 'uid': 1003},
     {'fname': 'David', 'lname': 'Beazley', 'uid': 1002},
@@ -46,3 +47,8 @@ rows_by_lfname = sorted(rows, key=lambda r: (r['lname'], r['fname']))
 # such as min() and max()
 print(max(rows, key=itemgetter('uid')))
 print(min(rows, key=itemgetter('uid')))
+
+
+# 按照字典的value项排序
+d = {x: random.randint(50, 100) for x in 'xynmojd'}
+sorted(d.items(), key=lambda x: x[1])

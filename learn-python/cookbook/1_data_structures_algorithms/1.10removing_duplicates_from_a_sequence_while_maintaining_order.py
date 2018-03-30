@@ -37,7 +37,7 @@ a = [
     {'x': 2, 'y': 4}
 ]
 
-print(list(dedupe(a, key=lambda d: (d['x'], d['y']))))  # [{'x': 1, 'y': 2}, {'x': 1, 'y': 3_num_date_time}, {'x': 2, 'y': 4}]
+print(list(dedupe(a, key=lambda d: (d['x'], d['y']))))  # [{'x': 1, 'y': 2}, {'x': 1, 'y': 3}, {'x': 2, 'y': 4}]
 
 print(list(dedupe(a, key=lambda d: d['x'])))  # [{'x': 1, 'y': 2}, {'x': 2, 'y': 4}]
 

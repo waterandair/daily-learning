@@ -47,8 +47,8 @@ else:
 # match() always tries to find the match at the start of a string. If you want to search text for all occurrences
 # of a pattern, use the findall() method instead
 
-text = 'Today is 11/27/2012. PyCon starts 3_num_date_time/13/2013.'
-print(datepat.findall(text))  # ['11/27/2012', '3_num_date_time/13/2013']
+text = 'Today is 11/27/2012. PyCon starts 3/13/2013.'
+print(datepat.findall(text))  # ['11/27/2012', '3/13/2013']
 
 # when defining regular expression, it is common to introduce capture groups by enclosing parts of the pattern in
 # parentheses
@@ -62,7 +62,7 @@ print(m.group(2))  # 27
 print(m.group(3))  # 2012
 print(m.groups())  # ('11', '27', '2012')
 
-print(datepat.findall(text))  # [('11', '27', '2012'), ('3_num_date_time', '13', '2013')]
+print(datepat.findall(text))  # [('11', '27', '2012'), ('3', '13', '2013')]
 
 # the findall() method searches the text sand finds all matches, returning them as a list.
 # if you want to find matches iteratively, use the finditer() method instead.

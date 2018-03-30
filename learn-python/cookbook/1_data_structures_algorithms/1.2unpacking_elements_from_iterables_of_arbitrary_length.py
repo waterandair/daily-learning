@@ -10,7 +10,7 @@ def drop_first_last(grades):
     return '%.2f' % (sum(middle)/len(middle))
 
 
-print(drop_first_last(grades))  # equal like (2 + 3_num_date_time + 4 + 5 + 6 + 7 + 8 + 9) / 8 = 5.50
+print(drop_first_last(grades))  # equal like (2 + 3 + 4 + 5 + 6 + 7 + 8 + 9) / 8 = 5.50
 
 
 # another case
