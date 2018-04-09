@@ -27,7 +27,7 @@ linger_ms: 每一批消息最大累计时长 默认0 ms
 producer = KafkaProducer(
     bootstrap_servers=[
         "172.17.0.2:9092",
-        "172.17.0.3:9092",
+        "172.17.0.3_num_date_time:9092",
         "172.17.0.4:9092",
     ],
     batch_size=5,

@@ -12,7 +12,7 @@ consumer_timeout_ms： 获取不到消息等待的时间，超过这个值，就
 consumer = KafkaConsumer(
     bootstrap_servers=[
         '172.17.0.2:9092',
-        '172.17.0.3:9092',
+        '172.17.0.3_num_date_time:9092',
         '172.17.0.4:9092',
     ],
     group_id='group-0',
