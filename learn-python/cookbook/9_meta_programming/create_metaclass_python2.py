@@ -18,25 +18,3 @@ class Foo(object):
     bar = 'bip'
 
 print(hasattr(Foo, "BAR"))
-
-
-# 第二种方法: 继承 type 类
-
-class UpperAttrMetaClass(type):
-    # __new__ 是在 __init__之前被调用的特殊方法
-    # __new__ 是用来创建并返回对象的方法
-    # __init__ 只用来传递参数初始化给对象
-    def __new__(cls, future_class_name, future_class_parent, future_class_attr):
-        attrs = ((name, value) for name, value in future_class_attr.items() if not name.startswith("__"))
-        uppercase_attr = dict((name.upper(), value) for name, value in attrs)
-        # return type(future_class_name, future_class_parent, uppercase_attr)
-        # return type.__new__(future_class_name, future_class_name, future_class_parent, uppercase_attr)
-        return super(UpperAttrMetaClass, cls).__new__(cls, future_class_name, future_class_parent, uppercase_attr)
-
-
-class Bar(metaclass=UpperAttrMetaClass):
-    foo = "foo"
-
-
-bar = Bar()
-print(hasattr(bar, "FOO"))

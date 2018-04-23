@@ -6,7 +6,7 @@ import re
 # allow for multiple delimiters or account for possible whitespace around the delimiters.
 # In cases when you need a bit more flexibility, use the re.split() method
 
-line = 'asdf fjdk; afed, fjek,asdf,      foo'
+line = 'asdf fjdk; afed, fjek,asdf,  ;    foo'
 str = re.split(r'[;,\s]\s*', line)
 print(str)  # ['asdf', 'fjdk', 'afed', 'fjek', 'asdf', 'foo']
 
