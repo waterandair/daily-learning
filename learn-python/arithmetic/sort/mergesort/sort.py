@@ -9,7 +9,8 @@ def merge_sort(alist):
     left = merge_sort(alist[:num])
     right = merge_sort(alist[num:])
     # 合并
-    return merge(left,right)
+    return merge(left, right)
+
 
 def merge(left, right):
     '''合并操作，将两个有序数组left[]和right[]合并成一个大的有序数组'''
@@ -26,6 +27,7 @@ def merge(left, right):
     result += left[l:]
     result += right[r:]
     return result
+
 
 if __name__ == '__main__':
     alist = [54,26,93,17,77,31,44,55,20]
