@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../ansible-playbook-devops/.idea/ansible-playbook-devops.iml" filepath="$PROJECT_DIR$/../ansible-playbook-devops/.idea/ansible-playbook-devops.iml" />
-      <module fileurl="file://$USER_HOME$/Downloads/ansible-redis-master/.idea/ansible-redis-master.iml" filepath="$USER_HOME$/Downloads/ansible-redis-master/.idea/ansible-redis-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/learn-python.iml" filepath="$PROJECT_DIR$/.idea/learn-python.iml" />
     </modules>
   </component>

@@ -5,7 +5,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="ansible-playbook-devops" />
-    <orderEntry type="module" module-name="ansible-redis-master" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_FOLDERS">

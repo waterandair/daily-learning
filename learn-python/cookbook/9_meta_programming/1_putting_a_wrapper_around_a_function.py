@@ -9,7 +9,6 @@ def timethis(func):
     :param func:
     :return:
     """
-
     @wraps(func)
     def wrapper(*args, **kwargs):
         start = time.time()
@@ -25,4 +24,7 @@ def countdown(n):
         n -=1
 
 countdown(100000)  # countdown 0.004749298095703125
+
+
+
 

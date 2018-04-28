@@ -1,0 +1,46 @@
+2018-04-28 09:44:24,151 ERROR: Exception on /user/zj [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/views.py", line 82, in user
+    return render_template('user.html', user=user, posts=posts, next_url=next_url, prev_url=prev_url)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 134, in render_template
+    context, ctx.app)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 116, in _render
+    rv = template.render(context)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 989, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 754, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/lib/python3/dist-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/user.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/base.html", line 33, in top-level template code
+    {% block content %}{% endblock %}
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/user.html", line 24, in block "content"
+    {% for post in posts %}
+TypeError: 'Pagination' object is not iterable
+2018-04-28 09:44:44,798 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
+2018-04-28 11:00:08,456 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
+2018-04-28 11:08:13,047 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
+2018-04-28 11:15:58,684 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
+2018-04-28 11:18:07,469 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
+2018-04-28 11:29:38,186 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
+2018-04-28 11:31:29,308 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
+2018-04-28 11:36:26,065 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
+2018-04-28 11:39:14,275 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
+2018-04-28 11:42:11,374 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
+2018-04-28 12:09:43,136 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
