@@ -18,9 +18,10 @@ class Config(object):
     """邮件相关的配置 测试服务器：python -m smtpd -n -c DebuggingServer localhost:8025 """
     MAIL_SERVER = "smtp.qq.com"
     MAIL_PORT = 465
+    MAIL_USE_TLS = 0
     MAIL_USE_SSL = 1
     MAIL_USERNAME = "156577812@qq.com"
-    MAIL_PASSWORD = 'gzxyhidhjtetbibe'
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     ADMINS = ['156577812@qq.com']
 
 

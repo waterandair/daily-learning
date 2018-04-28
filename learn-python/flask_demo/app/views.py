@@ -5,7 +5,7 @@ from flask import render_template, flash, redirect, url_for, request, session
 from app import app, db
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
-from .forms import LoginForm, RegistrationFrom, EditProfileForm, PostForm, ResetPasswordRequestForm
+from .forms import LoginForm, RegistrationFrom, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm
 from app.models import User, Post
 from app.email import send_password_reset_email
 
@@ -156,7 +156,7 @@ def explore():
     return render_template('index.html', title='发现', posts=posts.items, next_url=next_url, prev_url=prev_url)
 
 
-@app.route('/reset_password_request', methods=['GET, POST'])
+@app.route('/reset_password_request', methods=['GET','POST'])
 def reset_password_request():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -168,7 +168,27 @@ def reset_password_request():
             send_password_reset_email(user)
         flash('重置链接已经发到邮箱，点击链接重置密码')
         return redirect(url_for('login'))
-    return render_template('reset_password_request', title='重置密码', form=form)
+    return render_template('reset_password_request.html', title='重置密码', form=form)
+
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+
+    user = User.verify_reset_password_token(token)
+    if not user:
+        flash("无效的请求或过期的请求")
+        return redirect(url_for('index'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash('密码重置成功')
+        return redirect(url_for('login'))
+    return render_template('reset_password.html', form=form)
+
+
 
 
 

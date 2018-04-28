@@ -1,4 +1,4 @@
-2018-04-28 09:44:24,151 ERROR: Exception on /user/zj [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+2018-04-28 18:01:46,680 ERROR: Exception on /reset_password_request [POST] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
 Traceback (most recent call last):
   File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
     response = self.full_dispatch_request()
@@ -12,35 +12,33 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 261, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/views.py", line 82, in user
-    return render_template('user.html', user=user, posts=posts, next_url=next_url, prev_url=prev_url)
-  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 134, in render_template
-    context, ctx.app)
-  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 116, in _render
-    rv = template.render(context)
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 989, in render
-    return self.environment.handle_exception(exc_info, True)
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 754, in handle_exception
-    reraise(exc_type, exc_value, tb)
-  File "/usr/lib/python3/dist-packages/jinja2/_compat.py", line 37, in reraise
-    raise value.with_traceback(tb)
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/user.html", line 1, in top-level template code
-    {% extends 'base.html' %}
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/base.html", line 33, in top-level template code
-    {% block content %}{% endblock %}
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/user.html", line 24, in block "content"
-    {% for post in posts %}
-TypeError: 'Pagination' object is not iterable
-2018-04-28 09:44:44,798 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
-2018-04-28 11:00:08,456 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
-2018-04-28 11:08:13,047 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
-2018-04-28 11:15:58,684 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
-2018-04-28 11:18:07,469 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
-2018-04-28 11:29:38,186 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
-2018-04-28 11:31:29,308 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
-2018-04-28 11:36:26,065 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
-2018-04-28 11:39:14,275 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
-2018-04-28 11:42:11,374 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
-2018-04-28 12:09:43,136 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/views.py", line 168, in reset_password_request
+    send_password_reset_email(user)
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/email.py", line 40, in send_password_reset_email
+    html_body=render_template('email/teset_password.html', user=user, token=token))
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 851, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 812, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 774, in _load_template
+    cache_key = self.loader.get_source(self, name)[1]
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: email/teset_password.html
+2018-04-28 18:03:15,951 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
+2018-04-28 18:03:49,625 ERROR: Exception on /reset_password/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjQ5MTA0MDEuNzY2MjQ3MywicmVzZXRfcGFzc3dvcmQiOjN9.9yJBJilfzFlByQHpJcjhUfc-9kAdUse2oQW-gQ6DfU8 [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1615, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1630, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1725, in make_response
+    raise ValueError('View function did not return a response')
+ValueError: View function did not return a response
+2018-04-28 18:04:55,939 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]

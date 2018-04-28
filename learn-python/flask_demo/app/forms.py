@@ -66,13 +66,19 @@ class PostForm(FlaskForm):
 
 class ResetPasswordRequestForm(FlaskForm):
     """
-    重置密码
+    请求重置密码
     """
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    email = StringField('邮箱', validators=[DataRequired(), Email()])
     submit = SubmitField('重置密码')
 
 
-
+class ResetPasswordForm(FlaskForm):
+    """
+    重置密码
+    """
+    password = PasswordField('密码', validators=[DataRequired()])
+    password2 = PasswordField('重复密码', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('重置')
 
 
 

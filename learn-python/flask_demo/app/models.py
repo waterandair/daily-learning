@@ -115,11 +115,26 @@ class User(UserMixin, db.Model):
             digest, size)
 
     def get_reset_password_token(self, expires_in=600):
+        """
+        邮件重置密码获取 token
+        :param expires_in:
+        :return:
+        """
+        # exp: 过期时间
         return jwt.encode(
             {'reset_password': self.id, 'exp': time() + expires_in},
             app.config['SECRET_KEY'],
             algorithm='HS256'
         ).decode('utf-8')
+
+    @staticmethod
+    def verify_reset_password_token(token):
+        try:
+            id = jwt.decode(token, app.config['SECRET_KEY'], algorithms='HS256')['reset_password']
+        except :
+            # token 无法验证或过期
+            return None
+        return User.query.get(id)
 
     # def __repr__(self):
     #     return '<User {}>'.format(self.username)

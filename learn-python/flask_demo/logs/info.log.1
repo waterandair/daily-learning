@@ -1,4 +1,4 @@
-2018-04-28 09:43:46,246 ERROR: Exception on /user/zj [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+2018-04-28 18:00:10,112 ERROR: Exception on /login [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
 Traceback (most recent call last):
   File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
     response = self.full_dispatch_request()
@@ -12,52 +12,36 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 261, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/views.py", line 82, in user
-    return render_template('user.html', user=user, posts=posts, next_url=next_url, prev_url=prev_url)
-  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
-    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 851, in get_or_select_template
-    return self.get_template(template_name_or_list, parent, globals)
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 812, in get_template
-    return self._load_template(name, self.make_globals(globals))
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 786, in _load_template
-    template = self.loader.load(self, name, globals)
-  File "/usr/lib/python3/dist-packages/jinja2/loaders.py", line 125, in load
-    code = environment.compile(source, name, filename)
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 565, in compile
-    self.handle_exception(exc_info, source_hint=source_hint)
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/views.py", line 50, in login
+    return render_template('login.html', form=form, title='登录')
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 134, in render_template
+    context, ctx.app)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 116, in _render
+    rv = template.render(context)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 989, in render
+    return self.environment.handle_exception(exc_info, True)
   File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 754, in handle_exception
     reraise(exc_type, exc_value, tb)
   File "/usr/lib/python3/dist-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/user.html", line 33, in template
-    {% endif %}
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 470, in _parse
-    return Parser(self, source, name, encode_filename(filename)).parse()
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 897, in parse
-    result = nodes.Template(self.subparse(), lineno=1)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 879, in subparse
-    rv = self.parse_statement()
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 121, in parse_statement
-    return getattr(self, 'parse_' + self.stream.current.value)()
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 231, in parse_block
-    node.body = self.parse_statements(('name:endblock',), drop_needle=True)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 156, in parse_statements
-    result = self.subparse(end_tokens)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 879, in subparse
-    rv = self.parse_statement()
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 135, in parse_statement
-    self.fail_unknown_tag(token.value, token.lineno)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 88, in fail_unknown_tag
-    return self._fail_ut_eof(name, self._end_token_stack, lineno)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 81, in _fail_ut_eof
-    self.fail(' '.join(message), lineno)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 50, in fail
-    raise exc(msg, lineno, self.name, self.filename)
-jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endif'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
-2018-04-28 09:43:47,799 ERROR: Exception on /user/zj [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/login.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/base.html", line 33, in top-level template code
+    {% block content %}{% endblock %}
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/login.html", line 25, in block "content"
+    <p><a href="{{ url_for('reset_password_request') }}">重置密码</a></p>
+  File "/usr/local/lib/python3.5/dist-packages/flask/helpers.py", line 333, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1805, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/helpers.py", line 323, in url_for
+    force_external=external)
+  File "/usr/local/lib/python3.5/dist-packages/werkzeug/routing.py", line 1768, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'reset_password_request'. Did you mean 'reset_password' instead?
+2018-04-28 18:00:15,189 ERROR: Exception on /login [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
 Traceback (most recent call last):
   File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
     response = self.full_dispatch_request()
@@ -71,49 +55,65 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 261, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/views.py", line 82, in user
-    return render_template('user.html', user=user, posts=posts, next_url=next_url, prev_url=prev_url)
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/views.py", line 50, in login
+    return render_template('login.html', form=form, title='登录')
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 134, in render_template
+    context, ctx.app)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 116, in _render
+    rv = template.render(context)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 989, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 754, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/lib/python3/dist-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/login.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/base.html", line 33, in top-level template code
+    {% block content %}{% endblock %}
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/login.html", line 25, in block "content"
+    <p><a href="{{ url_for('reset_password_request') }}">重置密码</a></p>
+  File "/usr/local/lib/python3.5/dist-packages/flask/helpers.py", line 333, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1805, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/helpers.py", line 323, in url_for
+    force_external=external)
+  File "/usr/local/lib/python3.5/dist-packages/werkzeug/routing.py", line 1768, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'reset_password_request'. Did you mean 'reset_password' instead?
+2018-04-28 18:00:40,280 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
+2018-04-28 18:00:49,352 ERROR: Exception on /reset_password_request [POST] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/views.py", line 168, in reset_password_request
+    send_password_reset_email(user)
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/email.py", line 40, in send_password_reset_email
+    html_body=render_template('email/teset_password.html', user=user, token=token))
   File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
     return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
   File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 851, in get_or_select_template
     return self.get_template(template_name_or_list, parent, globals)
   File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 812, in get_template
     return self._load_template(name, self.make_globals(globals))
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 786, in _load_template
-    template = self.loader.load(self, name, globals)
-  File "/usr/lib/python3/dist-packages/jinja2/loaders.py", line 125, in load
-    code = environment.compile(source, name, filename)
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 565, in compile
-    self.handle_exception(exc_info, source_hint=source_hint)
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 754, in handle_exception
-    reraise(exc_type, exc_value, tb)
-  File "/usr/lib/python3/dist-packages/jinja2/_compat.py", line 37, in reraise
-    raise value.with_traceback(tb)
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/user.html", line 33, in template
-    {% endif %}
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 470, in _parse
-    return Parser(self, source, name, encode_filename(filename)).parse()
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 897, in parse
-    result = nodes.Template(self.subparse(), lineno=1)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 879, in subparse
-    rv = self.parse_statement()
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 121, in parse_statement
-    return getattr(self, 'parse_' + self.stream.current.value)()
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 231, in parse_block
-    node.body = self.parse_statements(('name:endblock',), drop_needle=True)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 156, in parse_statements
-    result = self.subparse(end_tokens)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 879, in subparse
-    rv = self.parse_statement()
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 135, in parse_statement
-    self.fail_unknown_tag(token.value, token.lineno)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 88, in fail_unknown_tag
-    return self._fail_ut_eof(name, self._end_token_stack, lineno)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 81, in _fail_ut_eof
-    self.fail(' '.join(message), lineno)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 50, in fail
-    raise exc(msg, lineno, self.name, self.filename)
-jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endif'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
-2018-04-28 09:44:19,918 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 774, in _load_template
+    cache_key = self.loader.get_source(self, name)[1]
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: email/teset_password.html
+2018-04-28 18:01:37,712 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]

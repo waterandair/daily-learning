@@ -1,21 +1,4 @@
-2018-04-25 18:22:12,143 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
-2018-04-25 18:42:43,570 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
-2018-04-27 11:23:15,301 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
-2018-04-27 11:24:18,262 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
-2018-04-27 11:24:54,496 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
-2018-04-27 11:25:08,793 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
-2018-04-27 17:09:01,699 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
-2018-04-27 17:09:22,541 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
-2018-04-27 17:10:19,545 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
-2018-04-27 17:13:01,561 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
-2018-04-27 17:15:09,017 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
-2018-04-27 17:16:17,698 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
-2018-04-27 17:28:06,489 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
-2018-04-27 17:38:12,257 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
-2018-04-27 18:22:23,932 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
-2018-04-27 18:44:10,445 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
-2018-04-27 18:46:44,891 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
-2018-04-27 18:47:21,369 ERROR: Exception on /unfollow/zj2 [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+2018-04-28 09:43:46,246 ERROR: Exception on /user/zj [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
 Traceback (most recent call last):
   File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
     response = self.full_dispatch_request()
@@ -31,57 +14,50 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/views.py", line 139, in unfollow
-    return redirect(url_for('user'), username=username)
-  File "/usr/local/lib/python3.5/dist-packages/flask/helpers.py", line 333, in url_for
-    return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1805, in handle_url_build_error
-    reraise(exc_type, exc_value, tb)
-  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
-    raise value
-  File "/usr/local/lib/python3.5/dist-packages/flask/helpers.py", line 323, in url_for
-    force_external=external)
-  File "/usr/local/lib/python3.5/dist-packages/werkzeug/routing.py", line 1768, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'user'. Did you forget to specify values ['username']?
-2018-04-27 18:50:47,790 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
-2018-04-27 19:00:30,851 ERROR: Exception on /index [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
-    raise value
-  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/views.py", line 21, in index
-    return render_template('index.html', posts=posts)
-  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 134, in render_template
-    context, ctx.app)
-  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 116, in _render
-    rv = template.render(context)
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 989, in render
-    return self.environment.handle_exception(exc_info, True)
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/views.py", line 82, in user
+    return render_template('user.html', user=user, posts=posts, next_url=next_url, prev_url=prev_url)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 851, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 812, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 786, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/usr/lib/python3/dist-packages/jinja2/loaders.py", line 125, in load
+    code = environment.compile(source, name, filename)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 565, in compile
+    self.handle_exception(exc_info, source_hint=source_hint)
   File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 754, in handle_exception
     reraise(exc_type, exc_value, tb)
   File "/usr/lib/python3/dist-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/index.html", line 1, in top-level template code
-    {% extends "base.html" %}
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/base.html", line 31, in top-level template code
-    {% block content %}{% endblock %}
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/index.html", line 5, in block "content"
-    {{ form.hidden_tag() }}
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 408, in getattr
-    return getattr(obj, attribute)
-jinja2.exceptions.UndefinedError: 'form' is undefined
-2018-04-27 19:14:34,089 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
-2018-04-27 19:14:37,325 ERROR: Exception on /index [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/user.html", line 33, in template
+    {% endif %}
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 470, in _parse
+    return Parser(self, source, name, encode_filename(filename)).parse()
+  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 897, in parse
+    result = nodes.Template(self.subparse(), lineno=1)
+  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 879, in subparse
+    rv = self.parse_statement()
+  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 121, in parse_statement
+    return getattr(self, 'parse_' + self.stream.current.value)()
+  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 231, in parse_block
+    node.body = self.parse_statements(('name:endblock',), drop_needle=True)
+  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 156, in parse_statements
+    result = self.subparse(end_tokens)
+  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 879, in subparse
+    rv = self.parse_statement()
+  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 135, in parse_statement
+    self.fail_unknown_tag(token.value, token.lineno)
+  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 88, in fail_unknown_tag
+    return self._fail_ut_eof(name, self._end_token_stack, lineno)
+  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 81, in _fail_ut_eof
+    self.fail(' '.join(message), lineno)
+  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 50, in fail
+    raise exc(msg, lineno, self.name, self.filename)
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endif'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2018-04-28 09:43:47,799 ERROR: Exception on /user/zj [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
 Traceback (most recent call last):
   File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
     response = self.full_dispatch_request()
@@ -97,24 +73,47 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/views.py", line 24, in index
-    return render_template('index.html', posts=posts)
-  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 134, in render_template
-    context, ctx.app)
-  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 116, in _render
-    rv = template.render(context)
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 989, in render
-    return self.environment.handle_exception(exc_info, True)
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/views.py", line 82, in user
+    return render_template('user.html', user=user, posts=posts, next_url=next_url, prev_url=prev_url)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 851, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 812, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 786, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/usr/lib/python3/dist-packages/jinja2/loaders.py", line 125, in load
+    code = environment.compile(source, name, filename)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 565, in compile
+    self.handle_exception(exc_info, source_hint=source_hint)
   File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 754, in handle_exception
     reraise(exc_type, exc_value, tb)
   File "/usr/lib/python3/dist-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/index.html", line 1, in top-level template code
-    {% extends "base.html" %}
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/base.html", line 31, in top-level template code
-    {% block content %}{% endblock %}
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/index.html", line 5, in block "content"
-    {{ form.hidden_tag() }}
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 408, in getattr
-    return getattr(obj, attribute)
-jinja2.exceptions.UndefinedError: 'form' is undefined
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/user.html", line 33, in template
+    {% endif %}
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 470, in _parse
+    return Parser(self, source, name, encode_filename(filename)).parse()
+  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 897, in parse
+    result = nodes.Template(self.subparse(), lineno=1)
+  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 879, in subparse
+    rv = self.parse_statement()
+  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 121, in parse_statement
+    return getattr(self, 'parse_' + self.stream.current.value)()
+  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 231, in parse_block
+    node.body = self.parse_statements(('name:endblock',), drop_needle=True)
+  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 156, in parse_statements
+    result = self.subparse(end_tokens)
+  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 879, in subparse
+    rv = self.parse_statement()
+  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 135, in parse_statement
+    self.fail_unknown_tag(token.value, token.lineno)
+  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 88, in fail_unknown_tag
+    return self._fail_ut_eof(name, self._end_token_stack, lineno)
+  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 81, in _fail_ut_eof
+    self.fail(' '.join(message), lineno)
+  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 50, in fail
+    raise exc(msg, lineno, self.name, self.filename)
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endif'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2018-04-28 09:44:19,918 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
