@@ -8,14 +8,14 @@
   </head>
   <body>
     <div>Nav:
-        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('main.index') }}">Home</a>
         {% if current_user.is_anonymous %}
-            <a href="{{ url_for('login') }}">登录</a>
+            <a href="{{ url_for('auth.login') }}">登录</a>
         {% else %}
-            <a href="{{ url_for('user', username=current_user.username) }}">个人主页</a>
-            <a href="{{ url_for('logout') }}">退出</a>
+            <a href="{{ url_for('main.user', username=current_user.username) }}">个人主页</a>
+            <a href="{{ url_for('auth.logout') }}">退出</a>
         {% endif %}
-        <a href="{{ url_for('explore') }}">发现</a>
+        <a href="{{ url_for('main.explore') }}">发现</a>
 
     </div>
     <hr>
@@ -32,4 +32,5 @@
 
     {% block content %}{% endblock %}
   </body>
+
 </html>

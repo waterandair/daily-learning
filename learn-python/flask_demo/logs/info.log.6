@@ -1,0 +1,122 @@
+2018-04-28 18:01:46,680 ERROR: Exception on /reset_password_request [POST] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/views.py", line 168, in reset_password_request
+    send_password_reset_email(user)
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/email.py", line 40, in send_password_reset_email
+    html_body=render_template('email/teset_password.html', user=user, token=token))
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 851, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 812, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 774, in _load_template
+    cache_key = self.loader.get_source(self, name)[1]
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: email/teset_password.html
+2018-04-28 18:03:15,951 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
+2018-04-28 18:03:49,625 ERROR: Exception on /reset_password/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjQ5MTA0MDEuNzY2MjQ3MywicmVzZXRfcGFzc3dvcmQiOjN9.9yJBJilfzFlByQHpJcjhUfc-9kAdUse2oQW-gQ6DfU8 [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1615, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1630, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1725, in make_response
+    raise ValueError('View function did not return a response')
+ValueError: View function did not return a response
+2018-04-28 18:04:55,939 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
+2018-04-28 18:52:00,426 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:55]
+2018-04-28 18:52:03,878 ERROR: Exception on /login [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/views.py", line 50, in login
+    return render_template('login.html', form=form, title='登录')
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 134, in render_template
+    context, ctx.app)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 116, in _render
+    rv = template.render(context)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 989, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 754, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/lib/python3/dist-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/login.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/base.html", line 35, in top-level template code
+    {% block scripts %}
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/base.html", line 36, in block "scripts"
+    {{ super() }}
+jinja2.exceptions.UndefinedError: there is no parent block called 'scripts'.
+2018-04-28 18:52:09,129 ERROR: Exception on /favicon.ico [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1590, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1573, in raise_routing_exception
+    raise request.routing_exception
+  File "/usr/local/lib/python3.5/dist-packages/flask/ctx.py", line 294, in match_request
+    self.url_adapter.match(return_rule=True)
+  File "/usr/local/lib/python3.5/dist-packages/werkzeug/routing.py", line 1573, in match
+    raise NotFound()
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server.  If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1512, in handle_user_exception
+    return self.handle_http_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1471, in handle_http_exception
+    return handler(e)
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/errors.py", line 9, in not_found_error
+    return render_template('404.html'), 404
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 134, in render_template
+    context, ctx.app)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 116, in _render
+    rv = template.render(context)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 989, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 754, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/lib/python3/dist-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/404.html", line 1, in top-level template code
+    {%  extends "base.html" %}
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/base.html", line 35, in top-level template code
+    {% block scripts %}
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/base.html", line 36, in block "scripts"
+    {{ super() }}
+jinja2.exceptions.UndefinedError: there is no parent block called 'scripts'.

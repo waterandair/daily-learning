@@ -1,4 +1,4 @@
-2018-04-28 18:01:46,680 ERROR: Exception on /reset_password_request [POST] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+2018-04-30 13:49:40,114 ERROR: Exception on /index [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
 Traceback (most recent call last):
   File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
     response = self.full_dispatch_request()
@@ -12,33 +12,67 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/views.py", line 168, in reset_password_request
-    send_password_reset_email(user)
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/email.py", line 40, in send_password_reset_email
-    html_body=render_template('email/teset_password.html', user=user, token=token))
-  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
-    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 851, in get_or_select_template
-    return self.get_template(template_name_or_list, parent, globals)
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 812, in get_template
-    return self._load_template(name, self.make_globals(globals))
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 774, in _load_template
-    cache_key = self.loader.get_source(self, name)[1]
-  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 57, in get_source
-    return self._get_source_fast(environment, template)
-  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 85, in _get_source_fast
-    raise TemplateNotFound(template)
-jinja2.exceptions.TemplateNotFound: email/teset_password.html
-2018-04-28 18:03:15,951 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
-2018-04-28 18:03:49,625 ERROR: Exception on /reset_password/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjQ5MTA0MDEuNzY2MjQ3MywicmVzZXRfcGFzc3dvcmQiOjN9.9yJBJilfzFlByQHpJcjhUfc-9kAdUse2oQW-gQ6DfU8 [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 260, in decorated_view
+    return current_app.login_manager.unauthorized()
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/login_manager.py", line 175, in unauthorized
+    redirect_url = make_login_url(login_view, next_url=request.url)
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 112, in login_url
+    base = expand_login_view(login_view)
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 89, in expand_login_view
+    return url_for(login_view)
+  File "/usr/local/lib/python3.5/dist-packages/flask/helpers.py", line 333, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1805, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/helpers.py", line 323, in url_for
+    force_external=external)
+  File "/usr/local/lib/python3.5/dist-packages/werkzeug/routing.py", line 1768, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'login'. Did you mean 'auth.login' instead?
+2018-04-30 13:51:45,688 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:61]
+2018-04-30 13:51:45,697 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:61]
+2018-04-30 13:51:45,723 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:61]
+2018-04-30 13:51:45,765 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:61]
+2018-04-30 13:51:47,500 ERROR: Exception on /index [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
 Traceback (most recent call last):
   File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
     response = self.full_dispatch_request()
-  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1615, in full_dispatch_request
-    return self.finalize_request(rv)
-  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1630, in finalize_request
-    response = self.make_response(rv)
-  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1725, in make_response
-    raise ValueError('View function did not return a response')
-ValueError: View function did not return a response
-2018-04-28 18:04:55,939 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:54]
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 260, in decorated_view
+    return current_app.login_manager.unauthorized()
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/login_manager.py", line 175, in unauthorized
+    redirect_url = make_login_url(login_view, next_url=request.url)
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 112, in login_url
+    base = expand_login_view(login_view)
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 89, in expand_login_view
+    return url_for(login_view)
+  File "/usr/local/lib/python3.5/dist-packages/flask/helpers.py", line 333, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1805, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/helpers.py", line 323, in url_for
+    force_external=external)
+  File "/usr/local/lib/python3.5/dist-packages/werkzeug/routing.py", line 1768, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'login'. Did you mean 'auth.login' instead?
+2018-04-30 13:52:50,501 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:61]
+2018-04-30 13:52:50,596 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:61]
+2018-04-30 13:52:50,648 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:61]
+2018-04-30 13:52:50,662 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:61]
+2018-05-01 06:20:10,294 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:60]
+2018-05-01 06:20:10,419 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:60]
+2018-05-01 06:20:10,454 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:60]
+2018-05-01 06:20:10,517 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:60]

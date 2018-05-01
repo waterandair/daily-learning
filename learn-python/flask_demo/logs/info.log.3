@@ -1,4 +1,54 @@
-2018-04-28 09:43:46,246 ERROR: Exception on /user/zj [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+2018-04-30 13:47:07,048 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:61]
+2018-04-30 13:47:07,049 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:61]
+2018-04-30 13:47:20,201 ERROR: Exception on / [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/pymysql/connections.py", line 920, in connect
+    **kwargs)
+  File "/usr/lib/python3.5/socket.py", line 711, in create_connection
+    raise err
+  File "/usr/lib/python3.5/socket.py", line 702, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/engine/base.py", line 2158, in _wrap_pool_connect
+    return fn()
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/pool.py", line 403, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/pool.py", line 788, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/pool.py", line 532, in checkout
+    rec = pool._do_get()
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/pool.py", line 1193, in _do_get
+    self._dec_overflow()
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/util/langhelpers.py", line 66, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/util/compat.py", line 187, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/pool.py", line 1190, in _do_get
+    return self._create_connection()
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/pool.py", line 350, in _create_connection
+    return _ConnectionRecord(self)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/pool.py", line 477, in __init__
+    self.__connect(first_connect_check=True)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/pool.py", line 671, in __connect
+    connection = pool._invoke_creator(self)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/engine/strategies.py", line 106, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/engine/default.py", line 410, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+  File "/usr/local/lib/python3.5/dist-packages/pymysql/__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.5/dist-packages/pymysql/connections.py", line 699, in __init__
+    self.connect()
+  File "/usr/local/lib/python3.5/dist-packages/pymysql/connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '127.0.0.1' ([Errno 111] Connection refused)")
+
+The above exception was the direct cause of the following exception:
+
 Traceback (most recent call last):
   File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
     response = self.full_dispatch_request()
@@ -8,112 +58,90 @@ Traceback (most recent call last):
     reraise(exc_type, exc_value, tb)
   File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
     raise value
-  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 261, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/views.py", line 82, in user
-    return render_template('user.html', user=user, posts=posts, next_url=next_url, prev_url=prev_url)
-  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
-    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 851, in get_or_select_template
-    return self.get_template(template_name_or_list, parent, globals)
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 812, in get_template
-    return self._load_template(name, self.make_globals(globals))
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 786, in _load_template
-    template = self.loader.load(self, name, globals)
-  File "/usr/lib/python3/dist-packages/jinja2/loaders.py", line 125, in load
-    code = environment.compile(source, name, filename)
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 565, in compile
-    self.handle_exception(exc_info, source_hint=source_hint)
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 754, in handle_exception
-    reraise(exc_type, exc_value, tb)
-  File "/usr/lib/python3/dist-packages/jinja2/_compat.py", line 37, in reraise
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1610, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1831, in preprocess_request
+    rv = func()
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/main/views.py", line 47, in before_request
+    if current_user.is_authenticated:
+  File "/usr/local/lib/python3.5/dist-packages/werkzeug/local.py", line 347, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/usr/local/lib/python3.5/dist-packages/werkzeug/local.py", line 306, in _get_current_object
+    return self.__local()
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 26, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 335, in _get_user
+    current_app.login_manager._load_user()
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/login_manager.py", line 359, in _load_user
+    return self.reload_user()
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/login_manager.py", line 321, in reload_user
+    user = self.user_callback(user_id)
+  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/models.py", line 15, in load_user
+    return User.query.get(int(id))
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/orm/query.py", line 882, in get
+    ident, loading.load_on_ident)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/orm/query.py", line 916, in _get_impl
+    return fallback_fn(self, key)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/orm/loading.py", line 232, in load_on_ident
+    return q.one()
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/orm/query.py", line 2848, in one
+    ret = self.one_or_none()
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/orm/query.py", line 2818, in one_or_none
+    ret = list(self)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/orm/query.py", line 2889, in __iter__
+    return self._execute_and_instances(context)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/orm/query.py", line 2910, in _execute_and_instances
+    close_with_result=True)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/orm/query.py", line 2919, in _get_bind_args
+    **kw
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/orm/query.py", line 2901, in _connection_from_session
+    conn = self.session.connection(**kw)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/orm/session.py", line 1035, in connection
+    execution_options=execution_options)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/orm/session.py", line 1040, in _connection_for_bind
+    engine, execution_options)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/orm/session.py", line 409, in _connection_for_bind
+    conn = bind.contextual_connect()
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/engine/base.py", line 2123, in contextual_connect
+    self._wrap_pool_connect(self.pool.connect, None),
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/engine/base.py", line 2162, in _wrap_pool_connect
+    e, dialect, self)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/engine/base.py", line 1476, in _handle_dbapi_exception_noconnection
+    exc_info
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/util/compat.py", line 203, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/util/compat.py", line 186, in reraise
     raise value.with_traceback(tb)
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/user.html", line 33, in template
-    {% endif %}
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 470, in _parse
-    return Parser(self, source, name, encode_filename(filename)).parse()
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 897, in parse
-    result = nodes.Template(self.subparse(), lineno=1)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 879, in subparse
-    rv = self.parse_statement()
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 121, in parse_statement
-    return getattr(self, 'parse_' + self.stream.current.value)()
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 231, in parse_block
-    node.body = self.parse_statements(('name:endblock',), drop_needle=True)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 156, in parse_statements
-    result = self.subparse(end_tokens)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 879, in subparse
-    rv = self.parse_statement()
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 135, in parse_statement
-    self.fail_unknown_tag(token.value, token.lineno)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 88, in fail_unknown_tag
-    return self._fail_ut_eof(name, self._end_token_stack, lineno)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 81, in _fail_ut_eof
-    self.fail(' '.join(message), lineno)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 50, in fail
-    raise exc(msg, lineno, self.name, self.filename)
-jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endif'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
-2018-04-28 09:43:47,799 ERROR: Exception on /user/zj [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/engine/base.py", line 2158, in _wrap_pool_connect
+    return fn()
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/pool.py", line 403, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/pool.py", line 788, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/pool.py", line 532, in checkout
+    rec = pool._do_get()
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/pool.py", line 1193, in _do_get
+    self._dec_overflow()
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/util/langhelpers.py", line 66, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/util/compat.py", line 187, in reraise
     raise value
-  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 261, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/views.py", line 82, in user
-    return render_template('user.html', user=user, posts=posts, next_url=next_url, prev_url=prev_url)
-  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
-    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 851, in get_or_select_template
-    return self.get_template(template_name_or_list, parent, globals)
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 812, in get_template
-    return self._load_template(name, self.make_globals(globals))
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 786, in _load_template
-    template = self.loader.load(self, name, globals)
-  File "/usr/lib/python3/dist-packages/jinja2/loaders.py", line 125, in load
-    code = environment.compile(source, name, filename)
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 565, in compile
-    self.handle_exception(exc_info, source_hint=source_hint)
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 754, in handle_exception
-    reraise(exc_type, exc_value, tb)
-  File "/usr/lib/python3/dist-packages/jinja2/_compat.py", line 37, in reraise
-    raise value.with_traceback(tb)
-  File "/home/zj/project/daily-learning/learn-python/flask_demo/app/templates/user.html", line 33, in template
-    {% endif %}
-  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 470, in _parse
-    return Parser(self, source, name, encode_filename(filename)).parse()
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 897, in parse
-    result = nodes.Template(self.subparse(), lineno=1)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 879, in subparse
-    rv = self.parse_statement()
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 121, in parse_statement
-    return getattr(self, 'parse_' + self.stream.current.value)()
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 231, in parse_block
-    node.body = self.parse_statements(('name:endblock',), drop_needle=True)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 156, in parse_statements
-    result = self.subparse(end_tokens)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 879, in subparse
-    rv = self.parse_statement()
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 135, in parse_statement
-    self.fail_unknown_tag(token.value, token.lineno)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 88, in fail_unknown_tag
-    return self._fail_ut_eof(name, self._end_token_stack, lineno)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 81, in _fail_ut_eof
-    self.fail(' '.join(message), lineno)
-  File "/usr/lib/python3/dist-packages/jinja2/parser.py", line 50, in fail
-    raise exc(msg, lineno, self.name, self.filename)
-jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endif'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
-2018-04-28 09:44:19,918 INFO: flask_demo start up [in /home/zj/project/daily-learning/learn-python/flask_demo/app/__init__.py:51]
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/pool.py", line 1190, in _do_get
+    return self._create_connection()
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/pool.py", line 350, in _create_connection
+    return _ConnectionRecord(self)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/pool.py", line 477, in __init__
+    self.__connect(first_connect_check=True)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/pool.py", line 671, in __connect
+    connection = pool._invoke_creator(self)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/engine/strategies.py", line 106, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "/usr/local/lib/python3.5/dist-packages/sqlalchemy/engine/default.py", line 410, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+  File "/usr/local/lib/python3.5/dist-packages/pymysql/__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.5/dist-packages/pymysql/connections.py", line 699, in __init__
+    self.connect()
+  File "/usr/local/lib/python3.5/dist-packages/pymysql/connections.py", line 967, in connect
+    raise exc
+sqlalchemy.exc.OperationalError: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on '127.0.0.1' ([Errno 111] Connection refused)") (Background on this error at: http://sqlalche.me/e/e3q8)
