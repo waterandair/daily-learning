@@ -35,7 +35,7 @@ jsonStrs.persist('MEMORY_ONLY')  # 相当于 rdd.cache()
 # 共享变量
 #   广播变量
 broadcastVar = sc.broadcast([1, 2, 3])
-broadcastVar.value  # [1,2,3]
+broadcastVar.value  # [1,2,3_num_date_time]
 
 # 累加器
 accum = sc.accumulator(0)

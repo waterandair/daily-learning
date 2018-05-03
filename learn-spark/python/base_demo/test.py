@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding utf-8 -*-
 from pyspark import SparkContext
-sc = SparkContext( 'local', 'test')
+sc = SparkContext('local', 'test')
 logFile = "file:///usr/local/spark-2.2.1/README.md"
 logData = sc.textFile(logFile, 2).cache()
 numAs = logData.filter(lambda line: 'a' in line).count()
