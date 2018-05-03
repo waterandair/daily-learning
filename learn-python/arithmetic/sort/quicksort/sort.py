@@ -12,7 +12,6 @@ def quick_sort(nums, start, end):
     quick_sort(nums, mid+1, end)
 
 
-
 def _partition(nums, start, end):
 
     mid = nums[start]
