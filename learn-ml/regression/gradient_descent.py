@@ -42,6 +42,18 @@ def sigmoid(z):
     return 1 / (1 + np.exp(-z))
 
 
+def show_sigmoid_demo():
+    """
+    绘制一个 sigmoid 函数的图
+    :return:
+    """
+    nums = np.arange(-10, 10)
+    fig, ax = plt.subplots(figsize=(12, 4))
+    ax.plot(nums, sigmoid(nums))
+    ax.set_title("sigmoid 函数")
+    plt.show()
+
+
 def model(X, theta):
     """
     返回预测结果值
@@ -68,16 +80,16 @@ def cost(X, y, theta):
 def gradient(X, y, theta):
     """
     计算每个参数的梯度方向
-    :param X:
-    :param y:
-    :param theta:
+    :param X: 样本
+    :param y: 目标值
+    :param theta: 参数
     :return:
     """
     grad = np.zeros(theta.shape)
-    error = (model(X, theta) - y).ravel()
+    error = (model(X, theta) - y).ravel()  # 计算误差
     for j in range(len(theta.ravel())):
         term = np.multiply(error, X[:, j])
-        grad[0, j] = np.sum(term) / len(X)
+        grad[0, j] = np.sum(term) / len(X)  # 计算每项的梯度
 
     return grad
 
@@ -154,10 +166,33 @@ def descent(data, theta, batchSize, stopType, thresh, alpha, n):
 
 
 def predict(X,theta):
+    """
+    返回预测值
+    :param X:
+    :param theta:
+    :return:
+    """
     return [1 if x > 0.5 else 0 for x in model(X, theta)]
 
 
 def runExpe(data, theta, batchSize, stopType, thresh, alpha, n):
+    """
+
+    :param data: 样本
+    :param theta: 参数
+    :param batchSize: 每次迭代要计算的样本数量,根据这个值,可以分为三种不同的梯度下降算法
+                      batchSize == n(样本总量): 批量梯度下降,每次迭代计算所有样本,速度慢,精度高
+                      batchSize == 1(样本总量): 随机梯度下降,每次迭代计算一个样本,速度快,精度低
+                      batchSize == m(部分样本): 随机梯度下降,每次迭代计算一部分样本,兼顾速度和精度
+    :param stopType: 三种停止策略
+                      STOP_ITER == 0:  根据迭代次数停止迭代
+                      STOP_COST == 1:  根据损失值的变化停止迭代,如果两次迭代损失值变化很小很小,就停止迭代
+                      STOP_GRAD == 2:  根据梯度,如果梯度变化很小很小,就停止迭代
+    :param thresh: 针对不同停止策略的阈值
+    :param alpha: 学习率
+    :param n: 样本重量
+    :return:
+    """
     theta, iter, costs, grad, dur = descent(data, theta, batchSize, stopType, thresh, alpha, n)
 
     title = "原始数据" if (data[:, 1] > 2).sum() > 1 else "标准化数据"
@@ -190,11 +225,13 @@ def runExpe(data, theta, batchSize, stopType, thresh, alpha, n):
 
 
 if __name__ == '__main__':
+    # 查看 sigmoid 函数曲线
+    # show_sigmoid_demo()
     student_data = pd.read_csv(data_path, header=None, names=['iq', 'eq', 'admitted'])
     # show_plt(student_data)
     # 添加一列偏置项系数, 设置为1
     student_data.insert(0, 'ones', 1)
-    # 设置样本X和目标值y
+    # 设置原始样本X和目标值y
     orig_data = student_data.as_matrix()  # 把DataFrame转为矩阵,方便计算
     cols = orig_data.shape[1]
     X = orig_data[:, 0:cols-1]
@@ -208,8 +245,8 @@ if __name__ == '__main__':
     """
     # 根据迭代次数停止,设置阈值 5000, 迭代5000次
     # res = runExpe(orig_data, theta, 100, STOP_ITER, 5000, 0.000001, 100)
-    # 根据损失值停止, 设置阈值 0.0000001, 迭代次数 508960 左右
-    # res = runExpe(orig_data, theta, 100, STOP_COST, 0.0000001, 0.001, 100)
+    # 根据损失值停止, 设置阈值 0.0000001, 迭代次数 109901 左右
+    # res = runExpe(orig_data, theta, 100, STOP_COST, 0.000001, 0.001, 100)
     # 根据梯度变化停止, 设置阈值 0.05, 迭代次数
     # res = runExpe(orig_data, theta, 100, STOP_GRAD, 0.05, 0.001, 100)
 
@@ -217,7 +254,7 @@ if __name__ == '__main__':
     随机梯度下降
     每次迭代只计算一个样本,速度快,准确度低,需要调低学习率
     """
-    # res = runExpe(orig_data, theta, 1, STOP_ITER, 5000, 0.000001, 100)
+    # res = runExpe(orig_data, theta, 1, STOP_ITER, 5000, 0.001, 100)
 
     """
     小批量梯度下降
@@ -235,7 +272,7 @@ if __name__ == '__main__':
     # res = runExpe(scaled_data, theta, 15, STOP_COST, 0.000001, 0.001, 100)
     # 标准化数据 根据梯度变化停止
     res = runExpe(scaled_data, theta, 15, STOP_GRAD, 0.001, 0.001, 100)
-    print(res)
+    # print(res)
 
     """
     预测
@@ -244,11 +281,11 @@ if __name__ == '__main__':
     scaled_X = scaled_data[:, :3]
     # 目标值
     y = scaled_data[:, 3]
-    # 传入上面梯度下降算法得出的参数
+    # 传入梯度下降算法得出的参数
     predictions = predict(scaled_X, res)
     correct = [1 if a == b else 0 for (a, b) in zip(predictions, y)]
     accuracy = (sum(map(int, correct)) % len(correct))
-    print('accuracy = {0}%'.format(accuracy))
+    print('准确率 = {0}%'.format(accuracy))  # 准确率 = 89%
 
 
 
