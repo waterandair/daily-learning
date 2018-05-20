@@ -12,7 +12,6 @@ group_id = "group-5"
 topics = {
     "test": 1
 }
-
 kafkaStream = KafkaUtils.createStream(ssc, zkQuorum, group_id, topics)
 
 word_counts = kafkaStream\
