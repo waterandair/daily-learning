@@ -28,17 +28,17 @@ var (
 
 func main() {
 	fmt.Printf("hello, world\n")
-	fmt.Println("My favorite number is ", rand.Intn(20))
+	fmt.fmt.Println("My favorite number is ", rand.Intn(20))
 	fmt.Printf("Now you have %g problems.\n", math.Nextafter(1, 3))
 	// 被导出的名称首字母必须大写
-	fmt.Println(math.Pi)
-	fmt.Println(add(1, 2))
+	fmt.fmt.Println(math.Pi)
+	fmt.fmt.Println(add(1, 2))
 	// := 简洁赋值语句在明确类型的地方,可以替代 var 定义,在函数外不能使用
 	a, b := swap("hello", "world")
-	fmt.Println(a, b)
-	fmt.Println(split(11))
+	fmt.fmt.Println(a, b)
+	fmt.fmt.Println(split(11))
 	var i int
-	fmt.Println(i, c, python, java)
+	fmt.fmt.Println(i, c, python, java)
 
 	// 常量不能使用 := 定义
 	const f = "%T(%v)\n"
@@ -50,7 +50,7 @@ func main() {
 	var x, y = 3, 4
 	var f2 = math.Sqrt(float64(x*x + y*y))
 	var z = int(f2)
-	fmt.Println(x, y, z)
+	fmt.fmt.Println(x, y, z)
 }
 
 // 变量在定义是没有赋值,会初始化为 零值 0, false, ""
