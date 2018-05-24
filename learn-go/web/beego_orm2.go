@@ -28,17 +28,17 @@ func init() {
 func main() {
 	o := orm.NewOrm()
 	// 插入数据
-	// user := model.User{Name: "zj11"}
-	//users := []model.User{
-	//	{Name: "multi_zj1", Departname:"研发部"},
-	//	{Name: "multi_zj2", Departname:"研收部"},
-	//	{Name: "multi_zj3", Departname:"研发部"},
-	//}
+	user := model.User{Name: "zj11"}
+	users := []model.User{
+		{Name: "multi_zj1", Departname:"研发部"},
+		{Name: "multi_zj2", Departname:"研收部"},
+		{Name: "multi_zj3", Departname:"研发部"},
+	}
 
 	// 插入一条
-	// InsertOne(o, user)
+	InsertOne(o, user)
 	// 插入多条
-	// InsertMulti(o, users)
+	InsertMulti(o, users)
 
 	//user := model.User{Uid: 1}
 	//UpdateOne(o, &user)
@@ -47,7 +47,10 @@ func main() {
 	// 查询
 	//user := model.User{Uid: 1}
 	//SelectOne(o, &user)
-	Filter(o)
+	//Filter(o)
+
+	// 原生 sql
+	// Sql(o)
 
 }
 
@@ -99,14 +102,12 @@ func SelectOne(o orm.Ormer, user *model.User) {
 
 func Filter(o orm.Ormer) {
 	var user model.User
-	var lists []orm.ParamsList
+	var users []*model.User
 	var maps []orm.Params
 	qs := o.QueryTable(user)
-	qs.Filter("Uid__gt", 1)  // id大于1
-	qs.ValuesList(&lists)
-	qs.Values(&maps)
+	qs.Filter("Uid__gt", 2).Values(&maps)  // id大于1
 
-	for _, row := range lists {
+	for _, row := range users {
 		fmt.Println(row)
 	}
 
@@ -114,9 +115,29 @@ func Filter(o orm.Ormer) {
 		fmt.Println(m["Uid"])
 	}
 
-
 }
 
+
+func Sql(o orm.Ormer) {
+	//var r orm.RawSeter
+	var users []*model.User
+	sql := o.Raw("select * from user")
+	//fmt.Println(sql)
+	sql.QueryRows(&users)
+	println(users[0].Name)
+
+	sql2 := o.Raw("insert into user (name, departname) values (?, ?)", "sql", "sql")
+	qs, err := sql2.Exec()
+	if err == nil {
+		nums, _ := qs.RowsAffected()
+		id, _ := qs.LastInsertId()
+		println(nums, id)
+	} else {
+		fmt.Println(err)
+	}
+
+
+}
 
 
 

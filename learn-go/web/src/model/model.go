@@ -12,10 +12,11 @@ type Userinfo struct {
 }
 
 type User struct {
-	Uid int `orm:"pk;auto;default(0)"`
+	Uid int `orm:"default(0);pk;auto"`
+	Uid2 int `orm:"default(0)"`
 	Name string
-	Departname  string
-	Created time.Time `orm:"auto_now_add"`
+	Departname  string `orm:"default(研发部)"`
+	Created time.Time `orm:"auto_now_add;default(time.Now())"`
 	Profile *Profile `orm:"null;rel(one);"`  // 一对一关系
 	Posts []*Post `orm:"reverse(many)"`  // 一对多的反向关系
 }
