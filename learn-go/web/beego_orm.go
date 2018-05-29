@@ -21,7 +21,7 @@ func init() {
 	// 创建table
 	orm.RunSyncdb("default", false, true)
 
-	// 根据数据库的别名，设置数据库的最大空闲连接, 与 RegisterDataBase 中的第4个 参数同样含义
+	// 根据数据库的别名，设置数据库的连接池最大空闲连接, 与 RegisterDataBase 中的第4个 参数同样含义
 	orm.SetMaxIdleConns("default", 30)
 	// 根据数据库的别名，设置数据库的最大数据库连接 (go >= 1.2) 与 RegisterDataBase 中的第5个 参数同样含义
 	orm.SetMaxOpenConns("default", 30)
