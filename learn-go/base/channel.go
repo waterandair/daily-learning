@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 /*
 goroutine运行在相同的地址空间，因此访问共享内存必须做好同步。那么goroutine之间如何进行数据的通信呢，Go提供了一个很好的通信机制channel。
 channel可以与Unix shell 中的双向管道做类比：可以通过它发送或者接收值。

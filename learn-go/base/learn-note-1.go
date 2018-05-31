@@ -1,5 +1,5 @@
 package main
-
+// 类型
 import (
 	"fmt"
 	"unsafe"
