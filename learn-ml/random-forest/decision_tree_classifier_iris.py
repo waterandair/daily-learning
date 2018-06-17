@@ -46,28 +46,28 @@ if __name__ == '__main__':
     f = open('iris_tree.dot', 'w')
     tree.export_graphviz(model.get_params('DTC')['DTC'], out_file=f)
 
-    # # 画图
-    # N, M = 100, 100  # 横纵各 100 个采样
-    # x1_min, x1_max = x[:, 0].min(), x[:, 0].max()  # 第 0 列的范围
-    # x2_min, x2_max = x[:, 1].min(), x[:, 1].max()  # 第 1 列的范围
-    # t1 = np.linspace(x1_min, x1_max, N)
-    # t2 = np.linspace(x2_min, x2_max, M)
-    # x1, x2 = np.meshgrid(t1, t2)  # 生成网格采样点
-    #
-    # x_show = np.stack((x1.flat, x2.flat), axis=1)  # 测试点
-    # y_show_hat = model.predict(x_show).reshape(x1.shape)  # 预测值
-    #
-    # cm_light = colors.ListedColormap(['#77E0A0', '#FF8080', '#A0A0FF'])
-    # cm_dark = colors.ListedColormap(['g', 'r', 'b'])
-    # plt.pcolormesh(x1, x2, y_show_hat, cmap=cm_light)  # 画出预的结果的范围
-    # plt.scatter(x_test[:, 0], x_test[:, 1], c=y_test.ravel(), edgecolors='k', s=20, cmap=cm_dark)  # 画出样本点
-    # plt.xlabel(iris_feature[0], fontsize=15)
-    # plt.ylabel(iris_feature[1], fontsize=15)
-    # plt.xlim(x1_min, x1_max)
-    # plt.ylim(x2_min, x2_max)
-    # plt.grid(True)
-    # plt.title(u'鸢尾花数据的决策树分类', fontsize=17)
-    # plt.show()
+    # 画图
+    N, M = 100, 100  # 横纵各 100 个采样
+    x1_min, x1_max = x[:, 0].min(), x[:, 0].max()  # 第 0 列的范围
+    x2_min, x2_max = x[:, 1].min(), x[:, 1].max()  # 第 1 列的范围
+    t1 = np.linspace(x1_min, x1_max, N)
+    t2 = np.linspace(x2_min, x2_max, M)
+    x1, x2 = np.meshgrid(t1, t2)  # 生成网格采样点
+
+    x_show = np.stack((x1.flat, x2.flat), axis=1)  # 测试点
+    y_show_hat = model.predict(x_show).reshape(x1.shape)  # 预测值
+
+    cm_light = colors.ListedColormap(['#77E0A0', '#FF8080', '#A0A0FF'])
+    cm_dark = colors.ListedColormap(['g', 'r', 'b'])
+    plt.pcolormesh(x1, x2, y_show_hat, cmap=cm_light)  # 画出预的结果的范围
+    plt.scatter(x_test[:, 0], x_test[:, 1], c=y_test.ravel(), edgecolors='k', s=20, cmap=cm_dark)  # 画出样本点
+    plt.xlabel(iris_feature[0], fontsize=15)
+    plt.ylabel(iris_feature[1], fontsize=15)
+    plt.xlim(x1_min, x1_max)
+    plt.ylim(x2_min, x2_max)
+    plt.grid(True)
+    plt.title(u'鸢尾花数据的决策树分类', fontsize=17)
+    plt.show()
 
     # 计算准确度
     y_test = y_test.reshape(-1)
