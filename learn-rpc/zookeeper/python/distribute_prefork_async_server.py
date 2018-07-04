@@ -67,7 +67,7 @@ class RPCServer(asyncore.dispatcher):
         self.zk.ensure_path(self.zk_root)
         value = json.dumps({"host": self.host, "port": self.port})
         # 创建服务临时子节点, 路径后缀索引
-        self.zk.create(self.zk_rpc, value, ephemeral=True, sequence=True)
+        self.zk.create(self.zk_rpc, value.encode(), ephemeral=True, sequence=True)
 
     def register_parent_signal(self):
         """
@@ -79,7 +79,7 @@ class RPCServer(asyncore.dispatcher):
         # 监听子进程退出
         signal.signal(signal.SIGCHLD, self.reap_child)
 
-    def exit_parent(self):
+    def exit_parent(self, sig, frame):
         """
         父进程监听到 sigint 和 sigterm 信号, 关闭所有连接所有子进程
         :return:
@@ -118,7 +118,7 @@ class RPCServer(asyncore.dispatcher):
                         raise ex  # 被其它信号打断了,要重试
             print("wait over", pid)
 
-    def reap_child(self):
+    def reap_child(self, sig, frame):
         """
         父进程监听到 sigchld 信号, 退出子进程
         :param sig:
@@ -149,7 +149,7 @@ class RPCServer(asyncore.dispatcher):
         signal.signal(signal.SIGINT, self.exit_child)
         signal.signal(signal.SIGTERM, self.exit_child)
 
-    def exit_child(self):
+    def exit_child(self, sig, frame):
         """
         子进程监听到 sigint 和 sigterm 信号, 关闭子进程所有连接
         :return:
@@ -205,7 +205,7 @@ class RPCHandler(asyncore.dispatcher_with_send):
             body = self.rbuf.read(length)
             if len(body) < length:
                 break
-            request = json.loads(body)
+            request = json.loads(body.decode())
             in_ = request['in']
             params = request['params']
             print(os.getpid(), in_, params)
@@ -236,7 +236,7 @@ class RPCHandler(asyncore.dispatcher_with_send):
         body = json.dumps(response)
         length_prefix = struct.pack("I", len(body))
         self.send(length_prefix)
-        self.send(body)
+        self.send(body.encode())
 
     def handle_close(self):
         print(self.addr, "bye")
