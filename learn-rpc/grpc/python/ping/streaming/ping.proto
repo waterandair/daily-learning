@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package ping;
+
+// ping service
+service PingCalculator {
+    // ping method
+    rpc Calc(stream PingRequest) returns (stream PingRequest) {}
+}
+
+// ping input
+message PingRequest {
+    int32 n = 1;
+}
+
+// ping output
+message PingResponse {
+    int32 n = 1;
+}
+
