@@ -2,18 +2,18 @@ syntax = "proto3";
 
 package ping;
 
-// ping service
+// ping 服务,注意在输入输出类型上增加了 stream 关键字
 service PingCalculator {
     // ping method
     rpc Calc(stream PingRequest) returns (stream PingRequest) {}
 }
 
-// ping input
+// ping 请求
 message PingRequest {
     int32 n = 1;
 }
 
-// ping output
+// ping 响应, 注意要与请求协议中的字段一一对应
 message PingResponse {
     int32 n = 1;
 }

@@ -1,24 +1,15 @@
 #!/usr/bin/ python3
 # -*- coding: utf-8 -*-
-"""
-preforking 同步模型
-
-因为进程比线程更好资源,所以更推荐使用多进程多线程的模式
-preforking 是预先创建多个子进程,共同监听套接字通过 accept 争抢新请求
-当一个子进程拿到请求后, 可以在进程内部使用多线程处理请求
-"""
+"""preforking 同步模型"""
 import os
 import json
 import struct
 import socket
+from threading import Thread
 
 
 def prefork(nums):
-    """
-    预先创建子进程
-    :param nums:
-    :return:
-    """
+    """预先创建指定数量的子进程"""
     for i in range(nums):
         pid = os.fork()
         if pid < 0:
@@ -43,7 +34,8 @@ def send_result(conn, out, result):
 def loop(sock, handlers):
     while True:
         conn, addr = sock.accept()
-        handle_conn(conn, addr, handlers)
+        # handle_conn(conn, addr, handlers)
+        Thread(target=handle_conn, args=(conn, addr, handlers)).start()
 
 
 def handle_conn(conn, addr, hanlers):
@@ -67,11 +59,12 @@ def handle_conn(conn, addr, hanlers):
 if __name__ == '__main__':
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    sock.bind("localhost", 8080)
+    sock.bind(("localhost", 8080))
     sock.listen(1)
 
     # 开启 10个 子进程
-    prefork(10)
+    # prefork(10)
+    prefork(1)
 
     handlers = {
         "ping": ping

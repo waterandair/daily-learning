@@ -5,7 +5,7 @@ import ping_pb2 as ping__pb2
 
 
 class PingCalculatorStub(object):
-  """ping service
+  """ping 服务,注意在输入输出类型上增加了 stream 关键字
   """
 
   def __init__(self, channel):
@@ -22,7 +22,7 @@ class PingCalculatorStub(object):
 
 
 class PingCalculatorServicer(object):
-  """ping service
+  """ping 服务,注意在输入输出类型上增加了 stream 关键字
   """
 
   def Calc(self, request_iterator, context):

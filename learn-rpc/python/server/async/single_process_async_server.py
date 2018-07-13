@@ -9,9 +9,7 @@ import struct
 
 
 class RPCServer(asyncore.dispatcher):
-    """
-    服务器套接字处理器必须继承dispatcher
-    """
+    """服务器套接字处理器必须继承dispatcher"""
     def __init__(self, host, port):
         asyncore.dispatcher.__init__(self)
         self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -37,6 +35,7 @@ class PRCHandler(asyncore.dispatcher_with_send):
         self.handlers = {
             "ping": self.ping
         }
+        # 因为是非阻塞的，所以可能一条消息经历了多次读取，所以这里用一个BytesIO缓冲区存放读取进来的数据
         self.rbuf = BytesIO()  # 读缓冲区由用户代码维护，写缓冲区由 asyncore 内部提供
 
     def ping(self, params):
@@ -49,17 +48,17 @@ class PRCHandler(asyncore.dispatcher_with_send):
         self.send(length_prefix)
         self.send(body)
 
-    # 新的连接被accept 回调方法
     def handle_connect(self):
+        """新的连接被accept 回调方法"""
         print(self.addr, 'comes')
 
-    # 连接关闭之前回调方法
     def handle_close(self):
+        """连接关闭之前回调方法"""
         print(self.addr, 'bye')
         self.close()
 
-    # 有读事件到来时回调方法
     def handle_read(self):
+        """有读事件到来时回调方法"""
         while True:
             content = self.recv(1024)
             if content:
@@ -69,8 +68,8 @@ class PRCHandler(asyncore.dispatcher_with_send):
                 break
         self.handle_rpc()
 
-    # 将读到的消息解包并处理
     def handle_rpc(self):
+        """将读到的消息解包并处理"""
         while True:  # 可能一次性收到了多个请求消息，所以需要循环处理
             self.rbuf.seek(0)
             length_prefix = self.rbuf.read(4)

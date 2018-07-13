@@ -25,9 +25,11 @@ def rpc(sock, in_, params):
 if __name__ == '__main__':
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(("localhost", 8080))
+    addr, port = s.getsockname()
+    print(addr, port)  # 打印出客户端的地址和占用的端口
     # 连续发送10个请求
-    for i in range(10):
+    for i in range(5):
+        time.sleep(1)
         out, result = rpc(s, "ping", "hello {}".format(i))
         print(out, result)
-        time.sleep(1)
     s.close()

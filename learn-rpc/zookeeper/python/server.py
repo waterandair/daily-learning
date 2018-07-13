@@ -1,8 +1,6 @@
 #!/usr/bin/ python3
 # -*- coding: utf-8 -*-
-"""
-分布式 RPC 服务
-"""
+"""分布式多进程 RPC 服务"""
 import os
 import sys
 import json
@@ -11,7 +9,6 @@ import struct
 import signal
 import socket
 import asyncore
-import math
 from io import BytesIO
 from kazoo.client import KazooClient
 
@@ -31,36 +28,26 @@ class RPCServer(asyncore.dispatcher):
         self.child_pids = []
         # 创建子进程
         if self.prefork(10):
-            # 父进程 注册 zookeeper 服务
-            self.register_zk()
-            # 父进程善后处理
-            self.register_parent_signal()
+            self.register_zk()  # 父进程 注册 zookeeper 服务
+            self.register_parent_signal()  # 父进程善后处理
         else:
-            # 子进程善后处理
-            self.register_child_signal()
+            self.register_child_signal()  # 子进程善后处理
 
     def prefork(self, n):
-        """
-        提前创建指定数量的子进程
-        在父进程中返回 True, 子进程中返回 False
-        :param n:
-        :return:
-        """
+        """创建子进程 父进程中返回 True, 子进程返回 False"""
         for i in range(n):
             pid = os.fork()
             if pid < 0:
-                # fork error
                 raise RuntimeError()
             if pid > 0:
-                # parent process, 记录子进程的 pid
-                self.child_pids.append(pid)
+                self.child_pids.append(pid)  # 父进程,记录下子进程的pid
                 continue
-            if pid == 0:
-                # child process
+            if pid == 0:  # 子进程
                 return False
         return True
 
     def register_zk(self):
+        """父进程创建zookeeper连接"""
         self.zk = KazooClient(hosts='127.0.0.1:2181')
         self.zk.start()
         # 创建根节点
@@ -70,33 +57,22 @@ class RPCServer(asyncore.dispatcher):
         self.zk.create(self.zk_rpc, value.encode(), ephemeral=True, sequence=True)
 
     def register_parent_signal(self):
-        """
-        父进程监听的信号量
-        :return:
-        """
-        signal.signal(signal.SIGINT, self.exit_parent)
-        signal.signal(signal.SIGTERM, self.exit_parent)
-        # 监听子进程退出
-        signal.signal(signal.SIGCHLD, self.reap_child)
+        """父进程监听信号量"""
+        signal.signal(signal.SIGINT, self.exit_parent)  # 监听父进程退出
+        signal.signal(signal.SIGTERM, self.exit_parent)  # 监听父进程退出
+        signal.signal(signal.SIGCHLD, self.reap_child)  # 监听子进程退出, 处理意外退出的子进程,避免僵尸进程
 
     def exit_parent(self, sig, frame):
-        """
-        父进程监听到 sigint 和 sigterm 信号, 关闭所有连接所有子进程
-        :return:
-        """
-        # 关闭 zk 客户端
-        self.zk.stop()
-        # 关闭 serversocker
-        self.close()
-        # 关闭所有 clientsocket
-        asyncore.close_all()
+        """父进程监听到 sigint 和 sigterm 信号, 关闭所有连接所有子进程"""
+        self.zk.stop()  # 关闭 zk 客户端
+        self.close()  # 关闭 serversocker
+        asyncore.close_all()  # 关闭所有 clientsocket
         pids = []
         # 关闭子进程
         for pid in self.child_pids:
             print("before kill")
             try:
-                # 关闭子进程
-                os.kill(pid, signal.SIGINT)
+                os.kill(pid, signal.SIGINT)  # 关闭子进程
                 pids.append(pid)
             except OSError as ex:
                 # 目标子进程已经提前挂了
@@ -108,7 +84,8 @@ class RPCServer(asyncore.dispatcher):
         for pid in pids:
             while True:
                 try:
-                    os.waitpid(pid, 0)
+                    # 子进程退出后,父进程必须通过 waitpid 收割子进程,否则子进程会称为僵尸进程
+                    os.waitpid(pid, 0)  # 收割目标子进程
                     break
                 except OSError as ex:
                     # 子进程已经被收割过了
@@ -119,17 +96,11 @@ class RPCServer(asyncore.dispatcher):
             print("wait over", pid)
 
     def reap_child(self, sig, frame):
-        """
-        父进程监听到 sigchld 信号, 退出子进程
-        :param sig:
-        :param frame:
-        :return:
-        """
+        """父进程监听到 sigchld 信号, 退出子进程"""
         print("before reap")
         while True:
             try:
-                # 收割任意子进程
-                info = os.waitpid(-1, os.WNOHANG)
+                info = os.waitpid(-1, os.WNOHANG)  # 收割任意子进程
                 break
             except OSError as ex:
                 # 子进程已经被收割
@@ -146,22 +117,18 @@ class RPCServer(asyncore.dispatcher):
         print("after reap", pid)
 
     def register_child_signal(self):
-        signal.signal(signal.SIGINT, self.exit_child)
-        signal.signal(signal.SIGTERM, self.exit_child)
+        """子进程监听信号"""
+        signal.signal(signal.SIGINT, self.exit_child)  # 退出子进程
+        signal.signal(signal.SIGTERM, self.exit_child)  # 退出子进程
 
     def exit_child(self, sig, frame):
-        """
-        子进程监听到 sigint 和 sigterm 信号, 关闭子进程所有连接
-        :return:
-        """
-        # 关闭所有 server socket
-        self.close()
-        # 关闭所有 client socket
-        asyncore.close_all()
+        """子进程监听到 sigint 和 sigterm 信号, 关闭子进程所有连接"""
+        self.close()  # 关闭所有 server socket
+        asyncore.close_all()  # 关闭所有 client socket
         print("all closed")
 
     def handle_accept(self):
-        # 接收新连接
+        """接收连接"""
         pair = self.accept()
         if pair is not None:
             sock, addr = pair
@@ -169,13 +136,12 @@ class RPCServer(asyncore.dispatcher):
 
 
 class RPCHandler(asyncore.dispatcher_with_send):
-
+    """处理请求"""
     def __init__(self, sock, addr):
         asyncore.dispatcher_with_send.__init__(self, sock)
         self.addr = addr
         self.handlers = {
             "ping": self.ping,
-            "pi": self.pi
         }
         self.rbuf = BytesIO()
 
@@ -183,6 +149,7 @@ class RPCHandler(asyncore.dispatcher_with_send):
         print(self.addr, "comes")
 
     def handle_read(self):
+        """接收请求"""
         while True:
             connect = self.recv(1024)
             if connect:
@@ -192,10 +159,7 @@ class RPCHandler(asyncore.dispatcher_with_send):
         self.handle_rpc()
 
     def handle_rpc(self):
-        """
-        接收一个完整的请求
-        :return:
-        """
+        """处理一个接收一个完整的请求"""
         while True:
             self.rbuf.seek(0)
             length_prefix = self.rbuf.read(4)
@@ -218,20 +182,8 @@ class RPCHandler(asyncore.dispatcher_with_send):
     def ping(self, params):
         self.send_result("pong", params)
 
-    def pi(self, n):
-        s = 0.0
-        for i in range(n + 1):
-            s += 1.0 / (2 * i + 1) / (2 * i + 1)
-        result = math.sqrt(8 * s)
-        self.send_result("pi_r", result)
-
     def send_result(self, out, result):
-        """
-        给客户端发送消息
-        :param out:
-        :param result:
-        :return:
-        """
+        """给客户端发送消息"""
         response = {"out": out, "result": result}
         body = json.dumps(response)
         length_prefix = struct.pack("I", len(body))

@@ -1,10 +1,6 @@
 #!/usr/bin/ python3
 # -*- coding: utf-8 -*-
-"""
-PerForking 异步 RPC 服务器
-单个进程的IO能力有限,且python由于GIL的原因只能使用到一个CPU核心的资源,为了进一步提高并发能力,就应该使用多进程
-Tornado 和 Nginx 就是采用了这种多进程异步模型
-"""
+"""PerForking 异步 RPC 服务器"""
 import os
 import json
 import struct
@@ -27,10 +23,10 @@ class RPCServer(asyncore.dispatcher):
             pid = os.fork()
             if pid < 0:  # fork error
                 return
-            if pid > 0:  # parent process
+            if pid > 0:  # 父进程
                 continue
             if pid == 0:
-                break  # child process
+                break  # 子进程
 
     def handle_accept(self):
         # 获取连接
@@ -48,6 +44,7 @@ class RPCHandler(asyncore.dispatcher_with_send):
         self.handlers = {
             "ping": self.ping
         }
+        # 因为是非阻塞的，所以可能一条消息经历了多次读取，所以这里用一个BytesIO缓冲区存放读取进来的数据
         self.rbuf = BytesIO()
 
     def handle_connect(self):
@@ -104,6 +101,7 @@ class RPCHandler(asyncore.dispatcher_with_send):
 
 if __name__ == '__main__':
     RPCServer("localhost", 8080)
+    # 进入事件循环
     asyncore.loop()
 
 

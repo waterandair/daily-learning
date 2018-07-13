@@ -2,18 +2,19 @@ syntax = "proto3";
 
 package ping;
 
-// ping service
+// ping 服务定义
 service PingCalculator {
     rpc Calc(PingRequest) returns (PingResponse) {}
 }
 
-// ping input
+// ping 请求消息
 message PingRequest {
    string n = 1;
 }
 
-// ping output
+// ping 响应消息
 message PingResponse {
     string n = 1;
 }
+
 
