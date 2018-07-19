@@ -13,8 +13,6 @@ func print(name string, vals ... any) {
 }
 
 func main() {
-	// 变量
-	test_1_1()
 	// 常量
 	test_1_2()
 	// 引用类型
@@ -28,12 +26,6 @@ func main() {
 
 }
 
-func test_1_1() {
-	// 多变量赋值时,先计算所有相关值,然后再从左到右依次赋值。
-	data, i := [3]int{0, 1, 2}, 0
-	i, data[i] = 2, 100
-	print("test_1_1", i, data)
-}
 
 func test_1_2() {
 	// 常量不能使用 := 定义

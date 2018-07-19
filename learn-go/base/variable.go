@@ -77,6 +77,9 @@ func main() {
 		TB
 	)
 	fmt.Println(KB, MB, GB, TB)
+
+	// 多变量赋值时,先计算所有相关值,然后再从左到右依次赋值。
+	basic_1()
 }
 
 // 变量在定义是没有赋值,会初始化为 零值 0, false, ""
@@ -98,6 +101,13 @@ func split(sum int)(x, y int) {
 	x = sum * 4 / 9
 	y = sum -x
 	return
+}
+
+// 多变量赋值时,先计算所有相关值,然后再从左到右依次赋值。
+func basic_1() {
+	data, i := [3]int{0, 1, 2}, 0
+	i, data[i] = 2, 100
+	print("test_1_1", i, data)  // [2 [100 1 2]]
 }
 
 
