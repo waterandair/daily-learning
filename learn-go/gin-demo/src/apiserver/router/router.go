@@ -5,6 +5,7 @@ import (
 	"apiserver/router/middleware"
 	"net/http"
 	"apiserver/handler/sd"
+	"apiserver/handler/user"
 )
 
 // 加载 middlewares, routes, handlers
@@ -26,6 +27,11 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		check.GET("/disk", sd.DiskCheck)
 		check.GET("/cpu", sd.CPUCheck)
 		check.GET("/ram", sd.RAMCheck)
+	}
+
+	u := g.Group("/v1/user")
+	{
+		u.POST("", user.Create)
 	}
 
 	return g

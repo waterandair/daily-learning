@@ -2,6 +2,7 @@ package model
 
 import (
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"fmt"
 	"github.com/lexkong/log"
 	"github.com/spf13/viper"
