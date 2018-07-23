@@ -4,12 +4,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"apiserver/router"
 	"apiserver/config"
-	"log"
+	"github.com/lexkong/log"
 	"net/http"
 	"time"
 	"errors"
 	"github.com/spf13/viper"
 	"github.com/spf13/pflag"
+	"apiserver/model"
 )
 
 var (
@@ -36,17 +37,21 @@ func main() {
 	// 路由
 	router.Load(g, middlewares...)
 
+	// 初始化数据库
+	model.DB.Init()
+	defer model.DB.Close()
+
 	// 检测健康状况
 	go func() {
 		if err := pingServer(); err != nil {
 			log.Fatal("The router has no response, or it might took too long to start up.", err)
 		}
-		log.Print("The router has been deployed successfully.")
+		log.Info("The router has been deployed successfully.")
 	}()
 
 	// 启动
-	log.Printf("Start to listening the incoming requests on http address: %s", viper.GetString("addr"))
-	log.Printf(http.ListenAndServe(viper.GetString("addr"), g).Error())
+	log.Infof("Start to listening the incoming requests on http address: %s", viper.GetString("addr"))
+	log.Info(http.ListenAndServe(viper.GetString("addr"), g).Error())
 }
 
 /*
@@ -61,7 +66,7 @@ func pingServer() error {
 			return nil
 		}
 
-		log.Print("Waiting for the router, retry in 1 second.")
+		log.Info("Waiting for the router, retry in 1 second.")
 		time.Sleep(time.Second)
 	}
 
