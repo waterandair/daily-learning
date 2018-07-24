@@ -22,6 +22,8 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		c.String(http.StatusNotFound, "The incorrect api route")
 	})
 
+	g.POST("/login", user.Login)
+
 	// health check handlers
 	check := g.Group("/sd")
 	{
@@ -31,7 +33,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		check.GET("/ram", sd.RAMCheck)
 	}
 
-	u := g.Group("/v1/user")
+	u := g.Group("/v1/user", middleware.AuthMiddleWare())
 	{
 		u.POST("", user.Create)       // 创建用户
 		u.DELETE("/:id", user.Delete) // 删除用户

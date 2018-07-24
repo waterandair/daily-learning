@@ -36,7 +36,6 @@ func Logging() gin.HandlerFunc {
 			return
 		}
 
-
 		var bodyBytes []byte
 		if c.Request.Body != nil {
 			bodyBytes, _ = ioutil.ReadAll(c.Request.Body)
@@ -57,7 +56,7 @@ func Logging() gin.HandlerFunc {
 		// 请求后
 
 		end := time.Now().UTC()
-		latency := end.Sub(start)  // 计算响应时间
+		latency := end.Sub(start) // 计算响应时间
 
 		code, message := -1, ""
 		var resp handler.Response
