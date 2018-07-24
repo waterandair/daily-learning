@@ -81,18 +81,18 @@ func main() {
 
 	//i能存储Student
 	i = mike
-	fmt.fmt.Println("This is Mike, a Student:")
+	fmt.Println("This is Mike, a Student:")
 	i.SayHi()
 	i.Sing("November rain")
 
 	//i也能存储Employee
 	i = tom
-	fmt.fmt.Println("This is tom, an Employee:")
+	fmt.Println("This is tom, an Employee:")
 	i.SayHi()
 	i.Sing("Born to be wild")
 
 	//定义了slice Men
-	fmt.fmt.Println("Let's use a slice of Men and see what happens")
+	fmt.Println("Let's use a slice of Men and see what happens")
 	x := make([]Men, 3)
 	//这三个都是不同类型的元素，但是他们实现了interface同一个接口
 	x[0], x[1], x[2] = paul, sam, mike

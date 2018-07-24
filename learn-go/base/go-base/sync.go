@@ -10,6 +10,7 @@ import (
 sync.Mutex  当一个goroutine获得了 Mutex 后,其他goroutine就只能乖乖等到这个goroutine释放该 Mutex
 sync.RWMutex 经典的单写多读模型.读锁占用会阻止写,但不阻止读,而写锁会阻止任何其他goroutine (无论读和写)进来,整个锁相当于由该goroutine独占
 sync.Once 全局唯一性操作，once 的 Do() 方法可以保证在全局范围内只调用指定的函数一次,而且所有其他goroutine在调用到此语句时,将会先被阻塞,直至全局唯一的once.Do() 调用结束后才继续。
+sync.WaitGroup 用于等待一组 goroutine 结束
 */
 
 func main() {

@@ -20,7 +20,7 @@ func main() {
 	// 类型转换
 	test_1_5()
 	// 字符串
-	test_1_6()
+	stringDemo()
 	// 指针
 	test_1_7()
 
@@ -96,7 +96,7 @@ func test_1_5() {
 	print("test_1_5", n)
 }
 
-func test_1_6() {
+func stringDemo() {
 	// 字符串是不可变值类型,内部用用指针指向 UTF-8 字节数组。
 	// 默认值是空字符串 ""。
 	// 用索引号访问某字节,如 s[i]。
@@ -111,7 +111,7 @@ func test_1_6() {
           c`
 	sss := "Hello world"  // 支持索引
 
-	a := 'a'  // 单引号字符常量表示示 Unicode Code Point,支支持 \uFFFF、\U7FFFFFFF、\xFF 格式
+	a := 'a'  // 单引号字符常量表示 Unicode Code Point,支持 \uFFFF、\U7FFFFFFF、\xFF 格式
 	var c1, c2 rune = '\u6211', '们'
 
 	// 修改字符串需要把字符串转为 []rune 或 []byte, 完成后再转为 string
@@ -136,7 +136,7 @@ func test_1_6() {
 	}
 
 
-	print("test_1_6", s[0] == '\x61', s[1] == 'b', s[2] == 0x63,
+	print("string demo", s[0] == '\x61', s[1] == 'b', s[2] == 0x63,
 		ss, sss[:5], a, c1 == '我', string(c2) == "\xe4\xbb\xac",
 		s1, u, s2, s2_slice)
 }
