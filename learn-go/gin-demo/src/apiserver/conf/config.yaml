@@ -19,4 +19,5 @@ db:
   addr: 127.0.0.1:3306
   username: root
   password: "000000"
+default_limit: 50  # 获取列表时的默认值
 

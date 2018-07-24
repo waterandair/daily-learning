@@ -39,6 +39,7 @@ func main() {
 
 	// 初始化数据库
 	model.DB.Init()
+	model.DB.Self.LogMode(true)
 	defer model.DB.Close()
 
 	// 检测健康状况

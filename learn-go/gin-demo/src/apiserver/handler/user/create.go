@@ -3,38 +3,47 @@ package user
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"apiserver/errno"
-	"github.com/lexkong/log"
-	"fmt"
+	"apiserver/pkg/errno"
+	"apiserver/model"
+	. "apiserver/handler"
 )
 
+// 创建用户
 func Create(c *gin.Context) {
-	var r struct{
-		Username string `json:"username"`
-		Password string `json:"password"`
-	}
+	var r CreateRequest
 
-	var err error
-
-	if err = c.Bind(&r); err != nil {
+	// 解析参数到 CreateRequest
+	if err := c.Bind(&r); err != nil {
 		c.JSON(http.StatusOK, errno.ErrBind)
 		return
 	}
 
-	log.Debugf("username is: [%s], password is [%s]", r.Username, r.Password)
-	if r.Username == "" {
-		err = errno.New(errno.ErrUserNotFound, fmt.Errorf("username can not found in db: xxxxx")).Add("this is add message")
-		log.Errorf(err, "get and error")
+	u := model.UserModel{
+		Username: r.Username,
+		Password: r.Password,
 	}
 
-	if errno.IsErrUserNotFound(err) {
-		log.Debug("err type is ErrUserNotFound ")
+	// 校验参数
+	if err := u.Validate(); err != nil {
+		SendResponse(c, errno.ErrValidation, nil)
+		return
 	}
 
-	if r.Password == "" {
-		err = fmt.Errorf("password is empty")
+	// 加密密码
+	if err := u.Encrypt(); err != nil {
+		SendResponse(c, errno.ErrEncrypt, nil)
+		return
 	}
 
-	code, message := errno.DecodeErr(err)
-	c.JSON(http.StatusOK, gin.H{"code": code, "message": message})
+	// 存入数据库
+	if err := u.Create(); err != nil {
+		SendResponse(c, errno.ErrDatabase, nil)
+	}
+
+	// 响应
+	resp := CreateResponse{
+		Username: r.Username,
+	}
+
+	SendResponse(c, nil, resp)
 }
