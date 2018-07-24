@@ -1,14 +1,15 @@
 package service
+
 // 复杂的业务逻辑不写到 handler 中
 
 import (
 	"apiserver/model"
-	"sync"
 	"apiserver/util"
 	"fmt"
+	"sync"
 )
 
-func ListUser(username string, offset, limit int)([]*model.UserInfo, uint64, error) {
+func ListUser(username string, offset, limit int) ([]*model.UserInfo, uint64, error) {
 	infos := make([]*model.UserInfo, 0)
 	users, count, err := model.ListUser(username, offset, limit)
 	if err != nil {
@@ -20,9 +21,9 @@ func ListUser(username string, offset, limit int)([]*model.UserInfo, uint64, err
 		ids = append(ids, user.Id)
 	}
 
-	wg := sync.WaitGroup{}  // 等待一批 goroutine 执行结束
+	wg := sync.WaitGroup{} // 等待一批 goroutine 执行结束
 	userList := model.UserList{
-		Lock: new(sync.Mutex),
+		Lock:  new(sync.Mutex),
 		IdMap: make(map[uint64]*model.UserInfo, len(users)),
 	}
 
@@ -32,9 +33,9 @@ func ListUser(username string, offset, limit int)([]*model.UserInfo, uint64, err
 	// 并行提高查询效率
 	// 在实际业务中,取出数据可能还要对数据进行处理在返回给客户端,这时候为了提高效率,可以并行处理每条数据,待所有并行程序执行完后,在按照id重新排列顺序返回
 	for _, u := range users {
-		wg.Add(1)  // 添加 goroutine 的个数
+		wg.Add(1) // 添加 goroutine 的个数
 		go func(u *model.UserModel) {
-			defer wg.Done()  // Done 执行一次 WaitGroup 中需要等待的 goroutine 数量减 1
+			defer wg.Done() // Done 执行一次 WaitGroup 中需要等待的 goroutine 数量减 1
 
 			shortId, err := util.GenShortId()
 			if err != nil {
@@ -63,7 +64,7 @@ func ListUser(username string, offset, limit int)([]*model.UserInfo, uint64, err
 
 	select {
 	case <-finished:
-	case err:= <-errChan:
+	case err := <-errChan:
 		return nil, count, err
 
 	}

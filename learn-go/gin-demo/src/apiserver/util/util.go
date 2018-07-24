@@ -1,8 +1,8 @@
 package util
 
 import (
-	"github.com/teris-io/shortid"
 	"github.com/gin-gonic/gin"
+	"github.com/teris-io/shortid"
 )
 
 func GenShortId() (string, error) {

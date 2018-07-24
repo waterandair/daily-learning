@@ -1,20 +1,20 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"apiserver/router"
 	"apiserver/config"
+	"apiserver/model"
+	"apiserver/router"
+	"errors"
+	"github.com/gin-gonic/gin"
 	"github.com/lexkong/log"
+	"github.com/spf13/pflag"
+	"github.com/spf13/viper"
 	"net/http"
 	"time"
-	"errors"
-	"github.com/spf13/viper"
-	"github.com/spf13/pflag"
-	"apiserver/model"
 )
 
 var (
-	cfg = pflag.StringP("config", "c", "", "apiserver config file path")  // 命令行参数
+	cfg = pflag.StringP("config", "c", "", "apiserver config file path") // 命令行参数
 )
 
 func main() {
@@ -61,7 +61,7 @@ func main() {
 	每隔一秒请求一次服务器,如果有 10 次失败,就返回 error,并终止程序
 */
 func pingServer() error {
-	for i :=0; i < viper.GetInt("max_ping_count"); i++ {
+	for i := 0; i < viper.GetInt("max_ping_count"); i++ {
 		resp, err := http.Get(viper.GetString("url") + "/sd/health")
 		if err == nil && resp.StatusCode == 200 {
 			return nil

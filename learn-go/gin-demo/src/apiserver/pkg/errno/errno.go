@@ -2,8 +2,8 @@ package errno
 
 import "fmt"
 
-type Errno struct{
-	Code int
+type Errno struct {
+	Code    int
 	Message string
 }
 
@@ -19,7 +19,6 @@ type Err struct {
 func (err *Err) Error() string {
 	return fmt.Sprintf("Err - code: %d, message: %s, error: %s", err.Code, err.Message, err.Err)
 }
-
 
 // 给自定义错误添加额外的信息
 func (err *Err) Add(message string) error {
@@ -37,7 +36,7 @@ func (err *Err) Addf(format string, args ...interface{}) error {
 func New(errno *Errno, err error) *Err {
 	return &Err{
 		Errno: errno,
-		Err:err,
+		Err:   err,
 	}
 }
 

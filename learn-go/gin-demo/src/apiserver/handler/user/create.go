@@ -1,11 +1,11 @@
 package user
 
 import (
+	. "apiserver/handler"
+	"apiserver/model"
+	"apiserver/pkg/errno"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"apiserver/pkg/errno"
-	"apiserver/model"
-	. "apiserver/handler"
 )
 
 // 创建用户

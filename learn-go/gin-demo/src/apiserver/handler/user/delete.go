@@ -1,11 +1,11 @@
 package user
 
 import (
+	. "apiserver/handler"
+	"apiserver/model"
+	"apiserver/pkg/errno"
 	"github.com/gin-gonic/gin"
 	"strconv"
-	"apiserver/model"
-	. "apiserver/handler"
-	"apiserver/pkg/errno"
 )
 
 // 软删除一个用户

@@ -1,14 +1,14 @@
 package user
 
 import (
+	. "apiserver/handler"
+	"apiserver/model"
+	"apiserver/pkg/errno"
+	"apiserver/util"
 	"github.com/gin-gonic/gin"
 	"github.com/lexkong/log"
 	"github.com/lexkong/log/lager"
-	"apiserver/util"
 	"strconv"
-	"apiserver/model"
-	. "apiserver/handler"
-	"apiserver/pkg/errno"
 )
 
 func Update(c *gin.Context) {

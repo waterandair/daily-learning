@@ -1,10 +1,10 @@
 package user
 
 import (
-	"github.com/gin-gonic/gin"
-	"apiserver/model"
 	. "apiserver/handler"
+	"apiserver/model"
 	"apiserver/pkg/errno"
+	"github.com/gin-gonic/gin"
 )
 
 // 获取用户信息
@@ -17,5 +17,5 @@ func Get(c *gin.Context) {
 		return
 	}
 
-	SendResponse(c, nil , user)
+	SendResponse(c, nil, user)
 }

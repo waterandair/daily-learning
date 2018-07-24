@@ -1,9 +1,9 @@
 package model
 
 import (
-	"github.com/spf13/viper"
-	"fmt"
 	"apiserver/pkg/auth"
+	"fmt"
+	"github.com/spf13/viper"
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
@@ -25,18 +25,18 @@ func (u *UserModel) Create() error {
 // 更新用户信息
 func (u *UserModel) Update() error {
 	//return DB.Self.Model(u).Omit("createdAt", "id").Updates(u).Error
-	 return DB.Self.Omit("createdAt").Save(u).Error
+	return DB.Self.Omit("createdAt").Save(u).Error
 }
 
 // 获取用户信息
-func GetUser(username string) (*UserModel, error)  {
+func GetUser(username string) (*UserModel, error) {
 	u := &UserModel{}
 	d := DB.Self.Where("username = ?", username).First(&u)
 	return u, d.Error
 }
 
 // 用户列表
-func ListUser(username string, offset, limit int)([]*UserModel, uint64, error) {
+func ListUser(username string, offset, limit int) ([]*UserModel, uint64, error) {
 	if limit == 0 {
 		limit = viper.GetInt("default_limit")
 	}
