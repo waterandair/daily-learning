@@ -9,24 +9,26 @@ sc = SparkContext('local[4]', 'rdd_demo')
 # * 第二种：调用SparkContext的parallelize方法，在Driver中一个已经存在的集合（数组）上创建。
 
 # 从文件中读取
-file = sc.textFile('file:///home/zj/...')
+# file = sc.textFile('file:///home/zj/...')
 # 从hdfs中读取
-file = sc.textFile('/user/zj/***.txt')
+# file = sc.textFile('/user/zj/***.txt')
 # 从 json 文件中解析 json
 # {"name":"Michael"}
 # {"name":"Andy", "age":30}
 # {"name":"Justin", "age":19}
 import json
-sc = SparkContext('local','JSONAPP')
-inputFile =  "file:///home/dblab/people.json"
-jsonStrs = sc.textFile(inputFile)
-result = jsonStrs.map(lambda s: json.loads(s))
+# sc = SparkContext('local','JSONAPP')
+# inputFile = "file:///home/dblab/people.json"
+# jsonStrs = sc.textFile(inputFile)
+# result = jsonStrs.map(lambda s: json.loads(s))
 # 直接创建(测试时用)
 nums = [1, 2, 3, 4, 5]
 rdd = sc.parallelize(nums)
 
+
+
 # 持久化
-jsonStrs.persist('MEMORY_ONLY')  # 相当于 rdd.cache()
+rdd.persist('MEMORY_ONLY')  # 相当于 rdd.cache()
 
 # 打印元素
 # 可以使用collect()方法，比如，rdd.collect().foreach(print)，但是，由于collect()方法会把各个worker节点上的所有RDD元素都抓取

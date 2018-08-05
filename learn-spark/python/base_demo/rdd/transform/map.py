@@ -7,4 +7,4 @@ if __name__ == '__main__':
     # 将原来RDD的每个数据项通过map中的用户自定义函数f映射转变为一个新的元素
     rdd_upper = rdd.map(lambda x: str(x).upper())
 
-    rdd_upper.foreach(lambda x: print(x))
+    rdd_upper.foreach(lambda x: print(x))  # A, B, C
