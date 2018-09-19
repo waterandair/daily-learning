@@ -2,54 +2,53 @@
 # -*- coding：utf-8 -*-
 
 
-def binary_search1(alist, item):
+def search(nums, n):
     """
-    二分查找，循环
-    :param alist:
-    :param item:
-    :return:
+    二分搜索（Binary search）是一项用于搜索已排序数据的技术。它通过选出数据的中项，与目标数值相比较。
     """
-    left = 0
-    right = len(alist) - 1
+    l = 0
+    r = len(nums) - 1
 
-    while left <= right:
+    print(__search1(nums, l, r, n))
+    print(__search2(nums, l, r, n))
 
-        mid = (left + right) // 2
-        if alist[mid] == item:
+
+def __search1(nums, l, r, n):
+    """
+    循环实现二分查找
+    """
+
+    while l <= r:
+        mid = l + (r - l) // 2
+        v = nums[mid]
+        if v == n:
             return mid
+        elif v > n:
+            r = mid - 1
         else:
-            if item < alist[mid]:
-                right = mid - 1
-            else:
-                left = mid + 1
+            l = mid + 1
 
     return -1
 
 
-def binary_search2(alist, item):
+def __search2(nums, l, r, n):
     """
-    递归
-    二分法搜索（Binary search）是一项用于搜索已排序数据的技术。它通过选出数据的中项，与目标数值相比较。
-    :param alist:
-    :param item:
-    :return:
+    递归实现二分查找
     """
-    size = len(alist)
-    if size == 0:
-        return False
-    else:
-        mid = size // 2
-        if item == alist[mid]:
-            return True
+    mid = l + (r - l) // 2
+    v = nums[mid]
+    if l <= r:
+        if v == n:
+            return mid
+        elif v > n:
+            return __search2(nums, l, mid - 1, n)
         else:
-            if item < alist[mid]:
-                return binary_search2(alist[: mid], item)
-            else:
-                return binary_search2(alist[mid+1:], item)
+            return __search2(nums, mid + 1, r, n)
+    else:
+        return -1
 
 
 if __name__ == '__main__':
-    alist = range(0, 1000000000, 2)
-    res1 = binary_search1(alist, 16)
-    res2 = binary_search2(alist, 16)
-    print(res1, res2)
+    nums = range(0, 20, 2)
+    print(list(nums))
+    search(nums, 15)
