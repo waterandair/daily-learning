@@ -61,11 +61,12 @@ def generate_body_length():
     return random.choice(range(1000))
 
 
-def mock_access_log(nums=100000):
+def mock_access_log(nums=10000):
     path = os.path.dirname(os.path.realpath(__file__))
+
     while nums > 0:
         nums -= 1
-        line = '"{}" - "{}" "{}" "{}" "{}" "{}"'.format(
+        line = '"{}" "{}" "{}" "{}" "{}" "{}"'.format(
             generate_ip(),
             generate_time(),
             generate_request(),
@@ -73,7 +74,6 @@ def mock_access_log(nums=100000):
             generate_body_length(),
             generate_user_agent()
         )
-        # print(line)
         with open(path + "/access.log", 'a') as f:
             f.write(line + "\n")
 

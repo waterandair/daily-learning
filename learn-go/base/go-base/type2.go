@@ -62,7 +62,7 @@ func test_slice() {
 	fmt.Println(data)  // [0 1 102 203 4 5 6]
 
 	// 可直接创建 slice 对象,自动分配底层数组。
-	s1 := []int{0, 1, 2, 3, 8: 100}  // 通过初始化表达式构造,可使用用索引号。
+	s1 := []int{0, 1, 2, 3, 8: 100}  // 通过初始化表达式构造,可使用索引号。
 	fmt.Println(s1, len(s1), cap(s1))
 
 	s2 := make([]int, 6, 8)  // 使用 make 创建,指定 len 和 cap 值。

@@ -28,6 +28,7 @@ def fib3(a, b, n):
 
 
 if __name__ == '__main__':
+    # 0 1 1 2 3
     print(fib1(6))
     print(fib2(6))
     print(fib3(1, 1, 6))

@@ -12,8 +12,10 @@ func main(){
 	str := "34  343  245"
 	var a,b,c int
 	fmt.Sscan(str,&a,&b,&c)
-	var t string
+	fmt.Println(a,b,c)  // 34 343 245
 
-	fmt.Sscan("aaaaaaaaaaaaaaa as asd ", "Bearer %s", &t)
-	fmt.Println(a,b,c, t, "b")  // 34 343 245
+	var x, y, z string
+
+	fmt.Sscan("aaaaaaaaaaaaaaa as asd ", &x, &y, &z)
+	fmt.Println(x, y, z, "b")
 }
