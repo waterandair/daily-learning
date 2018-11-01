@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package routeguide;
+
+service RouteGuide {
+    // 根据经纬度返回地名
+    rpc GetFeature(Point) returns (Feature) {}
+
+    // 根据矩形返回地名
+    rpc ListFeature(Rectangle) returns (stream Feature) {}
+
+    // 记录请求流中的点，返回点的总数，命名点的总数，两点之间的总距离
+    rpc RecordRoute(stream Point) returns (RouteSummary) {}
+
+    //
+    rpc RouteChat(stream RouteNote) returns (stream RouteNote) {}
+}
+
+message Point {
+    int32 latitude = 1;       // 纬度
+    int32 longitude = 2;      // 经度
+}
+
+// 该点的地名
+message Feature {
+    string name = 1;
+    Point location = 2;
+}
+
+// 两个经纬度确定一个矩形
+message Rectangle {
+    Point lo = 1;
+    Point hi = 2;
+}
+
+message RouteSummary {
+    int32 point_count = 1;      // point 的数量
+    int32 feature_count = 2;    // feature 的数量
+    int32 distance = 3;         // 总距离
+    int32 elapsed_time = 4;     // 遍历持续的时间
+}
+
+message RouteNote {
+    Point location = 1;
+    string message = 2;
+}
+
+
+
+
