@@ -1,0 +1,12 @@
+version: v1
+jwt_secret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+default_limit: 5
+auth_header: Authorization
+db:
+  name: weibo
+  addr: 127.0.0.1:3306
+  username: root
+  password: root
+
+grpc_like_host: localhost:50000
+rabbitMq_host: amqp:guest:guest@localhost:5627
