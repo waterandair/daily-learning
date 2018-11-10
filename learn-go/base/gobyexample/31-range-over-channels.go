@@ -12,17 +12,17 @@ func main() {
 	queue <- "one"
 	queue <- "two"
 
-	close(queue)  // 同一个goroutine中必须关闭channel， 否则会 fatal error: all goroutines are asleep - deadlock!
+	// close(queue)  // 同一个goroutine中必须关闭channel， 否则会 fatal error: all goroutines are asleep - deadlock!
 
-	//go func() {
-	//	for elem := range queue {
-	//		fmt.Println(elem)
-	//	}
-	//}()
+	go func(queue chan string) {
+		for elem := range queue {
+			fmt.Println(elem)
+		}
+	}(queue)
 
-	for elem := range queue {
-		fmt.Println(elem)
-	}
+	//for elem := range queue {
+	//	fmt.Println(elem)
+	//}
 
 	time.Sleep(time.Second)
 }

@@ -36,6 +36,11 @@ type ListResponse struct {
 	PageCount     uint64            `json:"page_all"`
 }
 
+// 添加微博的请求结构体
+type PostCreateRequest struct {
+	Content string `json:"content"`
+}
+
 /* 创建控制器 */
 func NewPostController(ps weibo.PostService, us weibo.UserService, ls weibo.LikeService, fs weibo.FollowService) *PostController {
 	return &PostController{
@@ -49,7 +54,7 @@ func NewPostController(ps weibo.PostService, us weibo.UserService, ls weibo.Like
 /* 首页-微博列表 */
 func (c *PostController) List(ctx echo.Context) error {
 	// 页码
-	page := ctx.QueryParam("page")
+	page := ctx.FormValue("page")
 	if page == "" {
 		page = "1"
 	}
@@ -148,8 +153,9 @@ func (c *PostController) List(ctx echo.Context) error {
 
 		data.IsLogin = true
 	}
+	response := MakeResponse(nil, data)
 
-	return ctx.Render(http.StatusOK, "index.html", data)
+	return ctx.JSON(http.StatusOK, response)
 }
 
 /* 写微博 get 请求 */
@@ -162,19 +168,26 @@ func (c *PostController) CreateForm(ctx echo.Context) error {
 /* 写微博 post 请求 */
 func (c *PostController) Create(ctx echo.Context) error {
 	user := ctx.Get("user").(*weibo.User)
-	content := ctx.FormValue("content")
+	var r PostCreateRequest
+	if err := ctx.Bind(&r); err != nil {
+		response := MakeResponse(err,nil,)
+		return ctx.JSON(http.StatusOK, response)
+	}
 
 	post := weibo.Post{
 		UserId:   user.ID,
 		UserName: user.Name,
-		Content:  content,
+		Content:  r.Content,
+
 	}
 
 	// 添加数据库 posts 表记录, 增加 redis 记录数
 	if err := c.ps.Create(&post); err != nil {
-		return ctx.String(http.StatusOK, err.Error())
+		response := MakeResponse(err, nil)
+		return ctx.JSON(http.StatusOK, response)
 	}
 
-
-	return ctx.Redirect(302, "/v1/")
+	response := MakeResponse(nil, nil)
+	return ctx.JSON(http.StatusOK, response)
 }
+

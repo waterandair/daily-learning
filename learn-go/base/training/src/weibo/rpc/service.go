@@ -23,7 +23,7 @@ type likeService struct {
 
 /* grpc 点赞服务端发送消息给 rabbitMq 消息队列 */
 func (s *likeService) SendMessage(ctx context.Context, in *like.Like) (*like.Result, error) {
-
+	log.Println("-----SendMessage--------")
 	// 返回消息是否发送成功
 	res := &like.Result{Res: true}
 
@@ -58,6 +58,7 @@ func failOnError(err error, msg string) {
 }
 
 func main() {
+	log.Println("-----server--------")
 	// 初始化配置
 	if err := unit.InitConfig(""); err != nil {
 		log.Fatal(err)

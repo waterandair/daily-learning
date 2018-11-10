@@ -138,6 +138,7 @@ func (s *LikeService) ResetMessagesCount(userId uint64) error {
 
 /* 发送点赞消息 grpc 点赞服务 客户端 */
 func (s *LikeService) SendMessage(likeMessage *weibo.Like) (*like.Result, error) {
+
 	// grpc 客户端 发送消息
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
@@ -157,6 +158,7 @@ func (s *LikeService) SendMessage(likeMessage *weibo.Like) (*like.Result, error)
 /* 消费消息 */
 
 func (s *LikeService) ConsumeMessage() {
+	log.Println("--------ConsumeMessage-----------")
 	// 读取消息队列
 	msgs, err := s.RabbitMq.Channel.Consume(
 		s.RabbitMq.Queue.Name, // queue
@@ -177,6 +179,7 @@ func (s *LikeService) ConsumeMessage() {
 	// 消息队列异步向消费者推送消息，所以消费者读消息的时候用 goroutine 去读
 	go func() {
 		for d := range msgs {
+			log.Println("--------range msgs -----------")
 			var message map[string]interface{}
 			if err := json.Unmarshal(d.Body, &message); err != nil {
 				panic(err)

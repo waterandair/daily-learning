@@ -28,28 +28,34 @@ func NewLikeController(ls weibo.LikeService) *LikeController {
 	}
 }
 
+type LikeRequest struct {
+	ToUserId uint64 `json:"to_user_id"`
+	PostId  uint64  `json:"post_id"`
+}
+
 /* 点赞 post 请求 */
 func (c *LikeController) Like(ctx echo.Context) error {
+
+	log.Println("-------sendmessage ------ ")
 	// 点赞者
 	user := ctx.Get("user").(*weibo.User)
 	fromUserId := user.ID
 	fromUserName := user.Name
 
-	// 被点赞者
-	toUserId := ctx.FormValue("to_user_id")
-	toIdUint64, err := strconv.ParseUint(toUserId, 10, 64)
-	failOnError(err, "")
-
-	// 微博 id
-	postId := ctx.FormValue("post_id")
-	postIdUint64, err := strconv.ParseUint(postId, 10, 64)
-	failOnError(err, "")
+	var r LikeRequest
+	if err := ctx.Bind(&r); err != nil {
+		response := MakeResponse(err, nil)
+		return ctx.JSON(http.StatusOK, response)
+	}
+	//err := ctx.Bind(&r)
+	//response := MakeResponse(err, nil)
+	//return ctx.JSON(http.StatusOK, response)
 
 	likeMessage := &weibo.Like{
 		FromUserId:   fromUserId,
 		FromUserName: fromUserName,
-		ToUserId:     toIdUint64,
-		PostId:       postIdUint64,
+		ToUserId:     r.ToUserId,
+		PostId:       r.PostId,
 	}
 
 	// 异步发送消息，若失败重试两次
@@ -67,7 +73,7 @@ func (c *LikeController) Like(ctx echo.Context) error {
 		}
 	}()
 
-	response := MakeResponse(err, likeMessage)
+	response := MakeResponse(nil, likeMessage)
 	return ctx.JSON(http.StatusOK, response)
 }
 

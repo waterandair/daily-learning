@@ -2,8 +2,6 @@ package controllers
 
 import (
 	"net/http"
-	"strconv"
-
 	"weibo"
 	"weibo/pkg/errno"
 
@@ -22,27 +20,32 @@ func NewFollowController(fs weibo.FollowService) *FollowController {
 	}
 }
 
+// 关注请求结构体
+type FollowRequest struct {
+	FollowedUserId uint64 `json:"followed_user_id"`
+}
+
 /* 关注 post 请求 */
 func (c *FollowController) Follow(ctx echo.Context) error {
 	// 当前用户
 	user := ctx.Get("user").(*weibo.User)
 
+	var r FollowRequest
 	// 被关注的用户
-	followedUserId := ctx.FormValue("followed_id")
-	followedUserIdUint64, err := strconv.ParseUint(followedUserId, 10, 64)
-	if err != nil {
+	if err := ctx.Bind(&r); err != nil {
 		return ctx.JSON(http.StatusOK, MakeResponse(err, nil))
 	}
 
+
 	// 验证是否已经关注过
-	if c.fs.CheckFollowed(user.ID, followedUserIdUint64) == false {
-		response := MakeResponse(errno.New(errno.ErrDuplicateFollow, err), "您已关注过该用户")
+	if c.fs.CheckFollowed(user.ID, r.FollowedUserId) == false {
+		response := MakeResponse(errno.New(errno.ErrDuplicateFollow, nil), "您已关注过该用户")
 		return ctx.JSON(http.StatusOK, response)
 	}
 
 	follow := weibo.Follow{
 		UserId:         user.ID,
-		FollowedUserId: followedUserIdUint64,
+		FollowedUserId: r.FollowedUserId,
 	}
 
 	// 添加数据库记录 增加 redis 的关注数和粉丝数
@@ -51,6 +54,6 @@ func (c *FollowController) Follow(ctx echo.Context) error {
 		return ctx.JSON(http.StatusOK, response)
 	}
 
-	response := MakeResponse(err, nil)
+	response := MakeResponse(nil, nil)
 	return ctx.JSON(http.StatusOK, response)
 }

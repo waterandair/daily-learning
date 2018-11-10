@@ -1,11 +1,10 @@
 package controllers
 
 import (
-	"html/template"
+	"github.com/spf13/viper"
 	"net/http"
 	"regexp"
 	"time"
-
 	"weibo"
 	"weibo/pkg/auth"
 	"weibo/pkg/errno"
@@ -13,7 +12,6 @@ import (
 
 	"github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo"
-	"github.com/spf13/viper"
 )
 
 // 用户模块控制器
@@ -34,11 +32,9 @@ type LoginRequest struct {
 	Password string `json:"password"`
 }
 
-// 注册响应结构体
-type ResponseRegister struct {
-	Title   string        `json:"title"`
-	Next    template.HTML `json:"next"`
-	Message string
+// 登录响应构体
+type LoginResponse struct {
+	Token string `json:"token"`
 }
 
 /* 新建控制器 */
@@ -82,22 +78,22 @@ func (c *UserController) Register(ctx echo.Context) error {
 	}
 
 	// 判断用户名是否已存在
-	_, err := c.us.FindByName(u.Name)
-	if err == nil {
+	if _, err := c.us.FindByName(u.Name); err == nil {
 		response := MakeResponse(errno.New(errno.ErrUserNameExisted, err), "用户名已存在")
 		return ctx.JSON(http.StatusOK, response)
 	}
 
 	// 判断 email 是否已存在
-	_, err = c.us.FindByEmail(u.Email)
-	if err == nil {
+
+	if _, err := c.us.FindByEmail(u.Email); err == nil {
 		response := MakeResponse(errno.New(errno.ErrEmailExisted, err), "邮箱地址已被注册")
 		return ctx.JSON(http.StatusOK, response)
 	}
 
 	// 加密密码
 	if err := c.us.Encrypt(&u); err != nil {
-		return ctx.String(http.StatusOK, errno.ErrEncrypt.Message)
+		response := MakeResponse(errno.New(errno.ErrEncrypt, err), "密码加密失败")
+		return ctx.JSON(http.StatusOK, response)
 	}
 
 	// 添加数据库 users 表记录
@@ -105,20 +101,16 @@ func (c *UserController) Register(ctx echo.Context) error {
 		mysqlErr, ok := err.(*mysql.MySQLError)
 		if ok {
 			if mysqlErr.Number == 1062 {
-				return ctx.String(http.StatusOK, "用户名重复")
+				response := MakeResponse(errno.New(errno.ErrDatabase, err), "用户名重复")
+				return ctx.JSON(http.StatusOK, response)
 			}
 		}
-		return ctx.String(http.StatusOK, err.Error())
+		response := MakeResponse(errno.New(errno.ErrDatabase, err), "添加记录失败")
+		return ctx.JSON(http.StatusOK, response)
 	}
 
-	// 构造响应
-	data := &ResponseRegister{
-		Title:   "注册成功",
-		Message: "注册成功",
-		Next:    template.HTML("<a href='/v1/login'>去登陆</a>"),
-	}
-
-	return ctx.Render(http.StatusOK, "success.html", data)
+	response := MakeResponse(nil, nil)
+	return ctx.JSON(http.StatusOK, response)
 }
 
 /* 登录 get 请求 */
@@ -168,8 +160,11 @@ func (c *UserController) Login(ctx echo.Context) error {
 	cookie := new(http.Cookie)
 	cookie.Name = viper.GetString("auth_header")
 	cookie.Value = tokenStr
-	cookie.Expires = time.Now().Add(time.Hour)
+	cookie.Expires = time.Now().Add(time.Hour*365)
+	cookie.Path = "/"
 	ctx.SetCookie(cookie)
+	ctx.Response().Header().Set("P3P:CP","NOI ADM DEV PSAi COM NAV OUR OTRo STP IND DEM")
+	response := MakeResponse(nil, LoginResponse{Token:tokenStr})
 
-	return ctx.Redirect(302, "/v1/")
+	return ctx.JSON(http.StatusOK, response)
 }

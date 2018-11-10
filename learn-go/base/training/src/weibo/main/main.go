@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"io"
 	"log"
+	"net/http"
 
 	"weibo/controllers"
 	"weibo/middleware"
@@ -17,7 +18,6 @@ import (
 func main() {
 
 	e := echo.New()
-
 	/**
 	初始化配置文件
 	 */
@@ -25,6 +25,7 @@ func main() {
 		panic(err)
 	}
 
+	e.Use()
 	/**
 	初始化数据库连接
 	 */
@@ -92,9 +93,10 @@ func main() {
 	version := viper.GetString("version")
 
 	authMiddleWare := middleware.NewAuthMiddleWare(us)
+	e.GET("/", Home)
 
 	// 博文模块
-	e.GET("/"+version+"/", pc.List).Name = "index"
+	e.POST("/"+version+"/", pc.List).Name = "index"
 	e.GET("/"+version+"/post/create", pc.CreateForm, authMiddleWare.AuthMiddleWare)
 	e.POST("/"+version+"/post/create", pc.Create, authMiddleWare.AuthMiddleWare)
 	e.GET("/"+version+"/post/create", pc.CreateForm, authMiddleWare.AuthMiddleWare)
@@ -117,7 +119,7 @@ func main() {
 	/**
 	注册静态文件
 	*/
-	e.Static("/static", "../assets")
+	e.Static("/", "../views")
 
 	log.Fatal(e.Start("0.0.0.0:8000"))
 }
@@ -132,3 +134,6 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 	return t.templates.ExecuteTemplate(w, name, data)
 }
 
+func Home(ctx echo.Context) error {
+	return ctx.Render(http.StatusOK, "index.html", nil)
+}
