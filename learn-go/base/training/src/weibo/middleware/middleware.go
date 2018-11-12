@@ -13,7 +13,6 @@ import (
 
 type Auth struct {
 	us *services.UserService
-
 }
 
 func NewAuthMiddleWare(us *services.UserService) *Auth {
@@ -23,7 +22,7 @@ func NewAuthMiddleWare(us *services.UserService) *Auth {
 }
 
 /* 登录中间件 */
-func(auth *Auth) AuthMiddleWare(next echo.HandlerFunc) echo.HandlerFunc {
+func (auth *Auth) AuthMiddleWare(next echo.HandlerFunc) echo.HandlerFunc {
 
 	return func(c echo.Context) error {
 		// 解析 token

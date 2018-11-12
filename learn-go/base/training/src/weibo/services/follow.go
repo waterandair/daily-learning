@@ -28,10 +28,12 @@ func NewFollowService(db *gorm.DB, redis *redis.Client) *FollowService {
 func (fs *FollowService) Follow(follow *weibo.Follow) error {
 	err := fs.db.Create(follow).Error
 	if err == nil {
+		log.Println(follow.UserId, follow.FollowedUserId)
 		// redis 增加关注数
 		fs.IncrFollowsCountToRedis(follow.UserId)
 		// redis 增加粉丝数
-		fs.IncrFansCountToRedis(follow.FollowedUserId)
+		err := fs.IncrFansCountToRedis(follow.FollowedUserId)
+		log.Println(err)
 	}
 	return err
 }

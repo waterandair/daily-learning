@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"log"
 	"net/http"
 	"weibo"
 	"weibo/pkg/errno"
@@ -47,6 +48,7 @@ func (c *FollowController) Follow(ctx echo.Context) error {
 		UserId:         user.ID,
 		FollowedUserId: r.FollowedUserId,
 	}
+	log.Println("-----follow-----")
 
 	// 添加数据库记录 增加 redis 的关注数和粉丝数
 	if err := c.fs.Follow(&follow); err != nil {

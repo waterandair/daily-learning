@@ -147,7 +147,7 @@ func (c *UserController) Login(ctx echo.Context) error {
 
 	// 验证密码是否正确
 	if err := auth.Compare(user.Password, u.Password); err != nil {
-		return ctx.String(http.StatusOK, err.Error())
+		return ctx.JSON(http.StatusOK, MakeResponse(errno.New(errno.ErrValidation, nil).Add("Password is invalid."), "密码错误"))
 	}
 
 	// 构造 token

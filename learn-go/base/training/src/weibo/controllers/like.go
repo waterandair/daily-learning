@@ -18,7 +18,7 @@ type LikeController struct {
 
 // 消息列表响应
 type messageResponse struct {
-	Data []*weibo.Like
+	Messages []*weibo.Like  `json:"messages"`
 }
 
 /* 新建控制器 */
@@ -85,17 +85,20 @@ func (c *LikeController) Message(ctx echo.Context) error {
 	nums := ctx.Param("nums")
 	numsUint, err := strconv.ParseUint(nums, 10, 64)
 	if err != nil {
-		ctx.JSON(http.StatusOK, errno.New(errno.ErrValidation, err))
+		response := MakeResponse(errno.New(errno.ErrValidation, err), nil)
+		return ctx.JSON(http.StatusOK, response)
 	}
 
 	// 获取未读消息
 	messages, err := c.ls.Messages(user.ID, numsUint)
 	if err != nil {
-		return ctx.JSON(http.StatusOK, errno.New(errno.ErrDatabase, err))
+		response := MakeResponse(errno.New(errno.ErrValidation, err), nil)
+		return ctx.JSON(http.StatusOK, response)
 	}
 
-	response := messageResponse{Data: messages}
-	return ctx.Render(http.StatusOK, "messages.html", response)
+	data := messageResponse{Messages: messages}
+	response := MakeResponse(nil, data)
+	return ctx.JSON(http.StatusOK, response)
 }
 
 /* 消费点赞消息队列 */

@@ -36,6 +36,8 @@ func NewLikeService(db *gorm.DB, redis *redis.Client, grpcLikeClient like.LikeSe
 /* 点赞 */
 func (s *LikeService) Like(like *weibo.Like) error {
 	err := s.db.Create(&like).Error
+	log.Println("****like****")
+	log.Println(err)
 	if err == nil {
 		// redis 文章增加点赞数
 		s.IncrLikesCountToRedis(like.PostId)
@@ -107,9 +109,9 @@ func (s *LikeService) GetMessagesCountFromRedis(toUserId uint64) (uint64, error)
 
 /* redis 增加消息数 */
 func (s *LikeService) IncrMessagesCountToRedis(userId uint64) error {
-	fansCountKey := "user:id:" + strconv.FormatUint(userId, 10) + ":messages"
-	s.redis.SetNX(fansCountKey, 0, 0)
-	if _, err := s.redis.Incr(fansCountKey).Result(); err != nil {
+	key := "user:id:" + strconv.FormatUint(userId, 10) + ":messages"
+	s.redis.SetNX(key, 0, 0)
+	if _, err := s.redis.Incr(key).Result(); err != nil {
 		return err
 	}
 	return nil
@@ -117,10 +119,14 @@ func (s *LikeService) IncrMessagesCountToRedis(userId uint64) error {
 
 /* redis 增加点赞数 */
 func (s *LikeService) IncrLikesCountToRedis(postId uint64) error {
-	fansCountKey := "user:id:" + strconv.FormatUint(postId, 10) + ":likes"
-	s.redis.SetNX(fansCountKey, 0, 0)
+	key := "post:id:" + strconv.FormatUint(postId, 10) + ":likes"
+	s.redis.SetNX(key, 0, 0)
+	log.Println("****IncrLikesCountToRedis****")
+	log.Println(key)
 
-	if _, err := s.redis.Incr(fansCountKey).Result(); err != nil {
+	if _, err := s.redis.Incr(key).Result(); err != nil {
+		log.Println("****err****")
+		log.Println(err)
 		return err
 	}
 	return nil
