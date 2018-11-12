@@ -1,14 +1,31 @@
 <template>
-  <div id="app">
-    <Header></Header>
-    <router-view/>
-  </div>
+    <div id="app">
+        <Top></Top>
+        <router-view/>
+    </div>
 </template>
 
 <script>
-  import Header from "./components/Header";
-  export default {
-     name: "App",
-      components: {Header}
-  }
+
+    import Top from "./components/Top";
+
+    export default {
+        name: "App",
+        components: {Top},
+    }
 </script>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    li {
+        list-style: none;
+    }
+</style>
