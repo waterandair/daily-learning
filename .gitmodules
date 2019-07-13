@@ -1,0 +1,6 @@
+[submodule "learn-redis/cli/go-redis-translation"]
+	path = learn-redis/cli/go-redis-translation
+	url = https://github.com/waterandair/go-redis-translation
+[submodule "learn-go/go-translation"]
+	path = learn-go/go-translation
+	url = https://github.com/waterandair/go-translation
