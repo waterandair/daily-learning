@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ReplicationController  # 资源类型对象: 副本控制器 RC
+metadata:
+  name: mysql  # RC 的名称,全局唯一
+spec:
+  replicas: 1  # Pod 副本期待数量
+  selector:
+    app: mysql  # 具有这个标签的 Pod
+  template:  # 根据次末班创建 Pod 的实例
+    metadata:
+      labels:
+        app: mysql  # Pod 副本拥有的标签,对应 RC 的 Selector
+    spec:
+      containers:  # Pod 内容器的定义
+        - name: mysql  # 容器的名称
+          image: mysql  # 容器对应的 docker 镜像
+          # imagePullPolicy: Never  如果本地有 mysql:latest 镜像,可以让 kubernetes 用本地镜像
+          ports:
+            - containerPort: 3306  # 容器暴露的端口号
+          env:  # 注入到容器的环境变量
+            - name: MYSQL_ROOT_PASSWORD
+              value: "123456"
