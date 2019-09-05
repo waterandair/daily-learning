@@ -7,7 +7,7 @@
 kubectl apply -f mysql-rc.yaml
 ```
 #### 建立mysql服务
-将类型设置为 NodePort, 这样就通过 node(集群中的某个机器)的 IP 访问到mysql
+将类型设置为 NodePort, 这样就通过 node(物理主机或虚拟机)的 IP 访问到mysql
 ```
 kubectl apply -f mysql-svc.yaml
 ```

@@ -8,13 +8,20 @@ spec:
     app: mysql  # 具有这个标签的 Pod
   template:  # 根据次末班创建 Pod 的实例
     metadata:
-      labels:
+      labels:  # labels 是用户可以任意指定的 key-val 键值对, 比如这里添加了一个 app: mysql 的label, 而 RC 的 selector 则选择了 app: mysql 这个标签
         app: mysql  # Pod 副本拥有的标签,对应 RC 的 Selector
     spec:
       containers:  # Pod 内容器的定义
         - name: mysql  # 容器的名称
           image: mysql  # 容器对应的 docker 镜像
-          # imagePullPolicy: Never  如果本地有 mysql:latest 镜像,可以让 kubernetes 用本地镜像
+          imagePullPolicy: IfNotPresent  # 优先让 kubernetes 用本地镜像
+          resources:  # 资源限额
+            requests:  # 最小申请量,系统必须满足的要求
+              memory: "64Mi"
+              cpu: "250m"  # cpu 限额以 m(千分之一) 为单位, 250m 表示 0.25 个 cpu
+            limits:  # 最大允许使用的资源量,超过后,可能会被 kubernetes Kill 并重启
+              memory: "512Mi"
+              cpu: "500m"
           ports:
             - containerPort: 3306  # 容器暴露的端口号
           env:  # 注入到容器的环境变量
