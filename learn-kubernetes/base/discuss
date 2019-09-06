@@ -260,6 +260,52 @@ Endpoints 对应被每个 Node 上的 kube-proxy 进程使用,kube-proxy 进程�
 
 ### Scheduler  
 
+Kubernetes Scheduler 在整个系统中承担了"承上启下"的重要功能,"承上"是指它负责接收 Controller Manager 创建的新 Pod, 为其安排一个落脚的"家"-目标Node;
+"启下"是指安置工作完成后,目标Node上的kubelet 服务进程接管后继工作,负责Pod生命周期中的"下半生".  
+
+简单的说,就是通过调度算法调度,为待调度Pod列表的每个Pod从Node列表中选择一个最合适的Node.  
+
+随后,目标Node上的kubelet通过API Server监听到的Kubernetes Scheduler 产生的 Pod 绑定事件,然后获取对应的 Pod 清单,下载 Image 镜像,并启动容器.  
+
+大概步骤:  
+- 预选调度过程: 遍历所有目标Node,筛选出符合要求的候选节点.  
+- 确定最优节点: 在预选过程产生的候选节点上,采用优选策略计算出每个候选节点的积分,积分最高者成为目标Node
+
+#### 预选策略
+- NoDiskConflict: 判断待调度的Pod的GCEPersistentDisk 或 AWSElasticBlockStore 和备选Node中已存在的 Pod 是否存在冲突.   
+- PodFitsResources: 判断备选Node的资源是否满足备选Pod的需求  
+- PodSelectorMatches: 判断备选Node是否包含备选Pod的 `spec.nodeSelector`指定的标签  
+- PodFitsHost: 判断备选Pod的`spec.nodeName`所指定的节点名称和备选Node的名称是否一致  
+- CheckNodeLabelPresence
+- CheckServiceAffinity  
+- PodFitsPorts
+
+#### 优选策略
+- LeastRequestedPriority: 选出资源消耗最小的节点  
+- CalculateNodeLabelPriority: 判断策略列出的标签在备选节点中存在时,是否选择该备选节点.
+- BalancedResourceAllocation: 选出各项资源使用率最均衡的节点.  
+
+### kubelet  
+
+Kubelet 用于处理 Master 节点下发到本节点的任务,管理 Pod 及Pod中的容器,并在 API Server 上注册节点自身信息,定期向 Master 节点汇报节点资源的使用情况,并
+通过 cAdvisor 监控容器和节点资源.  
+
+#### kubelet 处理创建和修改Pod任务  
+1. 为该Pod 创建一个数据目录
+2. 从APIServer读取该Pod清单
+3. 为该Pod挂载外部卷(External Volume)
+4. 下载 Pod 用到的 Secret
+5. 检查已经运行在节点中的Pod,如果该Pod没有容器或Pause容器没有启动,则先停止Pod里所有容器的进程.如果在Pod中有需要删除的容器,则删除这些容器.
+6. 用 'kubernetes/pause' 镜像为每个 Pod 创建一个容器.该 Pause 容器用于接管Pod中所有其他容器的网络.每创建一个新的Pod,kubelet 都会先创建一个 Pause 容器,然后其他容器
+7. 为Pod中的每个容器做如下处理:  
+7.1  
+
+
+
+
+
+
+
 
 
 
