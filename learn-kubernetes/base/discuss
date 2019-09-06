@@ -1,0 +1,182 @@
+## 笔记&讨论
+### 入门
+#### 为什么要给每一个 pod 初始一个 pause 容器
+1. 以业务无关的 pause 容器的状态代表 pod 的状态
+2. 方便 pod 中的容器共享网络和存储 
+
+#### 理解最小单元 pod
+1. pod 中任意一个容器停止,kubernetes 都会自动的重启该 pod
+2. pod 所在节点宕机后,该节点的所有 pod 将重新调度到其他节点
+
+#### Label Selector 的一些使用场景
+1. kube-controller 通过 RC 定义的 LabelSelector 筛选要监控的 Pod 副本数,从而实现 Pod 副本数始终符合预期设定的自动控制流程
+2. kube-proxy 通过 Service 的 Label Selector 选择对应的 Pod, 自动建立 Service 到 Pod 的请求转发路由表,实现负载均衡
+3. 对 Node 定义特定Label, 并在 Pod 定义中使用 NodeSelector,实现 Pod 的定向调度
+
+#### ReplicationController(RC)的一些特性与作用,Replica Set 与之相同
+- 大部分情况下,通过定义 RC 实现 Pod 的管理
+- RC 里包含完整的 Pod 定义模板
+- RC 通过 Label Selector 实现对Pod 副本的自动控制
+- 通过改变 RC 里的 Pod 副本数,可以实现 Pod 的扩容和缩容
+- 通过改变 RC 里的 Pod 模板中的镜像版本,可以实现 Pod 的滚动升级
+#### Replication Controller 和 Replica Set 的区别
+Replica Set 支持基于集合的 Label selector (Set-based selector)  
+Replication Controller 只支持基于等式的 Label Selector(equality-based selector)  
+
+Replica Set 很少单独使用,它主要被 Deployment 这个更高层的资源对象使用.  
+Replica Set 和 Department 逐步替代了 RC的作用
+
+#### Deployment 的使用场景
+- 创建一个 Deployment 来生层对应的 Replica Set 并完成副本的创建过程
+- 检查 Deployment 状态看部署是否完成(Pod副本的数量是否达到预期的值)
+- 更新 Deployment 以创建新的 Pod (比如镜像升级)
+- 如果当前 Deployment 不稳定,则回滚到一个早先的 Deployment 版本
+- 挂起或者恢复一个 Deployment
+
+#### Horizontal Pod Autoscaler (HPA) 是什么?
+HPA 也是一个资源对象, 它表示 Pod 横向自动扩容: 根据目标 Pod 的负载情况,自动的调整目标 Pod 的副本数.  
+HPA 可以根据两行方式作为指标:  
+1. CPUUtilizationPercentage, 表示目标 Pod 所有副本的 Cpu 利用率的平均值. 
+2. 应用程序自定义的度量指标,比如 TPS 或 QPS      
+
+注意:  
+- Pod CPU 使用率来源于 heapster, 要预先安装
+- 在 RC 或 Deployment 中的 Pod 必须定义 `resources.requests.cpu`
+
+#### Kubernetes 里的"三种 IP"
+##### NodeIP: Node 节点的 IP 地址
+Kubernetes 集群中每个节点的物理网卡IP地址, Kubernetes 集群外的节点通过 NodeIP 访问 Kubernetes 集群中某个节点的服务.
+##### PodIP: Pod 的 IP 地址
+它是 Docker Engine 根据 docker0 网桥的IP地址段进行分配的,通常是一个虚拟的二层网络.
+Kubernetes 里一个 Pod 里的容器访问另一个 Pod 里的容器,就是通过 PodIP 所在的虚拟二层网络进行通信,
+而真实的 TCP/IP 流量则是通过 NodeIP 所在的物理网卡流出的.
+
+##### ClusterIP: Service 的 IP 地址
+虚拟的IP
+- ClusterIP 仅仅作用于 Kubernetes Service 这个对象,并由 Kubernetes 管理和分配 IP 地址(来源于 ClusterIP 地址池)
+- ClusterIP 无法并Ping, 因为没有一个"实体网络对象"来响应
+- ClusterIP 只能结合 Service Port 组成一个具体的通信端口,单独的 ClusterIP 不具备 TCP/IP 通信的基础.
+- 在 Kubernetes 集群中,NodeIP网,PodIP网与ClusterIP网之间的通信,采用的是 Kubernetes 自己设计的一种变成方式的特殊的路由规则
+
+#### Service 的 NodePort 方式实现集群外部访问服务
+实现方式: 在 Service 的 `spec` 中制定 `type` 为 `NodePort`, 并在 `spec.ports` 中定义 `nodePort`  
+
+注意: 外部系统可以用kubernetes集群中任意一个 NodeIP + 具体NodePort 访问内部服务.
+
+#### 定义在Pod上的Volume类型
+##### emptyDir
+emptyDir Volume 是在 Pod 分配到 Node 时创建的,Kubernetes 自动为其在宿主机上分配一个目录.
+当 Pod 从 Node 上移除时, emptyDir 中的数据也会被永久删除.  
+
+应用场景:
+- 临时空间,某些应用程序运行时所需要的临时目录,且无需永久保留
+- 长时间任务的中间过程 CheckPoint 的临时保存目录
+- 一个容器需要从另一个容器中获取数据的目录(多容器共享目录)
+##### hostPath
+为Pod挂在宿主机上的文件或目录.  
+
+应用场景:
+- 容器应用程序生成的需要永久保存的日志文件
+- 需要访问宿主机上Docker引擎内部数据结构的容器应用时,可以定义 hostPath 为 /var/lib/docker 目录
+
+注意:  
+- 在不同的 Node 上具有相同配置的 Pod 可能会因为宿主机上的目录和文件不同而导致对 Volume 上的目录和文件的访问结果不一致
+- 如果使用了资源配额管理,则 Kubernetes 无法将 hostPath 在宿主机上使用的资源纳入管理
+
+##### NFS 网络文件系统
+
+##### 其它
+- gcePersistentDick 谷歌公有云的永久磁盘
+- awsElasticBlockStore 亚马逊公有云提供的 EBS Volume 存储 
+- ...
+
+#### Persistent Volume(PV) 与 Persistent Volume Claim(PVC)
+PV 是一种资源对象; PVC 是创建 PV 的模板. 
+
+- PV 只能是网络存储,不属于任何 Node, 但可以在每个 Node 上访问
+- PV 不是定义在 Pod 上的,而是独立于 Pod 之外的定义
+- PV 类型: NFS,RBD,GCE Persistent Disks,iSCSCI,AWS ElasticBlockStore,GlusterFS 
+
+#### ConfigMap 供容器使用的典型用法和限制条件
+##### 典型用法
+- 生成为容器内的环境变量
+- 设置容器启动命令的启动参数(需设置为环境变量)
+- 以 Volume 的形式挂载为容器内部的文件或目录
+##### 限制条件
+- ConfigMap 必须在 Pod 之前创建
+- ConfigMap 也可以定义为属于某个 Namespace, 只有处于相同 Namespaces 中的 Pod 可以引用它
+- 只能用于被 Api Server 管理的 Pod 使用,静态 Pod 无法引用 ConfigMap
+- Pod 对 ConfigMap 进行挂载(VolumeMount)时,只能被挂载为目录,而不是文件,且会覆盖该目录其他文件.如果要保留其他文件,可以先将 ConfigMap 挂载到临时目录,在通过启动脚本将配置文件复制到 实际配置目录下
+
+### Pod
+#### Pod 的几种状态
+- Pending: API Server 已经创建该 Pod, 但 Pod 内还有一个或多个容器的镜像没有创建,包括正在下载镜像的过程
+- Running: Pod 内所有容器均已创建,且至少有一个容器处于运行,正在启动,或者正在重启状态
+- Succeed: Pod 内所有容器均成功执行退出,且不会再重启
+- Failed: Pod 内所有容器均已退出,但至少有一个容器退出为失败状态
+- Unknown: 无法获取该Pod的状态,可能由于网络通信问题导致
+
+#### Pod 的重启策略(Restart Policy)
+由Pod所在Node上的kubelet进行判断,当容器异常退出或者健康检查失败后,根据Pod设置的重启策略进行操作.  
+重启策略包括:  
+- Always: 容器失效时,自动重启
+- OnFailure: 容器终止运行且退出码不为0时,自动重启
+- Never: 不会重启  
+
+用于管理 Pod 的控制器对Pod重启策略的要求:  
+- RC 和 DaemonSet: 必须为 Always,保证容器持续运行
+- Job: OnFailure 或 Never, 确保容器执行完后不再重启
+- kubelet 命令行: 失效时自动重启,不管 RestartPolicy 设置为什么值,也不会对 Pod 进行健康检查
+
+#### Pod 健康检查
+- LivenessProbe 探针: 判断容器是否存活(running 状态), 如果容器不包含 LivenessProbe, 则始终认为是 "success"
+- - ExecAction: 在容器内部执行一个命令,返回为0, 则表明容器健康
+- - TcpSocketAction: 判断是否可以通过容器的 IP 和端口号建立TCP连接
+- - HTTPGetAction: 判断容器的http服务的一个Get请求是否返回大于200小于400的状态码
+- ReadinessProbe: 判断容器是否启动完成(ready状态), 可以接收请求.
+
+#### Pod 的调度
+##### RC,Deployment: 全自动调度
+维护多份副本
+##### DaemonSet: 特定场景调度
+用于管理在集群中每个 Node 上仅运行一份 Pod 的副本实例, 比如:  
+- 在每个 Node 上运行一个 GlusterFS 存储或者 Ceph 存储的 daemon 进程
+- 在每个 Node 上运行一个日志采集程序, 例如 fluentd 或者 logstach
+- 在每个 Node 上运行一个健康程序,采集该Node的运行性能数据,例如 Prometheus Node Exporter, collectd, New Relic agent 或者 Ganglia gmond 等
+
+##### Job: 批处理调度
+
+###### Non-parallel Jobs
+通常一个 Job 只启动一个 Pod,只有在Pod异常后,才会重启该Pod,Pod正常结束,Job也将结束
+
+###### Parallel Jobs With a fixed completion count
+- 并行 Job 会启动多个 Pod
+- 当正常结束的 Pod 数量达到 `spec.completions` 时,Job结束.
+- `spec.parallelism` 参数控制并行度,表示同时起送几个 Job 来处理 Work Item
+
+每个 Pod 对应一个工作项,处理完一个,Pod就结束了,这种方式会大量的结束和开启 Pod
+
+###### Parallel Jobs with a work queue
+- 需要一个存放 Work item 的独立的 Queue
+- 不能设置 `spec.completions` 参数
+- 每个 Pod 能独立判断和决定是否还有任务项需要处理
+- 如果某个 Pod 正常结束,则 Job 不会再启动新的 Pod,其他Pod 应该处于即将结束或者退出状态
+- 所有Pod都结束了,且至少有一个 Pod 成功结束,则整个Job算成功结束  
+
+每个 Pod 不断从对垒中拉取工作项并处理,知道队列为空,Pod退出执行,因此,这种情况下,只要有一个 Pod 成功结束,就意味着整个 Job 进入终止状态
+
+#### 滚动升级(Rolling Update)的流程 todo
+新建一个新的 RC: `new-rc.yaml`, 运行 `kubectl rolling-update <old-rc> -f new-rc.yaml`  
+
+注意:  
+- 新的 RC 的名称不能与旧的 RC 名称相同  
+- 新的 RC 在 Selector 中应至少有一个 label 与旧的 RC 的 Label 不同,以标识新的RC
+
+## 注意
+### 前台运行启动命令
+kubernetes 要求我们自己创建的docker镜像以一个前台命令作为启动命令,如果在后台运行,比如 `nohup ./start,sh &`, 该命令执行完后,会销毁该Pod.  
+
+对于无法改造为前台执行的应用,可以使用 supervisor.
+
+### Endpoint
+PodIP + containerPort = Endpoint, 一个 Pod 可以有多个 Endpoint

@@ -2,535 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27f2264d-2b8b-4e20-992a-46be4e9ef38a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/daily-learning.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/daily-learning.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learn-kubernetes/base/service-definition" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/beego_orm.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/beego_orm2.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/content.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/db.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/file_operate.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/footer.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/header.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/http.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/json.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/login.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/redigo.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/regexp.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/rpc-http-client.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/rpc-http-server.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/src/github.com/cweill/gotests" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/src/github.com/garyburd/redigo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/src/github.com/gin-contrib/sse" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/src/github.com/gin-gonic/gin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/src/github.com/go-sql-driver/mysql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/src/github.com/golang/protobuf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/src/github.com/gorilla/websocket" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/src/github.com/mattn/go-isatty" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/src/github.com/sirupsen/logrus" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/src/github.com/ugorji/go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/src/gopkg.in/go-playground/validator.v8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/src/gopkg.in/yaml.v2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/src/model/model.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/string_operate.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/template.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/test.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/test/134154dq9x124e3vgr3xgv.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/upload.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/websocket-client.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/websocket-server.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/web/zj.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-hadoop/python/hdfs_demo.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-hive/base/demo.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-hive/log-analysis/access.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-hive/log-analysis/create_bd.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-hive/log-analysis/mock_logs.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-hive/udf/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-hive/udf/upper.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-java/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-java/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-java/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-java/learn-java.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-kafka/consumer/auto_consumer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-kafka/consumer/manual_consumer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-kafka/producer/kafkaproducer/async.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-kafka/producer/kafkaproducer/sync.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-kafka/producer/sample/async_producer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-kafka/producer/sample/sync_producer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/10_modules_and_packages/1_make_hierarchical_package_of_modules.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/11_network_and_web_programing/1_interacting_with_http_services_as_a_client.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/11_network_and_web_programing/2.1_tcp_client.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/11_network_and_web_programing/2_creating_a_tcp_server.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/11_network_and_web_programing/3_creating_a_udp_server.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/11_network_and_web_programing/4_generating_a_range_of_ip_address_from_a_cidr_address.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/11_network_and_web_programing/6.1_prc_client.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/11_network_and_web_programing/6_implementing_a_simple_remote_procedure_call_with_XML-RPC.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/11_network_and_web_programing/7.1_client.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/11_network_and_web_programing/7_communicating_simply_between_interpreters.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/11_network_and_web_programing/8_1_client.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/11_network_and_web_programing/8_implementing_remote_procedure_calls.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/12_concurrency/1_starting_and_stoping_threads.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/12_concurrency/2_determining_if_a_thread_has_started.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/12_concurrency/3_communicating_between_threads.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/12_concurrency/4_locking_critical_sections.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/12_concurrency/5_locking_with_deadlock_avoidance.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/12_concurrency/6_storing_thread_specific_state.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/12_concurrency/7_cerating_a_thread_pool.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/12_concurrency/8_performing_simple_parallel_programming.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/12_concurrency/9_defining_an_actor_task.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/12_concurrency/test/0.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/12_concurrency/test/1.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/12_concurrency/test/2.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/12_concurrency/test/3.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/12_concurrency/test/4.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/12_concurrency/test/5.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/12_concurrency/test/6.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/12_concurrency/test/7.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/12_concurrency/test/8.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/12_concurrency/test/9.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/13_utility_scripting_and_system_administration/1_accepting_script_input_via_redirection_pipes_or_input_files.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/13_utility_scripting_and_system_administration/2_terminating_a_program_with_an_error_message.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/13_utility_scripting_and_system_administration/3_parsing_command-line_options.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/13_utility_scripting_and_system_administration/4_prompting_for_a_password_at_runtime.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/13_utility_scripting_and_system_administration/5_getting_the_terminal_size.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/13_utility_scripting_and_system_administration/6_executing_an_external_command_and_getting_its_output.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/13_utility_scripting_and_system_administration/7_copying_or_moving_files_and_directories.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.10removing_duplicates_from_a_sequence_while_maintaining_order.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.11naming_a_slice.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.12determining_the_most_frequently_occurring_items_in_a_sequence.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.13sorting_a_list_of_dictionaries_by_a_common_key.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.14sorting_objects_without_native_comparison_support.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.15grouping_records_together_based_on_a_field.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.16filtering_sequence_elements.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.17 extracting_a_subset_of_a_dictionary.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.18mapping_names_to_sequence_elements.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.19transforming_and_reducing_data_at_the_same_time.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.1unpacking_a_sequence_into_separate_variables.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.20combining_multiple_mappings_into_a_single_mapping.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.21_找到多个字典中的公共键.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.2unpacking_elements_from_iterables_of_arbitrary_length.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.3keeping_the_last_n_items.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.4finding_the_largest_or_smallest_n_items.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.5implementing_a_priority_queue.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.6mapping_keys_to_multiple_values_in_a_dictionary.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.7keeping_dictionaries_in_order.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.8calculating_with_dictionaries.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.9finding_commonalities_in_two_dictionaries.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/test2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/2_strings_and_text/2.10working_with_unicode_characters_in_regular_expressions" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/2_strings_and_text/2.11stripping_unwanted_characters_from_strings.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/2_strings_and_text/2.12sanitizing_and_cleaning_up_text.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/2_strings_and_text/2.13aligning_text_string.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/2_strings_and_text/2.14combining_and_concatennating_strings.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/2_strings_and_text/2.15interpolating_variables_in_strings.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/2_strings_and_text/2.16reformatting_text_to_a_fixed_number_of_columns.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/2_strings_and_text/2.17handling_html_and_xml_entities_in_text.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/2_strings_and_text/2.18tokenizing_text.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/2_strings_and_text/2.1splitting_strings_on_any_of_multiple_delimiters.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/2_strings_and_text/2.2matching_text_at_the_start_or_end_of_a_string.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/2_strings_and_text/2.3matching_strings_using_shell_wildcard_patterns.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/2_strings_and_text/2.4matching_and_searching_for_text_patterns.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/2_strings_and_text/2.5searching_and_replacing_text.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/2_strings_and_text/2.6searching_and_replacing_case_insensitive_text.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/2_strings_and_text/2.7sepcifying_a_regular_expression_for_the_shortest_match.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/2_strings_and_text/2.8writing_a_regulay_expression_for_multiline_patterns.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/2_strings_and_text/2.9normalizing_unicode_text_to_a_standard.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/2_strings_and_text/test2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/2_strings_and_text/text3.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/3_num_date_time/3.10picking_things_at_random.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/3_num_date_time/3.11converting_days_to_seconds_and_other_basic_time_conversions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/3_num_date_time/3.12determining_last_fridays_date.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/3_num_date_time/3.13finding_the_date_range_for_the_current_month.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/3_num_date_time/3.14converting_strings_into_datetimes.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/3_num_date_time/3.1rounding_numerical_values.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/3_num_date_time/3.2performing_accurate_decimal_calulations.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/3_num_date_time/3.3formatting_numbers_for_output.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/3_num_date_time/3.4working_with_binary_octal_and_hexadecimal_integers.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/3_num_date_time/3.5packing_and_unpacking_large_integers_from_bytes.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/3_num_date_time/3.7working_with_infinity_and_nans.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/3_num_date_time/3.8calculating_with_fractions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/3_num_date_time/3.9calculating_with_large_numerical_arrays.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/4_iterators_and_generators/4.10iterating_over_the_index-value_pairs_of_a_sequence.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/4_iterators_and_generators/4.11iterating_over_multiple_sequences_simutaneously.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/4_iterators_and_generators/4.12iterating_on_items_in_separate_containers.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/4_iterators_and_generators/4.13creating_data_processing_pipelines.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/4_iterators_and_generators/4.14flattening_a_nested_sequence.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/4_iterators_and_generators/4.15iterating_in_sorted_order_over_merged_sorted_iterables.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/4_iterators_and_generators/4.16replacing_infinite_while_loops_with_an_iterator.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/4_iterators_and_generators/4.2delegating_tieration.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/4_iterators_and_generators/4.3creating_new_iteration_patterns_with_generators.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/4_iterators_and_generators/4.4implementing_the_iterator_protocol.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/4_iterators_and_generators/4.5iterating_in_reverse.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/4_iterators_and_generators/4.7taking_a_slice_of_an_iterator.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/4_iterators_and_generators/4.8skipping_the_first_part_of_an_iterable.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/4_iterators_and_generators/4.9iterating_over_all_possible_combinations_or_permutions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.10_memory_mapping_binary_files.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.11_manipulating_pathnames.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.12_testing_for_the_existence_of_a_file.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.13_getting_a_directory_listing.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.14_bypassing_filename_encoding.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.15_printing_bad_filenames.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.16_adding_or_changing_the_encoding_of_an_already_open_file.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.16_sample.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.17_writing_bytes_to_a_textfile.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.18_wrapping_an_existing_file_descriptor_as_a _file_object.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.19_making_temporary_files_and_directories.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.1_reading_and_writing_text_data.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.20_communicating_with_serial_ports.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.21_serialilzing_python_objects.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.21seriallizing_python_object.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.2printing_to_a_file.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.3printing_with_a_different_separator_or_line_ending.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.4_reading_and_writing_binary_data.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.5.1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.5writing_to_a_file_that_does_not_already_exist.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.6performing_io_operations_on_a_string.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.7_reading_and_writing_compressed_datafiles.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.7_test.txt.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.7_test_write.txt.bz2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.7_test_write.txt.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.7_testbz.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.7_testbz.txt.bz2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.8_iterating_over_fixed-sized_records.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.8_text_file.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.8sample.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.9_new_sample.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.9_reading_binary_data_into_a_mutable_buffer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/data" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/data.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/file/5.18_1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/file/5.21_test1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/file/5.21_test2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/file/test_5.21.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/jialapeño.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/test2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/test3.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/test4.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/test6.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/text.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/text5.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/6_data_encoding_and_processing/6.10_decoding_and_encoding_base64.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/6_data_encoding_and_processing/6.11_reading_and_writing_binary_arrays_of_structures.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/6_data_encoding_and_processing/6.13_summarizing_data_and_performing_statistics.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/6_data_encoding_and_processing/6.1_reading_and_writing_csv_data.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/6_data_encoding_and_processing/6.2_reading_and_writing_json_data.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/6_data_encoding_and_processing/6.9_decoding_and_encoding_hexadecimal_digits.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/6_data_encoding_and_processing/data.b" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/6_data_encoding_and_processing/test/data.b" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/6_data_encoding_and_processing/test/data.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/6_data_encoding_and_processing/test/stock.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/6_data_encoding_and_processing/test/stock2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/6_data_encoding_and_processing/test/stock3.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/6_data_encoding_and_processing/test/stock4.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/7_functions/1_writing_functions_that_accept_any_number_of_arguments.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/7_functions/7.10_carrying_extra_state_with_callback_functions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/7_functions/7.11_inlining_callback_functions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/7_functions/7.12_accessing_variables_defined_inside_a_closure.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/7_functions/7.2_writing_functions_that_only_accept_keyword_arguments.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/7_functions/7.3_attaching_informational_metadata_to_function_arguments.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/7_functions/7.4_return_multiple_values_from_a_function.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/7_functions/7.5_defining_functions_with_default_arguments.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/7_functions/7.6_defining_anonynous_or_inline_functions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/7_functions/7.7_capturing_variables_in_anonymous_functions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/7_functions/7.8_making_an_n_argument_callable_work_as_a_callable_with_fewer_arguments.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/7_functions/7.9_replacing_single_method_classes_with_functions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.10_using_lazily_comouted_properties.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.11_simplifying_the_initialzation_of_data_structures.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.12_defining_an_interface_or_abstract_base_class.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.13.2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.13.3.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.13_implementing_a_data_model_or_type_system.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.14_implementing_custom_containers.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.15_delegating_attribute_access.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.16_defining_more_than_one_constructor_in_a_class.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.17_creating_an_instance_without_invoking_init.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.18_extending_classes_with_mixins.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.19_implementing_stateful_objects_or_state_machines.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.1_changing_the_string_representation_of_instances.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.20_calling_a_method_on_an_object_given_the_name_as_a_string.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.2_customizing_string_formatting.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.3_making_objects_support_the_context_management_protocol.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.4_saving_memory_when_creating_a_large_number_of_instances.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.5_encapsulating_names_in_a_class.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.6_creating_managed_attributes.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.7_calling_a_method_on_a_parent_class.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.8_extending_a_property_in_a_subclass.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/8.9_creating_a_new_kind_of_class_or_instance_attribute.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/8_classes_and_objects/foo.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/10_applying decorators_to_class_and_static_methods.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/11_writing_decorators_that_add_arguments_to_wrapped_functions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/12_using_decorators_to_patch_class_definitions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/13_using_a_metaclass_to_control_instance_creation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/14_capturing_class_attribute_definition_order.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/15_defining_a_metaclass_that_takes_optional_arguments.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/16_enforcing_an_argument_signature_on_*args_and_**kwargs.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/17_encoforcing_creating_conventions_in_classes.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/18_defining_classes_programmatically.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/19_initializing_class_members_at_definition_time.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/1_putting_a_wrapper_around_a_function.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/21_avoiding_repetitive_property_methods.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/22_defining_context_managers_the_easy_way.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/2_preserving_function_metadata_when_writing_decorators.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/3_unwrapping_a_decorator.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/4_defining_a_decorator_that_takes_arguments.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/5_defining_a_decorator_with_user_adjustable_attributes.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/6_definging_a_decorate_that_takes_an_optional_argument.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/7_enforcing_type_checking_on_a_function_using_a_decorator.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/8_defining_decorators_as_part_of_a_class.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/9_defining_decorators_as_classes.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/create_metaclass_python2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/cookbook/9_meta_programming/create_metaclass_python3.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/.idea/mysite.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/db.sqlite3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/manage.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/myapp/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/myapp/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/myapp/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/myapp/migrations/0002_auto_20180312_1741.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/myapp/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/myapp/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/myapp/practice_model_demo.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/myapp/tests.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/myapp/views.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/mysite/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/mysite/settings.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/mysite/urls.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/mysite/wsgi.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/polls/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/polls/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/polls/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/polls/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/polls/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/polls/static/polls/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/polls/templates/polls/detail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/polls/templates/polls/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/polls/templates/polls/results.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/polls/tests.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/polls/urls.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/polls/views.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/mysite/templates/admin/base_site.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test1/booktest/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test1/booktest/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test1/booktest/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test1/booktest/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test1/booktest/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test1/booktest/tests.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test1/booktest/urls.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test1/booktest/views.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test1/manage.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test1/templates/booktest/detail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test1/templates/booktest/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test1/test1/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test1/test1/settings.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test1/test1/urls.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test1/test1/wsgi.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test2/booktest/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test2/booktest/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test2/booktest/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test2/booktest/migrations/0002_areainfo.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test2/booktest/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test2/booktest/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test2/booktest/tests.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test2/booktest/urls.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test2/booktest/views.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test2/manage.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test2/templates/booktest/detail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test2/templates/booktest/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test2/test2/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test2/test2/settings.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test2/test2/urls.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test2/test2/wsgi.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test3/booktest/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test3/booktest/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test3/booktest/apps.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test3/booktest/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test3/booktest/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test3/booktest/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test3/booktest/tests.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test3/booktest/urls.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test3/booktest/views.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test3/db.sqlite3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test3/manage.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test3/templates/booktest/detail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test3/templates/booktest/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test3/test3/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test3/test3/settings.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test3/test3/urls.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/django_demo/test3/test3/wsgi.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/.env" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/auth/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/auth/email.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/auth/forms.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/auth/views.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/emails.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/errors/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/errors/handlers.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/main/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/main/forms.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/main/views.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/templates/_post.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/templates/auth/login.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/templates/auth/register.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/templates/auth/reset_password.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/templates/auth/reset_password_request.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/templates/base.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/templates/edit_profile.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/templates/email/reset_password.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/templates/email/reset_password.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/templates/errors/404.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/templates/errors/500.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/templates/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/app/templates/user.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/db_create.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/db_repository/README" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/db_repository/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/db_repository/manage.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/db_repository/migrate.cfg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/db_repository/versions/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/flask_demo.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/logs/info.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/logs/info.log.1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/logs/info.log.10" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/logs/info.log.2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/logs/info.log.3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/logs/info.log.4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/logs/info.log.5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/logs/info.log.6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/logs/info.log.7" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/logs/info.log.8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/logs/info.log.9" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/migrations/README" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/migrations/alembic.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/migrations/env.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/migrations/script.py.mako" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/migrations/versions/179f739951ca_posts_table.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/migrations/versions/1cb7fd6b3062_new_fields_in_user_model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/migrations/versions/5798b577fea6_followers.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/migrations/versions/a6b51178d055_users_table.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/flask_demo/test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/matplotlib_demo/sin_demo.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/matplotlib_demo/test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/pattern/singleton/singleton_demo.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/pattern/singleton/singleton_demo2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/requests/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/requests/http_for_humans.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/spiders/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/spiders/duanzi_spider.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/spiders/qiushi.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/spiders/qiushi_queue.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/spiders/qiushi_queue.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/spiders/qiushi_queue2.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/spiders/qiushi_queue2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/cookie/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/cookie/cookie.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/cookie/cookiejar.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/cookie/login_mosoteach.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/cookie/mozillacookiejar.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/cookie/request_with_cookie.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/customize_opener.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/data/page_1.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/data/page_10.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/data/page_2.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/data/page_3.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/data/page_4.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/data/page_5.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/data/page_6.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/data/page_7.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/data/page_8.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/data/page_9.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/proxy_handler.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/tieba_spider.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/urllib/urllib_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/xpath/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/xpath/test_html.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/xpath/test_lxml.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/base/xpath/tieba_xpath.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/scrapy/mySpider/mosoteachspider.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/scrapy/mySpider/mySpider/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/scrapy/mySpider/mySpider/items.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/scrapy/mySpider/mySpider/middlewares.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/scrapy/mySpider/mySpider/pipelines.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/scrapy/mySpider/mySpider/settings.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/scrapy/mySpider/mySpider/spiders/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/scrapy/mySpider/mySpider/spiders/douyu.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/scrapy/mySpider/mySpider/spiders/itcast.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/scrapy/mySpider/mySpider/spiders/mosoteach.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/scrapy/mySpider/mySpider/spiders/sina.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/scrapy/mySpider/mySpider/spiders/teachaers.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/scrapy/mySpider/mySpider/spiders/teacher.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/scrapy/mySpider/mySpider/spiders/tencent.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/scrapy/mySpider/scrapy.cfg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/scrapy/mySpider/teacher2.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/spiders/scrapy/mySpider/tencent.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/tornado_demo/demo/config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/tornado_demo/demo/opt.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/tornado_demo/demo/test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-python/tornado_demo/demo/upload.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-react/doc-demo/src/Clock.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-react/doc-demo/src/ControlledComponent.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-react/doc-demo/src/LoginControl.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-react/myapp/src/components/Layouts.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-react/myapp/src/components/ProductList.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-react/myapp/src/models/products.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/.idea/hydra.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/.vscode/settings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/entry-level/HelloWord.scala" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/entry-level/classpath/HelloWord$.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/entry-level/classpath/HelloWord.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/entry-level/collectOperation.scala" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/entry-level/condition.scala" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/entry-level/data-structure.scala" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/entry-level/exception.scala" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/entry-level/file.scala" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/entry-level/functional.scala" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/entry-level/loop.scala" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/entry-level/object.scala" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/entry-level/output.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/entry-level/pattern_matching.scala" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/entry-level/wordcount.scala" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-scala/learn-scala.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/.browserslistrc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/.eslintrc.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/babel.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/postcss.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/public/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/public/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/src/App.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/src/assets/face.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/src/assets/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/src/components/HelloWorld.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/src/components/PostList.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/src/components/Top.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/src/dist/css/app.6ff70551.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/src/dist/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/src/dist/js/app.a5ee8c2f.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/src/dist/js/app.a5ee8c2f.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/src/dist/js/chunk-vendors.1dd61945.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/src/dist/js/chunk-vendors.1dd61945.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/src/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/src/router.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/src/store.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/src/views/Home.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/src/views/Login.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/src/views/Message.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/src/views/PostCreate.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-vue/base/weibo/src/views/Register.vue" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -538,46 +12,42 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileEditorManager">
-    <leaf />
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="kube-mysql" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="kube-mysql" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="kube-mysql" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="information_schema: schema" type="76f4a085:MysqlImplModel$Schema" />
+      </path>
+    </expand>
+    <select />
   </component>
   <component name="GOROOT" path="/usr/local/go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/learn-go/grpc-pubsub/README.MD" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="45" />
-    <option name="y" value="25" />
-    <option name="width" value="938" />
-    <option name="height" value="1055" />
-  </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="daily-learning" type="b2602c69:ProjectViewProjectNode" />
-              <item name="daily-learning" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
-  </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
     <property name="configurable.Project.GOPATH.is.expanded" value="true" />
@@ -586,6 +56,11 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="go.autoimport" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/learn-kubernetes/base" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -599,178 +74,22 @@
       </list>
     </option>
   </component>
-  <component name="ToolWindowManager">
-    <frame x="45" y="25" width="1875" height="1055" extended-state="6" />
-    <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19464189" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Terminal" visible="true" weight="0.32937366" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Database" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout>
+  <component name="ServiceViewManager">
+    <option name="allServicesViewState">
+      <serviceView>
+        <treeState>
+          <expand>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@171606a8" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+            </path>
+          </expand>
+          <select />
+        </treeState>
+      </serviceView>
+    </option>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/learn-go/base/training-web/src/weibo/pkg/auth/auth.go">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-go/base/go-pkg-base/json/unmarshal.go">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-go/base/go-base/type2.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1350" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-go/base/gobyexample/42-defer.go">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-go/base/gobyexample/49-epoch.go">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-go/web/rpc-http-client.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-106" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-go/base/go-base/sync.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1396" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-go/grpc-pubsub/README.MD">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor>
-            <caret column="16" selection-start-column="16" selection-end-column="16" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-go/grpc-pubsub/api/pubsub.proto">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-hadoop/python/hdfs_demo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-hive/log-analysis/create_bd.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-hive/log-analysis/mock_logs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-720" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-hive/udf/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-hive/udf/upper.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-hive/base/demo.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-kafka/consumer/auto_consumer.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-kafka/consumer/manual_consumer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-120" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-kafka/producer/kafkaproducer/sync.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-180" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-kafka/producer/kafkaproducer/async.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-150" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.1unpacking_a_sequence_into_separate_variables.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.2unpacking_elements_from_iterables_of_arbitrary_length.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-python/cookbook/1_data_structures_algorithms/1.4finding_the_largest_or_smallest_n_items.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="49" lean-forward="true" selection-start-line="9" selection-start-column="49" selection-end-line="9" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-ml/random-forest/decision_tree_classifier_iris.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-python/my_test/advance/do_generator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-105" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.3printing_with_a_different_separator_or_line_ending.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.4_reading_and_writing_binary_data.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.2printing_to_a_file.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-python/cookbook/5_files_and_io/5.15_printing_bad_filenames.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-rabbitmq/go/helloworld/comsumer/receive.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-331" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-zookeeper/lock/exclusive_lock.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-zookeeper/kazoo_usage.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="-4215" />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-go/base/go-base/defer.go">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learn-go/base/go-pkg-base/fmt/sscan.go">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
   </component>
 </project>
