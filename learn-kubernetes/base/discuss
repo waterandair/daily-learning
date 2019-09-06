@@ -172,6 +172,98 @@ PV 是一种资源对象; PVC 是创建 PV 的模板.
 - 新的 RC 的名称不能与旧的 RC 名称相同  
 - 新的 RC 在 Selector 中应至少有一个 label 与旧的 RC 的 Label 不同,以标识新的RC
 
+### Service
+#### 什么是 Headless Service   
+在某些场景中,开发人员希望自己控制负载均衡的策略,不使用 Service 提供的默认负载均衡,这时就可以通过 Headless Service 实现.   
+
+将 Service 的 Cluster 设置为 None,通过 Label Selector 将后端的 Pod 列表返回给调用的客户端,由客户端程序自己实现负载均衡,确定范文哪一个后端 Pod
+
+#### 什么是无 Label Selector 的服务  
+某些环境中,kubernetes 中的服务需要连接一个外部数据库,或者连接另一个集群或namespace 的服务,这时可以通过创建一个无 Label Selector 的 Service 实现.  
+
+定义一个无LabelSelector的Service,就无法选择后端 Pod, 因此需要先手动创建一个 Endpoint,
+
+#### kubernetes 外部访问 Pod 或 Service 的方式
+
+##### 将容器应用的端口号映射到物理机(不推荐,因为Pod的IP和所在的Node是随时会变的)
+1. 设置容器级别的 hostPort, 将容器应用的端口号映射到物理机上,然后通过物理机 IP + hostPort 就可以访问Pod内的服务  
+2. 设置 Pod 级别的 hostNetwork= true, 该 Pod 中所在的容器端口号都会被映射到物理机上.
+
+##### 将 Service 的端口号映射到物理机 
+1. 通过设置 `spec.type=NodePort`,且在 `spec.ports.port.nodePort` 指定映射到物理机的端口, 通过 NodeIP + NodePort 可以访问服务
+2. 设置 LoadBalancer,映射到负载均衡的IP地址,一般仅用于云平台
+
+#### Ingress: HTTP 7 层路由机制
+对于基于 http 的服务来说,仅仅通过 Service 的 IP:Port 形式不能满足不同url对应不同服务的需求.  
+比如:
+- 对 http://website/api 的访问要路由到 名为 api 的 Service(http://api:80)
+- 对 http://website/web 的访问要路由到 名为 web 的 Service(http://web:80)
+- 对 http://website/docs 的访问要路由到 名为 docs 的 Service(http://docs:80)  
+
+这种场景可以用 Ingress 解决, 步骤:  
+##### 创建 Ingress Controller
+Ingress Controller 实现基于不同 HTTP URL 向后转发的负载分发规则,有的公有云也提供了这种类型的 LoadBalancer,可以将其设置为 Ingress Controller.  
+
+可以用 nginx 实现一个 Ingress Controller.  
+
+##### 定义 Ingress
+
+### Kubernetes API Server
+- 提供了各类资源对象的curd及watch 等 http rest 接口,是数据交互和通信的中心枢纽
+- 是集群管理的API入口
+- 是资源配额控制的入口
+- 提供了完备的集群安全机制
+- kubectl 就是通过调用 kube-apiserver 提供的 rest 接口来进行操作的,因此,也可以使用 curl 替代 kubectl
+
+### Controller Manager 管理控制中心
+负责集群内的Node,Pod副本,Endpoint,Namespace,ServiceAccount,ResourceQuota 等的管理,  
+它会及时发现故障并自动修复,确保集群始终处于预期的工作状态,是核心管理者.  
+
+
+#### Replication Controller: 副本控制器, 注意区别同样称为 Replication Controller(简称 RC) 的一种资源对象,
+职责:  
+- 自动调度: 确保当前集群中有且仅有 N 个Pod实例
+- 弹性伸缩: 通过调整 replicas 属性实现系统扩容或缩容
+- 滚动更新: 通过修改 RC 中 Pod 模板(主要是镜像版本)来实现系统的更新,通过创建一个新的 RC,实现滚动更新,新RC的副本数逐步加1,旧 RC 的副本数逐步减1
+
+#### Node Controller  
+
+kubelet 进程在启动时通过 API server 注册自身节点信息,并定时汇报状态信息.    
+
+NodeController 通过 API Server 实时获取Node信息,实现管理和监控集群中的各个 Node 节点的相关控制功能.  
+
+#### ResourceQuota Controller 资源配额控制器
+确保指定的资源对象在任何时候都不会超量占用系统物理资源,确保集群的稳定性.  
+
+目前,支持三个层次的资源配额管理:  
+- 容器级别,对 cpu 和 memory 进行限制
+- Pod 级别,对 Pod 内所有容器的可用资源进行限制(通过 LimitRanger 设置)
+- Namespace 级别,包括 Pod 数量,Replication Controller 数量,Service 数量,ResourceQuota 数量,Secret 数量,可是持有的 Persistent Volume 数量(通过 ResourceQuota 设置)
+
+#### Namespace Controller  
+
+管理 Namespace 的 创建和删除, 删除的同时,会删除该 Namespace 下的各种资源对象
+
+#### Endpoint Controller
+Endpoints 表示一个 Service 对应的所有 Pod 副本的访问地址, EndpointsController 就是负责生成和维护所有 Endpoints 对象的控制器. 它负责
+监听 Service 和 对应副本的变化:  
+- 如果 Service 被删除,则删除和该 Service 同名的 Endpoints 对象  
+- 如果 Service 被创建,则根据 Service 信息获取 Pod 列表,然后创建或者更新 Service 对应的 Endpoints 对象  
+- 如果检测到 Pod 时间,则更新它所对应的 Service 的 Endpoints 对象  
+
+Endpoints 对应被每个 Node 上的 kube-proxy 进程使用,kube-proxy 进程获取每个 Service 的 Endpoints, 实现了 Service 的负载均衡.
+
+#### Service Controller  
+
+它其实是 Kubernetes 集群与外部的一个接口控制器,Service Controller 监听 Service 的变化,如果是一个 LoadBalancer 类型的Service,就确保
+外部云平台上该 Service 对应的 LoadBalancer 实例被相应的创建,删除以及更新路由转发表.  
+
+### Scheduler  
+
+
+
+
+
 ## 注意
 ### 前台运行启动命令
 kubernetes 要求我们自己创建的docker镜像以一个前台命令作为启动命令,如果在后台运行,比如 `nohup ./start,sh &`, 该命令执行完后,会销毁该Pod.  
@@ -180,3 +272,6 @@ kubernetes 要求我们自己创建的docker镜像以一个前台命令作为启
 
 ### Endpoint
 PodIP + containerPort = Endpoint, 一个 Pod 可以有多个 Endpoint
+
+### 删除 RC 控制的 pod
+删除一个 RC 不会影响它所创建的 Pod, 如果想删除一个 RC 所控制的 Pod, 需要将该 RC 的 replicas 设置为 0, 这样所有的 Pod 副本都会被自动删除.  
