@@ -298,12 +298,46 @@ Kubelet 用于处理 Master 节点下发到本节点的任务,管理 Pod 及Pod�
 5. 检查已经运行在节点中的Pod,如果该Pod没有容器或Pause容器没有启动,则先停止Pod里所有容器的进程.如果在Pod中有需要删除的容器,则删除这些容器.
 6. 用 'kubernetes/pause' 镜像为每个 Pod 创建一个容器.该 Pause 容器用于接管Pod中所有其他容器的网络.每创建一个新的Pod,kubelet 都会先创建一个 Pause 容器,然后其他容器
 7. 为Pod中的每个容器做如下处理:  
-7.1  
+7.1  为容器计算一个hash值,然后用容器的名字去查询对应的Docker容器的hash值.若查找到容器,且两者不同,则停止Docker中的容器进程,并停止与之关联的Pause 容器的进程;若两者相同,则不做任何处理.  
+7.2 如果容器被终止了,且容器没有指定的restartPolicy,则不做任何处理  
+7.3 调用 DockerClient 下载容器镜像,调用 Docker Client 运行容器.
 
+#### kubelet 健康检查
 
+- LivenessProbe 探针: 判断容器是否存活(running 状态), 如果容器不包含 LivenessProbe, 则始终认为是 "success"
+- - ExecAction: 在容器内部执行一个命令,返回为0, 则表明容器健康
+- - TcpSocketAction: 判断是否可以通过容器的 IP 和端口号建立TCP连接
+- - HTTPGetAction: 判断容器的http服务的一个Get请求是否返回大于200小于400的状态码
+- ReadinessProbe: 判断容器是否启动完成(ready状态), 可以接收请求.  
 
+### kube-proxy  
+Service 是对一组 Pod 的抽象,它会根据访问策略(负载均衡)来访问这组Pod,Service 只是一个概念,而真正将 Service 的作用落实的背后是 kube-proxy 服务进程.  
 
+每个 Node 上都会运行一个 kube-proxy 服务进程,它可以看作是 Service 的透明代理兼负载均衡器,将访问Service 的请求转发到后端的某个 Pod 上 .  
 
+Service 的 ClusterIP 与 NodePort 等概念是 kube-proxy 服务通过 Iptables 的 NAT 转换实现的.   
+
+访问 Service 的请求,不论是 ClusterIP + TargetPort 的方式,还是 NodeIP + NodePort 的方式,都被Node的Iptables 规则重定向到 kube-proxy 监听 Service 服务代理端口.  
+
+#### kube-proxy 原理  
+kube-proxy 查询和监听 API Server 中 Service 与 Endpoints 的变化, 为每个Service 建立一个"服务代理对象(kube-proxy内部的一个数据结构)",在 LoadBalancer 上保存了Service到Endpoints的动态转发路由表,
+由RoundRobin算法和Session保持(SessionAffinity)两个特性决定路由到哪个Endpoint.   
+
+##### 针对发生变化的 Service 列表,kube-proxy 会逐个处理,流程如下:  
+- 如果Service没有设置ClusterIP,则不做任何处理,否则,获取该 Service 的所有端口定义列表(spec.ports域)  
+- 逐个读取端口信息,根据端口名称,Service名称和Namespace判断本地是否已经存在对应的服务代理对象,没有则新建;如果存在并且Service 端口被修改过,则先删除Iptables中和该Service端口相关的规则,关闭服务代理对象,然后走新建流程:分配服务代理对象并创建相关Iptables规则  
+- 更新负载均衡器中对应Service的转发地址列表,对于新建的Service,确定转发时的会话保持策略.  
+- 对于已经删除的Service则进行清理.    
+
+针对Endpoint的变化,kube-proxy 会自动更新负载均衡器中对应的 Service 的转发地址列表  
+
+##### kube-proxy 对 Iptables 做的一些操作  todo
+
+kube-proxy 启动时监听到 Service 或 Endpoint变化后,会在本机Iptables的NAT表中添加4条规则:  
+1. KUBE-PROTALS-CONTAINER: 从容器中通过 ClusterIP + TargetPort 访问Service  
+2. KUBE-PROTALS-HOST: 从主机中通过 ClusterIP + TargetPort 访问 Service  
+3. KUBE-NODEPORT-CONTAINER: 从容器中通过 NodeIP + NodePort 访问 Service  
+4. KUBE-NODEPORT-HOST: 从主机中通过 NodeIP + NodePort 访问 Service
 
 
 
@@ -320,4 +354,7 @@ kubernetes 要求我们自己创建的docker镜像以一个前台命令作为启
 PodIP + containerPort = Endpoint, 一个 Pod 可以有多个 Endpoint
 
 ### 删除 RC 控制的 pod
-删除一个 RC 不会影响它所创建的 Pod, 如果想删除一个 RC 所控制的 Pod, 需要将该 RC 的 replicas 设置为 0, 这样所有的 Pod 副本都会被自动删除.  
+删除一个 RC 不会影响它所创建的 Pod, 如果想删除一个 RC 所控制的 Pod, 需要将该 RC 的 replicas 设置为 0, 这样所有的 Pod 副本都会被自动删除.    
+
+### 其他  
+- 单进程意思不是只能运行一个进程，而是只有一个进程是可控的。
