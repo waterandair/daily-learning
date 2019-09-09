@@ -28,17 +28,17 @@ spec:  # Pod 中容器的详细定义
       env:  # 容器运行前需设置的环境变量列表
         - name: string
           value: string
-      resources:  资源限制
-        requests:
+      resources:  # 资源限制
+        requests: # 最小限制
+          cpu: string  # cpu,单位为核心数
+          memory: string  # 内存,单位为 MiB,GiB 等.
+        limits:  # 最大限制
           cpu: string
           memory: string
-        limits:
-          cpu: string
-          memory: string
-      livenessProbe:
-        exec:
-          command: [string]
-        httpGet:
+      livenessProbe:  # 对 Pod 内个容器健康检查的设置.当探测无响应几次之后,系统将自动重启该容器.可以设置的方法包括: exec,httpGet和tcpSocket
+        exec:  # 执行一段脚本或命令, 返回 0 表示成功
+          command: [string]  # exec 方式需要执行的一段脚本或命令
+        httpGet:  # 发送http请求,返回码为 200-400表示成功
           path: string
           port: int
           host: string
@@ -46,31 +46,31 @@ spec:  # Pod 中容器的详细定义
           httpHeaders:
             - name: string
               value: string
-        tcpSocket:
+        tcpSocket:  # 监听端口的方式
           port: int
-        initialDelaySeconds: 0
-        timeoutSeconds: 0
-        periodSeconds: 0
+        initialDelaySeconds: 0  # 容器启动后首次探测的时间,单位为秒
+        timeoutSeconds: 0  # 探测等待响应的超时时间,默认 1 秒;超时则认为不健康,将重启该容器
+        periodSeconds: 0  # 对容器健康检查的定期探测时间,默认10s一次
         successThreshold: 0
         failureThreshold: 0
       securityContext:
         privileged: false
-    restartPolicy: [Always | Never | OnFailure]
-    nodeSelector: object
-    imagePullSecrets:
+    restartPolicy: [Always | Never | OnFailure]  # 重启策略. Always: Pod 一旦终止运行,kubelet 都将它重启. OnFailure: 只有 Pod 以非0退出发终止时,kubelet 才会重启该容器. Never: Pod 终止后,kubelet 将退出码报告给 Master,不会重启该Pod
+    nodeSelector: object  # 表示将 Pod 调度到包含这些 label 的 Node 上, 以key: value 格式指定
+    imagePullSecrets:  # Pull 镜像时使用的 Secret 名称,以 name: secretkey 格式指定
       - name: string
-    hostNetwork: false
-    volumes:
-      - name: string
-        emptyDir: {}
-        hostPath:
-          path: string
-        secret:
+    hostNetwork: false  # 是否使用主机网络模式,默认 false. true 表示容器使用宿主机网络,不在使用 docker 网桥,该 Pod 将无法在同一台宿主机上启动第2个副本
+    volumes:  # 在 Pod 上定义的共享存储列表. volume 类型包括: emptyDir,hostPath,gcePersistentDisk,secret,nfs,PersistentVolumeClaim,configMap....
+      - name: string  # 名称.
+        emptyDir: {}  # emptyDir 类型,表示与Pod同生命周期的一个临时目录,其值为一个空对象
+        hostPath:  # hostPath 类型,表示挂载Pod所在宿主机的目录,通过 volumes[].hostPath.path 指定
+          path: string  # Pod 所在主机的目录,将被用于容器中 mount 的目录
+        secret:  # secret 类型,表示挂载集群预定义的 Secret 对象到容器内部
           secretName: string
           items:
             - key: string
               path: string
-        configMap:
+        configMap:  # configMap 类型,表示挂载集群预定义的 ConfigMap 对象到容器内部
           name: string
           items:
             - keys: string

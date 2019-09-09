@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="27f2264d-2b8b-4e20-992a-46be4e9ef38a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-kubernetes/base/discuss" beforeDir="false" afterPath="$PROJECT_DIR$/learn-kubernetes/base/discuss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/learn-kubernetes/base/pod-definition" beforeDir="false" afterPath="$PROJECT_DIR$/learn-kubernetes/base/pod-definition" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
