@@ -331,13 +331,25 @@ kube-proxy 查询和监听 API Server 中 Service 与 Endpoints 的变化, 为�
 
 针对Endpoint的变化,kube-proxy 会自动更新负载均衡器中对应的 Service 的转发地址列表  
 
-##### kube-proxy 对 Iptables 做的一些操作  todo
+##### kube-proxy 对 Iptables 做的一些操作  
 
 kube-proxy 启动时监听到 Service 或 Endpoint变化后,会在本机Iptables的NAT表中添加4条规则:  
 1. KUBE-PROTALS-CONTAINER: 从容器中通过 ClusterIP + TargetPort 访问Service  
 2. KUBE-PROTALS-HOST: 从主机中通过 ClusterIP + TargetPort 访问 Service  
 3. KUBE-NODEPORT-CONTAINER: 从容器中通过 NodeIP + NodePort 访问 Service  
 4. KUBE-NODEPORT-HOST: 从主机中通过 NodeIP + NodePort 访问 Service
+
+todo: iptables 细节  
+
+### Kubernetes 安全机制  
+
+todo
+
+
+
+### 网络原理  
+
+
 
 
 

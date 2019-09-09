@@ -1,1 +1,77 @@
 # Pod 定义详解
+apiVersion: v1  # Required 版本号
+kind: Pod  # 资源对象类型
+metadata:
+  name: string  # Pod 的名称
+  namespace: string  # Pod 所属的命名空间,默认为 default
+  labels:  # 自定义标签列表
+    - name: string
+  annotations:  # 自定义注解列表
+    - name: string
+spec:  # Pod 中容器的详细定义
+  containers:  # Pod 中的容器列表
+    - name: string  # 容器的名称
+      image: string  # 容器的镜像名称
+      imagePullPolicy: [Always(默认) | Never | IfNotPresent]  # Always: 表示每次都尝试重新下载镜像. IfNotPresent: 表示当本地没有该镜像时再下载镜像. Never: 仅使用本地镜像
+      command: [string]  # 容器的启动命令列表,如果不指定,则使用镜像打包时使用的启动命令
+      args: [string]  # 容器启动命令参数列表
+      workingDir: string  # 容器的工作目录
+      volumeMounts:  # 挂载到容器内部的存储卷配置
+        - name: string  # 引用 Pod 定义的共享存储卷的名称,需使用 volmes[] 部分定义的共享存储卷名称
+          mountPath: string  # 存储卷在容器内 Mount 的绝对路径,应少于 512 个字符
+          readOnly: boolean  # 是否为只读模式,默认为读写模式
+      ports:  # 容器需要暴露的端口号列表
+        - name: string  # 端口的名称
+          containerPort: int  # 容器需要监听的端口号
+          hostPort: int  # 容器所在主机需要监听的端口号,默认与 containerPort 相同,设置 hostPort 时,同一台宿主机将无法启动该容器的第二个副本
+          protocol: string  # 端口协议,支持 TCP,UDP, 默认TCP
+      env:  # 容器运行前需设置的环境变量列表
+        - name: string
+          value: string
+      resources:  资源限制
+        requests:
+          cpu: string
+          memory: string
+        limits:
+          cpu: string
+          memory: string
+      livenessProbe:
+        exec:
+          command: [string]
+        httpGet:
+          path: string
+          port: int
+          host: string
+          scheme: string
+          httpHeaders:
+            - name: string
+              value: string
+        tcpSocket:
+          port: int
+        initialDelaySeconds: 0
+        timeoutSeconds: 0
+        periodSeconds: 0
+        successThreshold: 0
+        failureThreshold: 0
+      securityContext:
+        privileged: false
+    restartPolicy: [Always | Never | OnFailure]
+    nodeSelector: object
+    imagePullSecrets:
+      - name: string
+    hostNetwork: false
+    volumes:
+      - name: string
+        emptyDir: {}
+        hostPath:
+          path: string
+        secret:
+          secretName: string
+          items:
+            - key: string
+              path: string
+        configMap:
+          name: string
+          items:
+            - keys: string
+              path: string
