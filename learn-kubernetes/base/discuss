@@ -342,12 +342,23 @@ kube-proxy 启动时监听到 Service 或 Endpoint变化后,会在本机Iptables
 todo: iptables 细节  
 
 ### Kubernetes 安全机制  
+- API Server 认证
+- API Server 授权
+- Admission Control 准入控制
+- Service Account: 内部Pod调用服务的认证方式
+- Secret 私密凭据
 
-todo
+### 网络原理
+  
+特性: Pod 内的所有容器共享一个网络栈, IP-Per-Pod, 集群内的Pod可以互相直接通过对方IP访问对方  
 
+为了满足特性,kubernetes 对集群的网络有如下要求:  
+- 所有容器都可以在不用 NAT 的方式下同别的容器通信  
+- 所有节点都可以在不同NAT 的方式下同所有容器通信
+- 容器的地址和别人看到的地址是同一个地址  
 
-
-### 网络原理  
+### Kubernetes 资源管理
+  
 
 
 
