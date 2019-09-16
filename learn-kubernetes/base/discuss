@@ -359,10 +359,49 @@ todo: iptables 细节
 
 ### Kubernetes 资源管理
   
+#### 计算资源管理 Compute Resources
+计算资源配置项分为 Requests(下限) 和 Limits(上限)  
+- Requests 和 limits 都是可选的,有默认值
+- Requests 如果没有配置, 默认会被设置为等于 Limits
+- Limits >= Requests  
+- Pod 的资源限制参数是所有Pod 中所有容器对应配置的总和  
+- 调度器在调度时,首先要确保调度后该 node 上的所有 pod 的cpu和memory 的Requests 总和不超过该 node 的提供给 pod 的最大容量  
+- 
+
+**CPU:**  
+单位: 0.1 = 100m, 推荐使用形如 100m 的 millicpu 作为计量单位  
+**Memory:**  
+默认单位为字节数(bytes), 同时支持多种单位.       
+注意区分十进制和二进制单位的不同:
+- 十进制: 1KB = 1000 bytes = 8000 bits  
+- 二进制: 1KiB = 2^10 bytes = 1024 bytes = 8192 bits  
+
+#### 资源配置范围管理 LimitRange(资源对象)
+LimitRange 是一种资源对象,作用于一个 Namespace.
 
 
+#### 服务质量管理 Resource Qos
+Qos 体系,用于保证高可靠的 Pod 可以申请可靠资源,而一些不需要高可靠性的Pod可以申请可靠性较低的资源.  
 
+- Requests == Limits, 完全可靠
+- Requests < Limits, 小于 Requests 部分的资源完全可靠,超出 Requests 的部分不可靠
 
+**可压缩资源 CPU:**
+- 空闲CPU按照容器的Requests值的比例分配
+- 如果cpu没有配置limits,那么Pod会尝试抢占所有空闲的CPU
+**不可压缩资源 Memory:**  
+- 同一node上的Pod发生竞争或有新的Pod调度到该node上时,内存使用量超过 Requests 的Pod, 可能会被 kill
+- Pod 的内存使用量超过 limits 时,会kill 掉 Pod 中内存使用最多的容器  
+
+**Pod 的三种Qos级别:**
+- Guaranteed (完全可靠的): Pod 中所有容器都定义了 Requests 和 Limits,并且它们的值均不为0且相等,可以只定义Limits,因为Requests未定义时默认为 Limits
+- Burstable (弹性波动,较可靠的): Pod 中所有容器都未定义 Requests 和 Limits
+- Best Effort (尽力而为,不太可靠的): 既不是 guaranteed,又不是 burstable 的 ,就是 best effort.  
+
+#### 资源的配额管理 (Resource Quotas)  
+ResourceQuota 是一种资源对象,它可以定义一项资源配额,为每一个Namespace提供一种总体的资源使用限制:  
+- 限制某种类型的对象的总数目上限  
+- 设置 Namespace 中 Pod 可以使用的计算资源的总上限.
 
 
 
