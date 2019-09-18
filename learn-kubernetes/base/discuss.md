@@ -1,4 +1,36 @@
 ## 笔记&讨论
+
+### 核心组件简介
+
+组件 | 作用
+---|---
+etcd | 保存了整个集群的状态
+kube-apiserver | 提供了资源操作的唯一入口,并提供认证、授权、访问控制、API注册和发现等机制
+kube-controller-manager | 负责维护集群的状态,比如故障检测、自动扩展、滚动更新等  
+kube-scheduler | 负责资源的调度,按照预定的调度策略将 Pod 调度到相应的机器上  
+kubelet | 负责维持容器的生命周期,同时也负责 Volume(CVI)和网络(CNI)的管理  
+Container runtime | 负责镜像管理以及 Pod 和容器的真正运行(CRI),默认的容器运行时为 Docker  
+kube-proxy | 负责为 Service 提供 cluster 内部的服务发现和负载均衡  
+
+### 核心技术概念和API对象
+对象 | 作用简介
+---|---  
+Pod | 最小单元;多容器组合完成任务,共享网络栈和文件系统
+RC (Replication Controller) | 最早保证高可用的API对象.
+RS (Replication Set) | 新一代的 RC, 支持更多种类的匹配,一般不单独使用,而是作为 Deployment 的理想状态参数使用  
+Deployment | 未来对所有长期伺服型的的业务的管理,都会通过Deployment来管理. 它可以用来创建一个新的服务,更新一个新的服务,也可以是滚动升级一个服务  
+Service | 通过虚拟IP + 服务发现 + 负载均衡,解决访问 Pod 的问题,负载均衡由 kube-proxy 实现.  
+Job | 批处理型任务的API对象,此类型的 Pod,在任务完成后就自动退出.  
+DaemonSet | 后台支撑服务集, 关注点在 Node,保证每个Node 上都会运行一个此类的Pod,也可以通过 nodeSelector 选择特定的 node, 典型应用在 存储,日志,监控等服务  
+StatefulSet | 有状态服务集,StatefulSet中的每个Pod的名字都是事先确定的,不能更改。典型如mysql,zookeeper, etcd 等  
+Volume | 存储卷,作用于一个 Pod 内的所有容器  
+PV与PVC(Persistent Volume 与 Persistent Volume Claim) | 抽象了存储,使得在配置Pod的逻辑里可以忽略对实际后台存储技术的配置, PV 定义了实际的存储, PVC 声明了需要使用什么规格的存储,pod 根据 PVC 的定义自动找到可用的 PV  
+Node | Pod运行的物理节点,每个node都要有 kubelet 和 kubeproxy  
+Secret | 密钥对象,保存和传递密码、密钥、认证凭证这些敏感信息的对象  
+Namespace | 命名空间  
+UserAccount 和 ServiceAccount | 用户账户和服务账户,用户帐户对应的是人的身份,人的身份与服务的namespace无关,所以用户账户是跨namespace的;而服务帐户对应的是一个运行中程序的身份,与特定namespace是相关的。  
+RBAC | 访问授权,主要是引入了角色(Role)和角色绑定(RoleBinding)的抽象概念
+
 ### 入门
 #### 为什么要给每一个 pod 初始一个 pause 容器
 1. 以业务无关的 pause 容器的状态代表 pod 的状态
@@ -114,8 +146,14 @@ PV 是一种资源对象; PVC 是创建 PV 的模板.
 - Running: Pod 内所有容器均已创建,且至少有一个容器处于运行,正在启动,或者正在重启状态
 - Succeed: Pod 内所有容器均成功执行退出,且不会再重启
 - Failed: Pod 内所有容器均已退出,但至少有一个容器退出为失败状态
-- Unknown: 无法获取该Pod的状态,可能由于网络通信问题导致
+- Unknown: 无法获取该Pod的状态,可能由于网络通信问题导致  
 
+#### pod 的创建流程
+1. 用户通过 REST API 创建一个 Pod
+2. apiserver 将其写入 etcd
+3. scheduluer 检测到未绑定 Node 的 Pod,开始调度并更新 Pod 的 Node 绑定
+4. kubelet 检测到有新的 Pod 调度过来,通过 container runtime 运行该 Pod
+5. kubelet 通过 container runtime 取到 Pod 状态,并更新到 apiserver 中
 #### Pod 的重启策略(Restart Policy)
 由Pod所在Node上的kubelet进行判断,当容器异常退出或者健康检查失败后,根据Pod设置的重启策略进行操作.  
 重启策略包括:  
@@ -129,23 +167,31 @@ PV 是一种资源对象; PVC 是创建 PV 的模板.
 - kubelet 命令行: 失效时自动重启,不管 RestartPolicy 设置为什么值,也不会对 Pod 进行健康检查
 
 #### Pod 健康检查
-- LivenessProbe 探针: 判断容器是否存活(running 状态), 如果容器不包含 LivenessProbe, 则始终认为是 "success"
+- LivenessProbe 探针: 判断容器是否存活(running 状态),不存活则删除并重新创建容器, 如果容器不包含 LivenessProbe, 则始终认为是 "success"
 - - ExecAction: 在容器内部执行一个命令,返回为0, 则表明容器健康
 - - TcpSocketAction: 判断是否可以通过容器的 IP 和端口号建立TCP连接
 - - HTTPGetAction: 判断容器的http服务的一个Get请求是否返回大于200小于400的状态码
-- ReadinessProbe: 判断容器是否启动完成(ready状态), 可以接收请求.
+- ReadinessProbe: 判断容器是否启动完成(ready状态), 可以接收请求,否则不接受来自 kubernetes Service 的流量
 
 #### Pod 的调度
-##### RC,Deployment: 全自动调度
+##### RC,RS,Deployment: 全自动调度
 维护多份副本
-##### DaemonSet: 特定场景调度
+##### DaemonSet: 特定场景调度,后台支撑服务集
 用于管理在集群中每个 Node 上仅运行一份 Pod 的副本实例, 比如:  
 - 在每个 Node 上运行一个 GlusterFS 存储或者 Ceph 存储的 daemon 进程
 - 在每个 Node 上运行一个日志采集程序, 例如 fluentd 或者 logstach
-- 在每个 Node 上运行一个健康程序,采集该Node的运行性能数据,例如 Prometheus Node Exporter, collectd, New Relic agent 或者 Ganglia gmond 等
+- 在每个 Node 上运行一个健康程序,采集该Node的运行性能数据,例如 Prometheus Node Exporter, collectd, New Relic agent 或者 Ganglia gmond 等  
+
+长期伺服型和批处理型服务的核心在业务应用,可能有些节点运行多个同类业务的
+Pod,有些节点上又没有这类Pod运行;而后台支撑型服务的核心关注点在K8s集群中的
+节点(物理机或虚拟机),要保证每个节点上都有一个此类Pod运行。节点可能是所有
+集群节点也可能是通过nodeSelector选定的一些特定节点。典型的后台支撑型服务包
+括,存储,日志和监控等在每个节点上支撑K8s集群运行的服务。
 
 ##### Job: 批处理调度
-
+Job管理的Pod根据用户的设置把任务成功完成就自动退出了。成功完成的标志根据不同的
+spec.completions策略而不同:单Pod型任务有一个Pod成功就标志完成;定数成功型任
+务保证有N个任务全部成功;工作队列型任务根据应用确认的全局成功而标志成功。
 ###### Non-parallel Jobs
 通常一个 Job 只启动一个 Pod,只有在Pod异常后,才会重启该Pod,Pod正常结束,Job也将结束
 
@@ -173,6 +219,13 @@ PV 是一种资源对象; PVC 是创建 PV 的模板.
 - 新的 RC 在 Selector 中应至少有一个 label 与旧的 RC 的 Label 不同,以标识新的RC
 
 ### Service
+#### 普通 Service
+RC、RS和Deployment只是保证了支撑服务的微服务Pod的数量, Service 解决如何访问这些服务的问题.每个Service会对应一个集群内部有效的虚拟IP,集群内部通过虚拟
+IP访问一个服务。在K8s集群中微服务的负载均衡是由Kube-proxy实现的。Kube-proxy
+是K8s集群内部的负载均衡器。它是一个分布式代理服务器,在K8s的每个节点上都有一
+个;这一设计体现了它的伸缩性优势,需要访问服务的节点越多,提供负载均衡能力的
+Kube-proxy就越多,高可用节点也随之增多。与之相比,我们平时在服务器端使用反向
+代理作负载均衡,还要进一步解决反向代理的高可用问题。
 #### 什么是 Headless Service   
 在某些场景中,开发人员希望自己控制负载均衡的策略,不使用 Service 提供的默认负载均衡,这时就可以通过 Headless Service 实现.   
 
@@ -217,7 +270,10 @@ Ingress Controller 实现基于不同 HTTP URL 向后转发的负载分发规则
 
 ### Controller Manager 管理控制中心
 负责集群内的Node,Pod副本,Endpoint,Namespace,ServiceAccount,ResourceQuota 等的管理,  
-它会及时发现故障并自动修复,确保集群始终处于预期的工作状态,是核心管理者.  
+它会及时发现故障并自动修复,确保集群始终处于预期的工作状态,是核心管理者.    
+
+是Kubernetes 的大脑, 通过 apiserver 监控整个集群的状态,并确保集群处于预期的工
+作状态。
 
 
 #### Replication Controller: 副本控制器, 注意区别同样称为 Replication Controller(简称 RC) 的一种资源对象,
@@ -258,7 +314,7 @@ Endpoints 对应被每个 Node 上的 kube-proxy 进程使用,kube-proxy 进程�
 它其实是 Kubernetes 集群与外部的一个接口控制器,Service Controller 监听 Service 的变化,如果是一个 LoadBalancer 类型的Service,就确保
 外部云平台上该 Service 对应的 LoadBalancer 实例被相应的创建,删除以及更新路由转发表.  
 
-### Scheduler  
+### kubernetes Scheduler  
 
 Kubernetes Scheduler 在整个系统中承担了"承上启下"的重要功能,"承上"是指它负责接收 Controller Manager 创建的新 Pod, 为其安排一个落脚的"家"-目标Node;
 "启下"是指安置工作完成后,目标Node上的kubelet 服务进程接管后继工作,负责Pod生命周期中的"下半生".  
@@ -291,33 +347,44 @@ Kubelet 用于处理 Master 节点下发到本节点的任务,管理 Pod 及Pod�
 通过 cAdvisor 监控容器和节点资源.  
 
 #### kubelet 处理创建和修改Pod任务  
-1. 为该Pod 创建一个数据目录
-2. 从APIServer读取该Pod清单
-3. 为该Pod挂载外部卷(External Volume)
+1. 为该 Pod 创建一个数据目录
+2. 从 APIServer 读取该Pod清单
+3. 为该 Pod 挂载外部卷(External Volume)
 4. 下载 Pod 用到的 Secret
-5. 检查已经运行在节点中的Pod,如果该Pod没有容器或Pause容器没有启动,则先停止Pod里所有容器的进程.如果在Pod中有需要删除的容器,则删除这些容器.
-6. 用 'kubernetes/pause' 镜像为每个 Pod 创建一个容器.该 Pause 容器用于接管Pod中所有其他容器的网络.每创建一个新的Pod,kubelet 都会先创建一个 Pause 容器,然后其他容器
-7. 为Pod中的每个容器做如下处理:  
-7.1  为容器计算一个hash值,然后用容器的名字去查询对应的Docker容器的hash值.若查找到容器,且两者不同,则停止Docker中的容器进程,并停止与之关联的Pause 容器的进程;若两者相同,则不做任何处理.  
-7.2 如果容器被终止了,且容器没有指定的restartPolicy,则不做任何处理  
+5. 检查已经运行在节点中的 Pod,如果该 Pod 没有容器或 Pause 容器没有启动,则先停止 Pod里 所有容器的进程.如果在 Pod 中有需要删除的容器,则删除这些容器.
+6. 用 'kubernetes/pause' 镜像为每个 Pod 创建一个容器.该 Pause 容器用于接管 Pod 中所有其他容器的网络.每创建一个新的 Pod,kubelet 都会先创建一个 Pause 容器,然后创建其他容器
+7. 为 Pod 中的每个容器做如下处理:  
+7.1 为容器计算一个 hash 值,然后用容器的名字去查询对应的 Docker 容器的 hash 值.若查找到容器,且两者不同,则停止Docker中的容器进程,并停止与之关联的 Pause 容器的进程;若两者相同,则不做任何处理.  
+7.2 如果容器被终止了,且容器没有指定的 restartPolicy,则不做任何处理  
 7.3 调用 DockerClient 下载容器镜像,调用 Docker Client 运行容器.
 
 #### kubelet 健康检查
 
-- LivenessProbe 探针: 判断容器是否存活(running 状态), 如果容器不包含 LivenessProbe, 则始终认为是 "success"
+- LivenessProbe 探针: 判断容器是否存活(running 状态),不存活则删除并重新创建容器, 如果容器不包含 LivenessProbe, 则始终认为是 "success"
 - - ExecAction: 在容器内部执行一个命令,返回为0, 则表明容器健康
 - - TcpSocketAction: 判断是否可以通过容器的 IP 和端口号建立TCP连接
 - - HTTPGetAction: 判断容器的http服务的一个Get请求是否返回大于200小于400的状态码
-- ReadinessProbe: 判断容器是否启动完成(ready状态), 可以接收请求.  
+- ReadinessProbe: 判断容器是否启动完成(ready状态), 可以接收请求,否则不接受来自 kubernetes Service 的流量
+
+#### Kubelet Eviction(驱逐)  
+
+#### Container Runtime (容器运行时)  
+Kubelet 通过 Container Runtime Interface (CRI) 与容器运行时交互,以管理镜像和容器。  
+
+CRI 是一个grpc接口,kubelet 实现grpc客户端, 容器运行时需要实现grpc服务端(通常称为 CRI shim)
 
 ### kube-proxy  
 Service 是对一组 Pod 的抽象,它会根据访问策略(负载均衡)来访问这组Pod,Service 只是一个概念,而真正将 Service 的作用落实的背后是 kube-proxy 服务进程.  
 
-每个 Node 上都会运行一个 kube-proxy 服务进程,它可以看作是 Service 的透明代理兼负载均衡器,将访问Service 的请求转发到后端的某个 Pod 上 .  
+每个 Node 上都会运行一个 kube-proxy 服务进程,它监听 API server 中 service 和 endpoint 的变化情况,它可以看作是 Service 的透明代理兼负载均衡器,将访问Service 的请求转发到后端的某个 Pod 上 .  
 
 Service 的 ClusterIP 与 NodePort 等概念是 kube-proxy 服务通过 Iptables 的 NAT 转换实现的.   
 
-访问 Service 的请求,不论是 ClusterIP + TargetPort 的方式,还是 NodeIP + NodePort 的方式,都被Node的Iptables 规则重定向到 kube-proxy 监听 Service 服务代理端口.  
+访问 Service 的请求,不论是 ClusterIP + TargetPort 的方式,还是 NodeIP + NodePort 的方式,都被Node的Iptables 规则重定向到 kube-proxy 监听 Service 服务代理端口.   
+
+kube-proxy 可以直接运行在物理机上,也可以以 static pod 或者 daemonset 的方式运行。    
+
+仅支持 TCP 和 UDP,不支持 HTTP 路由,并且也没有健康检查机制。这些可以通过自定义 Ingress Controller 的方法来解决。
 
 #### kube-proxy 原理  
 kube-proxy 查询和监听 API Server 中 Service 与 Endpoints 的变化, 为每个Service 建立一个"服务代理对象(kube-proxy内部的一个数据结构)",在 LoadBalancer 上保存了Service到Endpoints的动态转发路由表,
@@ -340,6 +407,10 @@ kube-proxy 启动时监听到 Service 或 Endpoint变化后,会在本机Iptables
 4. KUBE-NODEPORT-HOST: 从主机中通过 NodeIP + NodePort 访问 Service
 
 todo: iptables 细节  
+
+### kubernetes DNS  
+推荐使用 CoreDNS(从 v1.13 开始) 替代 kube-dns 为集群提供 DNS 服务
+  
 
 ### Kubernetes 安全机制  
 - API Server 认证

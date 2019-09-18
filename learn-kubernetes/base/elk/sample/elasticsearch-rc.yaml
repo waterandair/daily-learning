@@ -36,6 +36,8 @@ spec:
           env:
             - name: "xpack.security.enabled"
               value: "false"
+            - name: "discovery.type"
+              value: "single-node"
       volumes:
         - name: es-persistent-storage
           emptyDir: {}
