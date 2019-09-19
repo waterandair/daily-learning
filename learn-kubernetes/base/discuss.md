@@ -413,20 +413,52 @@ todo: iptables 细节
   
 
 ### Kubernetes 安全机制  
-- API Server 认证
-- API Server 授权
+- Authentication 认证
+- Authorization 授权
 - Admission Control 准入控制
 - Service Account: 内部Pod调用服务的认证方式
 - Secret 私密凭据
 
-### 网络原理
+### 网络插件
   
 特性: Pod 内的所有容器共享一个网络栈, IP-Per-Pod, 集群内的Pod可以互相直接通过对方IP访问对方  
 
 为了满足特性,kubernetes 对集群的网络有如下要求:  
 - 所有容器都可以在不用 NAT 的方式下同别的容器通信  
-- 所有节点都可以在不同NAT 的方式下同所有容器通信
+- 所有Node和所有容器之间都可以在无需 NAT 的方式下互相访问
 - 容器的地址和别人看到的地址是同一个地址  
+
+#### CNI (Container Network Interface) 容器网络接口
+Container Network Interface (CNI) 最早是由CoreOS发起的容器网络规范,是
+Kubernetes网络插件的基础。其基本思想为:Container Runtime在创建容器时,先创建
+好network namespace,然后调用CNI插件为这个netns配置网络,其后再启动容器内的
+进程。现已加入CNCF,成为CNCF主推的网络模型。  
+
+Kubernetes Pod 中的其他容器都是Pod所属pause容器的网络,创建过程为:
+1. kubelet 先创建pause容器生成network namespace
+2. 调用网络CNI driver
+3. CNI driver 根据配置调用具体的cni 插件
+4. cni 插件给pause 容器配置网络
+5. pod 中其他的容器都使用 pause 容器的网络
+
+##### Flannel
+Flannel通过给每台宿主机分配一个子网的方式为容器提供虚拟网络,它基于Linux
+TUN/TAP,使用UDP封装IP包来创建overlay网络,并借助etcd维护网络的分配情况。  
+控制平面上host本地的flanneld负责从远端的ETCD集群同步本地和其它host上的subnet
+信息,并为POD分配IP地址。数据平面flannel通过Backend(比如UDP封装)来实现L3
+Overlay,既可以选择一般的TUN设备又可以选择VxLAN设备。  
+
+##### Calico
+
+### CRI (Container Runtime Interface) 容器运行时接口
+Kubelet 通过 Container Runtime Interface (CRI) 与容器运行时交互,以管理镜像和容器。  
+
+CRI 是一个grpc接口,kubelet 实现grpc客户端, 容器运行时需要实现grpc服务端(通常称为 CRI shim)
+
+### CSI (Container Storage Interface) 容器存储接口  
+
+类似于 CRI,CSI 也是基于 gRPC 实现。
+
 
 ### Kubernetes 资源管理
   
