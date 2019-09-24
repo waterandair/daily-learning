@@ -23,8 +23,8 @@ func2
 # 函数返回值
 func3 () {
   echo '请输入函数的返回值:'
-  read N
-  return $N
+  read -r N
+  return "$N"
 }
 func3
 echo "上个函数的返回值是" $?   # 使用 $? 获取上一条指令的返回值
@@ -34,16 +34,18 @@ echo "上个函数的返回值是" $?   # 使用 $? 获取上一条指令的返�
 func4 () {
   echo "第一个参数 $1"
   echo "第二个参数 $2"
+  echo "所有参数 $*"
   echo "所有参数 $@"
   echo "参数数量 $#"
 }
+
 func4 a b c
 
 # 使用 set 可以指定位置的脚本（或函数）参数值
 func5() {
   set q w e
   echo "参数1 $1"
-  echo "所有参数: $@"
+  echo "所有参数: $*"
 }
 func5
 
@@ -59,7 +61,7 @@ func6 q w e r t
 
 # 实现一个 pow 函数
 pow() {
-  let "r=$1**$2"
+  ((r=$1**$2))
   return $r
 
 }
