@@ -368,10 +368,15 @@ Kubelet 用于处理 Master 节点下发到本节点的任务,管理 Pod 及Pod�
 
 #### Kubelet Eviction(驱逐)  
 
-#### Container Runtime (容器运行时)  
-Kubelet 通过 Container Runtime Interface (CRI) 与容器运行时交互,以管理镜像和容器。  
+#### CRI(Container Runtime),OCI(Open Container Initiative),  CNI(Container Networking Interface), CSI(Container Storage Interface)。
+Kubelet 通过 CRI(Container Runtime Interface) 与容器运行时交互,以管理镜像和容器。 
+CRI 是一个grpc接口,kubelet 实现grpc客户端, 容器运行时需要实现grpc服务端(通常称为 CRI shim).
+而具体的容器运行时,则通过OCI(Open Container Initiative)开放容器标准与底层的 Linux 操作系统进行交互,
+即把 CRI 请求翻译成对 Linux 操作系统的调用(操作 Linux Namespace 和 Cgroups).  
 
-CRI 是一个grpc接口,kubelet 实现grpc客户端, 容器运行时需要实现grpc服务端(通常称为 CRI shim)
+kubelet 还会调用网络插件和存储插件为容器配置网络和持久化存储,这两个插件与 kubelet 进行交互的接口,分别是  CNI(Container Networking Interface), CSI(Container Storage Interface)。
+
+
 
 ### kube-proxy  
 Service 是对一组 Pod 的抽象,它会根据访问策略(负载均衡)来访问这组Pod,Service 只是一个概念,而真正将 Service 的作用落实的背后是 kube-proxy 服务进程.  
@@ -505,6 +510,7 @@ Qos 体系,用于保证高可靠的 Pod 可以申请可靠资源,而一些不需
 ResourceQuota 是一种资源对象,它可以定义一项资源配额,为每一个Namespace提供一种总体的资源使用限制:  
 - 限制某种类型的对象的总数目上限  
 - 设置 Namespace 中 Pod 可以使用的计算资源的总上限.
+
 
 
 
