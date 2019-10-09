@@ -18,10 +18,10 @@ kube-proxy | 负责为 Service 提供 cluster 内部的服务发现和负载均�
 Pod | 最小单元;多容器组合完成任务,共享网络栈和文件系统
 RC (Replication Controller) | 最早保证高可用的API对象.
 RS (Replication Set) | 新一代的 RC, 支持更多种类的匹配,一般不单独使用,而是作为 Deployment 的理想状态参数使用  
-Deployment | 未来对所有长期伺服型的的业务的管理,都会通过Deployment来管理. 它可以用来创建一个新的服务,更新一个新的服务,也可以是滚动升级一个服务  
+Deployment | 未来对所有长期伺服型的的业务的管理,都会通过Deployment来管理. 它可以用来创建一个新的服务,更新一个新的服务,也可以是滚动升级一个服务,它通过ReplicaSet的个数来描述应用的版本；然后，它再通过ReplicaSet的属性（比如replicas的值），来保证Pod的副本数量。Deployment 只允许容器 restartPolicy=Always,
 Service | 通过虚拟IP + 服务发现 + 负载均衡,解决访问 Pod 的问题,负载均衡由 kube-proxy 实现.  
 Job | 批处理型任务的API对象,此类型的 Pod,在任务完成后就自动退出.  
-DaemonSet | 后台支撑服务集, 关注点在 Node,保证每个Node 上都会运行一个此类的Pod,也可以通过 nodeSelector 选择特定的 node, 典型应用在 存储,日志,监控等服务  
+DaemonSet | 后台支撑服务集, 关注点在 Node,保证每个Node 上都会运行一个此类的Pod,也可以通过 nodeSelector(将要被废弃) 选择特定的 node, 典型应用在 存储,日志,监控等服务  
 StatefulSet | 有状态服务集,StatefulSet中的每个Pod的名字都是事先确定的,不能更改。典型如mysql,zookeeper, etcd 等  
 Volume | 存储卷,作用于一个 Pod 内的所有容器  
 PV与PVC(Persistent Volume 与 Persistent Volume Claim) | 抽象了存储,使得在配置Pod的逻辑里可以忽略对实际后台存储技术的配置, PV 定义了实际的存储, PVC 声明了需要使用什么规格的存储,pod 根据 PVC 的定义自动找到可用的 PV  
@@ -140,6 +140,16 @@ PV 是一种资源对象; PVC 是创建 PV 的模板.
 - 只能用于被 Api Server 管理的 Pod 使用,静态 Pod 无法引用 ConfigMap
 - Pod 对 ConfigMap 进行挂载(VolumeMount)时,只能被挂载为目录,而不是文件,且会覆盖该目录其他文件.如果要保留其他文件,可以先将 ConfigMap 挂载到临时目录,在通过启动脚本将配置文件复制到 实际配置目录下
 
+#### Project Volume
+Projected Volume,可以把它翻译为“投射数据卷”,Projected Volume是Kubernetes v1.11之后的新特性.  
+在Kubernetes中，有几种特殊的Volume，它们存在的意义不是为了存放容器里的数据，也不是用来进行容器和宿主机之间的数据交换。这些特殊Volume的作用，是为容器提供预先定义好的数据。所以，从容器的角度来看，这些Volume里的信息就是仿佛是被Kubernetes“投射”（Project）进入容器当中的。这正是Projected Volume的含义。  
+到目前为止，Kubernetes支持的Projected Volume一共有四种：
+- Secret
+- ConfigMap
+- Downward API
+- ServiceAccountToken: 保存 Service Account的授权信息和文件, 它只是一种特殊的 Secret 对象, kubernetes 提供了一个默认的 default Service Account,把Kubernetes客户端以容器的方式运行在集群里，然后使用default Service Account自动授权的方式，被称作“InClusterConfig”，是最推荐的进行Kubernetes API编程的授权方式。  
+
+
 ### Pod
 #### Pod 的几种状态
 - Pending: API Server 已经创建该 Pod, 但 Pod 内还有一个或多个容器的镜像没有创建,包括正在下载镜像的过程
@@ -217,6 +227,10 @@ spec.completions策略而不同:单Pod型任务有一个Pod成功就标志完成
 注意:  
 - 新的 RC 的名称不能与旧的 RC 名称相同  
 - 新的 RC 在 Selector 中应至少有一个 label 与旧的 RC 的 Label 不同,以标识新的RC
+
+#### PodPreSet
+PodPreset（Pod预设置）的功能 已经出现在了v1.11版本的Kubernetes中。
+PodPreset里定义的内容，只会在Pod API对象被创建之前追加在这个对象本身上，而不会影响任何Pod的控制器的定义。
 
 ### Service
 #### 普通 Service
@@ -364,7 +378,10 @@ Kubelet 用于处理 Master 节点下发到本节点的任务,管理 Pod 及Pod�
 - - ExecAction: 在容器内部执行一个命令,返回为0, 则表明容器健康
 - - TcpSocketAction: 判断是否可以通过容器的 IP 和端口号建立TCP连接
 - - HTTPGetAction: 判断容器的http服务的一个Get请求是否返回大于200小于400的状态码
-- ReadinessProbe: 判断容器是否启动完成(ready状态), 可以接收请求,否则不接受来自 kubernetes Service 的流量
+- ReadinessProbe: 判断容器是否启动完成(ready状态), 可以接收请求,否则不接受来自 kubernetes Service 的流量 
+
+1. 只要Pod的restartPolicy指定的策略允许重启异常的容器（比如：Always），那么这个Pod就会保持Running状态，并进行容器重启。否则，Pod就会进入Failed状态 。  
+2. 对于包含多个容器的Pod，只有它里面所有的容器都进入异常状态后，Pod才会进入Failed状态。在此之前，Pod都是Running状态。
 
 #### Kubelet Eviction(驱逐)  
 
