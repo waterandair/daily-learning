@@ -122,12 +122,16 @@ emptyDir Volume 是在 Pod 分配到 Node 时创建的,Kubernetes 自动为其�
 - awsElasticBlockStore 亚马逊公有云提供的 EBS Volume 存储 
 - ...
 
-#### Persistent Volume(PV) 与 Persistent Volume Claim(PVC)
-PV 是一种资源对象; PVC 是创建 PV 的模板. 
+#### Persistent Volume(PV) 与 Persistent Volume Claim(PVC),StorageClass
+PV 是一种资源对象; PVC 是 PV 的模板. 
 
+- PV 描述的是一个具体的 Volume 的属性，比如Volume的类型、挂载目录、远程存储服务器地址等,
 - PV 只能是网络存储,不属于任何 Node, 但可以在每个 Node 上访问
 - PV 不是定义在 Pod 上的,而是独立于 Pod 之外的定义
 - PV 类型: NFS,RBD,GCE Persistent Disks,iSCSCI,AWS ElasticBlockStore,GlusterFS 
+- PVC 描述的是 Pod 想要使用的持久化存储的属性，比如存储的大小、读写权限等
+- StorageClass 是 PV 的模板,并且只有同属于一个 StorageClass 的 PV 和 PVC，才可以绑定在一起。StorageClass的另一个重要作用，是指定 PV 的 Provisioner（存储插件）,如果存储插件支持 Dynamic Provisioning 的话，Kubernetes就可以自动创建PV了。
+
 
 #### ConfigMap 供容器使用的典型用法和限制条件
 ##### 典型用法
@@ -243,7 +247,9 @@ Kube-proxy就越多,高可用节点也随之增多。与之相比,我们平时�
 #### 什么是 Headless Service   
 在某些场景中,开发人员希望自己控制负载均衡的策略,不使用 Service 提供的默认负载均衡,这时就可以通过 Headless Service 实现.   
 
-将 Service 的 Cluster 设置为 None,通过 Label Selector 将后端的 Pod 列表返回给调用的客户端,由客户端程序自己实现负载均衡,确定范文哪一个后端 Pod
+将 Service 的 Cluster 设置为 None,通过 Label Selector 将后端的 Pod 列表返回给调用的客户端,由客户端程序自己实现负载均衡,确定访问哪一个后端 Pod.
+
+此外,在 stateFulSet 中, 为了方便 Pod 之间的访问,会通过用 `spec.serviceName` 字段指定 Headless Service 的方式，为每个 Pod 创建一个固定并且稳定的 DNS 记录，来作为它的访问入口。  
 
 #### 什么是无 Label Selector 的服务  
 某些环境中,kubernetes 中的服务需要连接一个外部数据库,或者连接另一个集群或namespace 的服务,这时可以通过创建一个无 Label Selector 的 Service 实现.  
