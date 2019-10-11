@@ -266,7 +266,7 @@ Kube-proxy就越多,高可用节点也随之增多。与之相比,我们平时�
 1. 通过设置 `spec.type=NodePort`,且在 `spec.ports.port.nodePort` 指定映射到物理机的端口, 通过 NodeIP + NodePort 可以访问服务
 2. 设置 LoadBalancer,映射到负载均衡的IP地址,一般仅用于云平台
 
-#### Ingress: HTTP 7 层路由机制
+#### Ingress: HTTP 7 层路由机制,反向代理
 对于基于 http 的服务来说,仅仅通过 Service 的 IP:Port 形式不能满足不同url对应不同服务的需求.  
 比如:
 - 对 http://website/api 的访问要路由到 名为 api 的 Service(http://api:80)
@@ -337,11 +337,11 @@ Endpoints 对应被每个 Node 上的 kube-proxy 进程使用,kube-proxy 进程�
 ### kubernetes Scheduler  
 
 Kubernetes Scheduler 在整个系统中承担了"承上启下"的重要功能,"承上"是指它负责接收 Controller Manager 创建的新 Pod, 为其安排一个落脚的"家"-目标Node;
-"启下"是指安置工作完成后,目标Node上的kubelet 服务进程接管后继工作,负责Pod生命周期中的"下半生".  
+"启下"是指安置工作完成后,目标 Node 上的 kubelet 服务进程接管后继工作,负责 Pod 生命周期中的"下半生".  
 
-简单的说,就是通过调度算法调度,为待调度Pod列表的每个Pod从Node列表中选择一个最合适的Node.  
+简单的说,就是通过调度算法调度,为待调度 Pod 列表的每个 Pod 从 Node 列表中选择一个最合适的 Node.  
 
-随后,目标Node上的kubelet通过API Server监听到的Kubernetes Scheduler 产生的 Pod 绑定事件,然后获取对应的 Pod 清单,下载 Image 镜像,并启动容器.  
+随后,目标 Node 上的 kubelet 通过 API Server 监听到的 Kubernetes Scheduler 产生的 Pod 绑定事件,然后获取对应的 Pod 清单,下载 Image 镜像,并启动容器.  
 
 大概步骤:  
 - 预选调度过程: 遍历所有目标Node,筛选出符合要求的候选节点.  
@@ -359,12 +359,35 @@ Kubernetes Scheduler 在整个系统中承担了"承上启下"的重要功能,"�
 #### 优选策略
 - LeastRequestedPriority: 选出资源消耗最小的节点  
 - CalculateNodeLabelPriority: 判断策略列出的标签在备选节点中存在时,是否选择该备选节点.
-- BalancedResourceAllocation: 选出各项资源使用率最均衡的节点.  
+- BalancedResourceAllocation: 选出各项资源使用率最均衡的节点. 
+
+#### 优先级（Priority ）和抢占（Preemption）机制    
+
+一般情况下当一个 Pod 调度失败后，它就会被暂时“搁置”起来，直到 Pod 被更新，或者集群状态发生变化，调度器才会对这个 Pod进行重新调度。但有时在创建一个高优先级的 Pod 的时候,
+希望它可以挤掉优先级低的 Pod, 总是被创建成功.
+
+调度器里维护着一个调度队列,当 Pod 拥有了优先级之后，高优先级的 Pod 就可能会比低优先级的 Pod 提前出队，从而尽早完成调度过程,可以通过定义 PriorityClass 的方式为 Pod 指定优先级.
+
+```yaml
+apiVersion: scheduling.k8s.io/v1beta1
+kind: PriorityClass
+metadata:
+  name: high-priority
+value: 1000000  # 优先级是一个32 bit的整数，最大值不超过1000000000（10亿，1 billion），并且值越大代表优先级越高。而超出10亿的值，其实是被Kubernetes保留下来分配给系统 Pod使用的。
+globalDefault: false  #  globalDefault被设置为 true 表示这个 PriorityClass 的值会成为系统的默认值
+description: "This priority class should be used for high priority service pods only."
+``` 
 
 ### kubelet  
 
 Kubelet 用于处理 Master 节点下发到本节点的任务,管理 Pod 及Pod中的容器,并在 API Server 上注册节点自身信息,定期向 Master 节点汇报节点资源的使用情况,并
-通过 cAdvisor 监控容器和节点资源.  
+通过 cAdvisor 监控容器和节点资源.   
+
+kubelet 的工作核心，就是一个控制循环.驱动这个控制循环运行的事件，包括四种：
+- Pod 更新事件
+- Pod 生命周期变化
+- kubelet 本身设置的执行周期
+- 定时的清理事件
 
 #### kubelet 处理创建和修改Pod任务  
 1. 为该 Pod 创建一个数据目录
@@ -392,6 +415,7 @@ Kubelet 用于处理 Master 节点下发到本节点的任务,管理 Pod 及Pod�
 #### Kubelet Eviction(驱逐)  
 
 #### CRI(Container Runtime),OCI(Open Container Initiative),  CNI(Container Networking Interface), CSI(Container Storage Interface)。
+
 Kubelet 通过 CRI(Container Runtime Interface) 与容器运行时交互,以管理镜像和容器。 
 CRI 是一个grpc接口,kubelet 实现grpc客户端, 容器运行时需要实现grpc服务端(通常称为 CRI shim).
 而具体的容器运行时,则通过OCI(Open Container Initiative)开放容器标准与底层的 Linux 操作系统进行交互,
@@ -497,7 +521,7 @@ CRI 是一个grpc接口,kubelet 实现grpc客户端, 容器运行时需要实现
 - Limits >= Requests  
 - Pod 的资源限制参数是所有Pod 中所有容器对应配置的总和  
 - 调度器在调度时,首先要确保调度后该 node 上的所有 pod 的cpu和memory 的Requests 总和不超过该 node 的提供给 pod 的最大容量  
-- 
+- 在调度的时候，kube-scheduler只会按照requests的值进行计算。而在真正设置Cgroups限制的时候，kubelet则会按照limits的值来进行设置。
 
 **CPU:**  
 单位: 0.1 = 100m, 推荐使用形如 100m 的 millicpu 作为计量单位  
@@ -526,8 +550,11 @@ Qos 体系,用于保证高可靠的 Pod 可以申请可靠资源,而一些不需
 
 **Pod 的三种Qos级别:**
 - Guaranteed (完全可靠的): Pod 中所有容器都定义了 Requests 和 Limits,并且它们的值均不为0且相等,可以只定义Limits,因为Requests未定义时默认为 Limits
-- Burstable (弹性波动,较可靠的): Pod 中所有容器都未定义 Requests 和 Limits
-- Best Effort (尽力而为,不太可靠的): 既不是 guaranteed,又不是 burstable 的 ,就是 best effort.  
+- Burstable (弹性波动,较可靠的): Pod 中所有容器至少有一个Container设置了requests
+- Best Effort (尽力而为,不太可靠的): 既没有设置requests，也没有设置limits， ,就是 best effort.    
+
+QoS划分的主要应用场景，是当宿主机资源紧张的时候，kubelet对Pod进行Eviction（即资源回收）时需要用到的。  
+而当Eviction发生的时候，kubelet具体会挑选哪些Pod进行删除操作，就需要参考这些Pod的QoS类别了.    
 
 #### 资源的配额管理 (Resource Quotas)  
 ResourceQuota 是一种资源对象,它可以定义一项资源配额,为每一个Namespace提供一种总体的资源使用限制:  
@@ -550,5 +577,14 @@ PodIP + containerPort = Endpoint, 一个 Pod 可以有多个 Endpoint
 ### 删除 RC 控制的 pod
 删除一个 RC 不会影响它所创建的 Pod, 如果想删除一个 RC 所控制的 Pod, 需要将该 RC 的 replicas 设置为 0, 这样所有的 Pod 副本都会被自动删除.    
 
+### cpuset
+在使用容器的时候，你可以通过设置cpuset把容器绑定到某个CPU的核上，而不是像cpushare那样共享CPU的计算能力。  
+这种情况下，由于操作系统在CPU之间进行上下文切换的次数大大减少，容器里应用的性能会得到大幅提升。事实上，cpuset方式，是生产环境里部署在线应用类型的Pod时，非常常用的一种方式。  
+如何将kubernetes设置cpuset:  
+- Pod必须是Guaranteed的QoS类型  
+- Pod的CPU资源的requests和limits设置为同一个相等的整数值  
+
+建议将 DaemonSet 的 Pod 都设置为 Guaranteed 的 QoS 类型。否则，一旦 DaemonSet 的 Pod 被回收，它又会立即在原宿主机上被重建出来，这就使得前面资源回收的动作，完全没有意义了。
 ### 其他  
 - 单进程意思不是只能运行一个进程，而是只有一个进程是可控的。
+- 在大规模集群里，建议为 kube-proxy 设置 –proxy-mode=ipvs 来开启这个功能。
