@@ -15,4 +15,4 @@ spec:
     spec:
       containers:
         - name: redis-slave
-          images: redis
+          image: redis

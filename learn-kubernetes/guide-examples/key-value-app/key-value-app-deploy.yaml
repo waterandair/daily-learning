@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: key-value-app
+  labels:
+    app: key-value-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "key-value-app"
+  template:
+    metadata:
+      labels:
+        app: key-value-app
+    spec:
+      containers:
+        - name: key-value-app
+          image: waterandair/key-value-app
+          ports:
+            - containerPort: 8082
+              name: http-server
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
