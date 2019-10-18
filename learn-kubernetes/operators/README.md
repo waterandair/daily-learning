@@ -9,7 +9,8 @@ kubernetes 尚且不能理解它的含义,无法对它进行调度. 要想让 ku
 #### CRD 资源对象详解
 
 ##### yaml 示例 
-```
+
+```yaml
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
@@ -28,7 +29,13 @@ spec:
 常见的一些核心资源对象如 Pod, Node 等,它们的Group实际上是空的 `""`, 所以这类对象直接在 `/api/` 下,而对于非核心的则在 `/apis/` 下, 如 `/apis/batch/v1/jobs`  
 
 在上面的示例中, `apiVersion` 字段中指定的 `apiextensions.k8s.io` 就是组名, `v1beta1` 就是 `CustomResourceDefinition` 对象的版本号. 而这个 CRD 中定义了
-一个组名为 `samplecrd.k8s.io`, 版本为 `v1alpha1` 的 `MyResource` 资源对象, 并指定了它的复数形式为 `myResources`, `scope` 表示该对象是属于 `Namespace` 的,和 Pod 一样. 
+一个组名为 `samplecrd.k8s.io`, 版本为 `v1alpha1` 的 `MyResource` 资源对象, 并指定了它的复数形式为 `myResources`, `scope` 表示该对象是属于 `Namespace` 的,和 Pod 一样.   
+
+### CustomerController(自定义Controller) 
+
+内容较多,点击查看[click](sample-controller)
+
+### Operator
 
 
 
