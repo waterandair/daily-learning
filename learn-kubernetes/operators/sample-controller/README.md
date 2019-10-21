@@ -210,6 +210,7 @@ $ cd $GOPATH/src/k8s.io/code-generator
 $ $GOPATH/src/k8s.io/code-generator/generate-groups.sh all "$ROOT_PACKAGE/pkg/client" "$ROOT_PACKAGE/pkg/apis" "$CUSTOM_RESOURCE_NAME:$CUSTOM_RESOURCE_VERSION"
 ```
 
+注意: 本项目使用 go mod 管理依赖,要确保项目根目录下的 go.mod 文件中包含需要的包. 比如在本实例中, go.mod 在 `github.com/waterandair/daily-learning/` 目录下
 
 ##### 说明
 
