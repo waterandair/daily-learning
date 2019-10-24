@@ -1,7 +1,8 @@
 # Job 与 CronJob
 
 ## Job
-Job 处理离线计算任务, 通过定义 Pod 的并行度(spec.parallelism) 和要完成的总的 Pod 数(spec.completions), 去控制 Pod 的创建和删除,并根据 Pod 的状态是否是完成决定是否重新创建(restartPolicy=Never)一个新的Pod或重启(restartPolicy=OnFailure)Pod里的容器
+Job 处理离线计算任务, 通过定义 Pod 的并行度(spec.parallelism) 和要完成的总的 Pod 数(spec.completions), 去控制 Pod 的创建和删除,
+并根据 Pod 的状态是否是完成决定是否重新创建(restartPolicy=Never)一个新的Pod或重启(restartPolicy=OnFailure)Pod里的容器
 
 ### 三种用法
 
