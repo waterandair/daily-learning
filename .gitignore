@@ -29,3 +29,5 @@ learn-spark/scala/base/project/
 learn-python/python_for_linux_administration_and_automated_operation/
 
 .idea/
+
+vendor/

@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27f2264d-2b8b-4e20-992a-46be4e9ef38a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/learn-docker/base/discuss.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learn-go/base/discuss.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learn-kafka/base/discuss.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learn-redis/base/discuss.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-go/go-translation" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-redis/cli/go-redis-translation" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-elk/es/question.md" beforeDir="false" afterPath="$PROJECT_DIR$/learn-elk/es/question.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -51,6 +47,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1R0GjbyN4di2yPvMArTyrnQ2GUV" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -114,7 +111,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
