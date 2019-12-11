@@ -4,6 +4,10 @@
 
 ##### 动态 mapping
 
+##### IndexTemplate
+
+##### DynamicTemplate
+
 #### 搜索
 - 一般搜索会对返回的结果列表进行相关度评分,如果不需要频分,可以使用 constant_score 将 Query 转成 Filter,忽略 TF-IDF 计算,避免相关性算分的开销,且可以利用缓存
 - 在 es 中搜索上下文有 query Context 和 filter Context, query Context 会计算相关性评分, Filter 不会,可以利用cache
@@ -49,8 +53,10 @@ tie_breaker 参数为 0 表示使用最佳匹配,为 1 表示所有字段同等�
 四种类型: 
 - Term: 词语搜索
 - Phrase: 短语搜索
-- Complete:　提供了自动完成的功能, 用户没输入一个词,就要发送一个请求去进行匹配,es 将 Analyze 的数据编码成 FST 和索引一起存放。FST 会被 ES 整个加载进内存,速度很快,但只能用于前缀搜索
-- Context: Complete Suggester 的扩展.
+- Complete:　提供了自动完成的功能, 用户每输入一个词,就要发送一个请求去进行匹配,es 将 Analyze 的数据编码成 FST 和索引一起存放。FST 会被 ES 整个加载进内存,速度很快,但只能用于前缀搜索
+
+
+- Context: Complete Suggester 的扩展.根据上下文判断应该推荐的类别，可以根据自定义 Category 和 地理位置信息进行 Context 类型的搜索建议
 
 每一种 suggester 都有三种模式:
 - missing: 只有在索引搜索中没有找到结果,才会提供建议
@@ -97,9 +103,9 @@ ES 聚合分析的默认作用范围是 query 的查询结果集,可以通过指
 
 #### 处理关联关系
 四种方式: 
-- 对象类型: 直接把关联的对象以json对象的方式记录到一个字段上, 这种方式下,json对象中的字段不会被建立索引
-- 嵌套对象: 与对象类型类似,但解决了对象类型不会被加入索引的问题.
-- 父子关联关系: 分别将数据索引到父子两个文档,子文档可以独立更新.
+- 对象类型(Object): 直接把关联的对象以json对象的方式记录到一个字段上, 这种方式下,json对象中的字段不会被建立索引
+- 嵌套对象(Nested): 与对象类型类似,但解决了对象类型不会被加入索引的问题.
+- 父子关联关系(Parent/Child): 分别将数据索引到父子两个文档,子文档可以独立更新.
 - 应用端关联: - 
 
 | - | Nested Object | Parent/Child |
@@ -115,9 +121,19 @@ ES 聚合分析的默认作用范围是 query 的查询结果集,可以通过指
 - 集群间做数据迁移
 
 重建索引的方法;
-- Update By Query: 在现有索引上重建
-- Reindex: 在其他索引上重建
-
-
+- Update By Query: 在现有索引上重建， 使用场景比如： 修改 mapping为字段增加子字段
+- Reindex: 在其他索引上重建， 使用场景： 修改索引的主分片数，改变字段类型，集群内或跨集群数据迁移......
 
 #### Ingest Pipeline 预处理
+
+#### 其他问题
+##### 聚合分析的精准度问题
+在多分片的场景下，数据分散在多个分片， coordinating 节点可能无法获取数据的全貌，造成 term 聚合精准度降低。 
+
+在 term 聚合的返回值中有以下两个参数：  
+- doc_count_error_upper_bound: 被遗漏的 term 分桶包含的文档，有可能的最大值
+- sum_other_doc_count: 除了返回结果 bucket 的 terms 以外，其他 terms 的文档总数（总数 - 返回的总数）
+
+如果 doc_count_error_upper_bound 不为 0 ，表示可能出现了不准确的问题，这时通过在聚合请求中增加 `shard_size` 参数的值来缓解这样的问题， 
+设聚合返回的结果的数量为 size， `shard_size` 的默认值为 size×1.5+10 
+
