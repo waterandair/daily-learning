@@ -1,6 +1,5 @@
-#### 事务、锁
-##### 避免长事务
-长事务意味着需要存很多视图，导致占用大量的存储空间。  
+### 事务
+避免长事务，长事务意味着需要存很多视图，导致占用大量的存储空间。  
 - 设置 `set autocommit = 1`, 显式声明事务的开始和结束
 - 去掉不必要的只读事务
 - 根据业务预估事务执行的时间，设置合适的 `MAX_EXECUTION_TIME`
@@ -8,12 +7,12 @@
 - 测试阶段要求输出 general_log 日志，分析日志行为提前发现问题
 - 尝试使用 pt-kill 工具
 
-##### 锁的一些概念
-###### 全局锁
+### 锁
+#### 全局锁
 全局锁会使数据库的写操作全部停止，它的应用场景一般是做全库的逻辑备份，通过 Flush tables with read lock (FTWRL) 加锁，然后做备份。  
 对于不支持事务的存储引擎通常是采用这种方式的。  
 对于支持事务的存储引擎可以通过开启一个事务的方式，拿到当前时间节点的视图，对这个视图进行备份。
-###### 表级锁
+#### 表级锁
 表级锁用两种: 1. 表锁 2. 元数据锁(MDL)  
 
 表锁 lock tables ...read/write 可以用unlock tables主动释放锁，这种方式除了限制了别的线程的读写外，也限制了当前线程接下来的操作对象，比如:  
@@ -23,7 +22,7 @@ MDL 不需要显示的声明，在访问一个表时会被自动加上。当对�
 读锁之间不互斥，因此可以有多个线程同时对一张表增删改查。读写锁之间、写锁之间是互斥的，用来保证变更表结构操作的安全性。因此，如果有两个线 程要同时给一个表加字段，其中一个要等另一个执行完才能开始执行。  
 MDL会直到事务提交才释放, 所以如果存在长事务，在修改表结构的时候，可能会造成长时间的阻塞。
 
-###### 行级锁
+#### 行级锁
 行锁是在引擎层实现的。在 Innodb 中行锁是在需要的时候才加上的，但并不是不需要了就马上释放，而是等到事务提交了才会释放锁(两阶段锁协议)。如果事务中需要锁多个行，要把最可能造成冲突，最可能影响并发度的锁尽量往后放，这样可以最大程度的减少事务之间的锁等待。  
 
 行级锁的粒度最小，也最容易放生死锁。为了避免死锁将 CPU 打爆，有两种方法：  
@@ -37,6 +36,18 @@ MDL会直到事务提交才释放, 所以如果存在长事务，在修改表结
 隔离级别的实现：  
 - Innodb 的行数据通过 undolog 逻辑上维护了多个版本，每个版本有自己的 row trx_id, ，每个事务或者语句都有自己的一致性视图。
 - 对于可重复读，查询只承认在事务启动前就已经提交完成的数据；对于读提交，查询只承认在语句启动前就已经完成提交的数据。
+
+#### 可重复读级别下的加锁的规则 mysql-5.x, mysql-8.0
+- 可重复读隔离级别遵守两阶段锁协议，所有加锁的资源，都是在事务提交或者回滚的时候才释放的。
+- 加锁的基本单位是next-key lock。next-key lock是前开后闭区间。gap lock 是开区间。
+- 查找过程中访问到的对象才会加锁。
+- 索引上的等值查询，给唯一索引加锁的时候，next-key lock退化为行锁
+- 索引上的等值查询，向右遍历时且最后一个值不满足等值条件的时候，next-key lock退化为间隙锁。
+- 唯一索引上的范围查询会访问到不满足条件的第一个值为止
+
+注意：  
+- 锁是加在索引上的，如果查询是覆盖索引，`lock in share mode` 只锁覆盖索引，不会锁主键索引，但`for update`语句不会这样，系统会认为接下来要更新数据，索引会给
+主键索引上满足查询条件的行加上行锁
 
 #### 索引
 ##### Innodb 的索引模型
@@ -113,7 +124,8 @@ redo log 是物理日志，记录在数据页上做了什么修改；binlog 是�
 
 #### 隔离级别
 ##### 幻读
-- 在可重复读隔离级别下，普通的查询表是快照读，不会看到其他事务插入的数据，幻读在"当前读"下才会出现
+- 在可重复读隔离级别的事务下，普通的查询表是`快照读(需要执行undo Log)`，不会看到其他事务插入的数据，
+幻读在`当前读(lock in share mode 和 for update)`下才会出现
 - 幻读仅专指"新插入的行"
 
 Innodb 使用间隙锁解决幻读问题：  
@@ -123,6 +135,60 @@ Innodb 使用间隙锁解决幻读问题：
 
 `读提交的级别下，没有间隙锁，但会出现数据和日志不一致的情况，需要把binlog设置为row `
 
+#### 排查查询慢的原因
+##### MDL 锁
+执行 `show processlist` 命令查看当前语句的状态 state 处于 `waiting for table metadata lock` 表示有一个线程持有 MDL 写锁，通过查询 `sys.schema_table_lock_waits` 这张表， 
+可以找出造成阻塞的 process id， 把这个连接用 kill 命令断开即可。
+```sql
+select blocking_pid from sys.schema_table_lock_waits; 
+
+kill {blocking_pid}
+```
+
+##### 等 flush
+当 `flush tables` 命令被阻塞后，再执行查询语句，查询语句也会被阻塞
+##### 等行锁
+当一个事务持有某一行的行锁且没有提交，那么关于这一行的查询语句将会被阻塞，可以如此排查：
+
+```sql
+select * from t sys.innodb_lock_waits where locked_table=`'{db_name}'.'{table_namn}'`\G  
+
+kill {blocking_pid}
+```
+
+##### 一致性读，需要执行大量的 redo log
+在一个可重复度级别的事务`A`中，`select * form table where id = 1` 是一致性读，`select * from table where id = 1 lock in share mode`
+是`当前读`， 此时如果另一个事务`B`对 `id=1` 这条记录执行了 `n` 次 `Update` 操作，就会产生 `n` 条 `undo log`， `B`事务提交后，`A` 事务中执行
+`select * form table where id = 1` 会导致执行 `n` 次 undo log， 导致查询非常慢。而执行 `select * from table where id = 1 lock in share mode`
+是当前读，可以直接读到最新的数据。
+
+##### 索引没有设计好
+紧急办法： 
+
+- 直接 `alter table`，最好是可以在备库执行
+- 在备库B上执行 set sql_log_bin=off，也就是不写binlog，然后执行alter table 语句加上索引；
+- 执行主备切换；
+- 这时候主库是B，备库是A。在A上执行 set sql_log_bin=off，然后执行alter table 语句加上索引。
+##### sql 语句没写好
+紧急办法，使用 `query_rewrite`
+
+```sql
+insert into query_rewrite.rewrite_rules(pattern, replacement, pattern_database) values ("select * from t where id + 1 = ?", "select * from t where id = ? - 1", "db1");
+
+call query_rewrite.flush_rewrite_rules();
+```
+
+##### 没有利用索引， 选错了索引
+紧急办法：
+- 使用  `query_rewrite` 为 sql 语句强行加上 `force index`
+
+
+
+##### `lock in share mode` vs `for update`
+- lock in share mode适用于两张表存在业务关系时的一致性要求，for  update适用于操作同一张表时的一致性要求。  
+- 使用 SELECT FOR UPDATE 为 update 操作锁定行，只适用于 autocommit 被禁用（当使用 START TRANSACTION 开始事务或者设置 autocommit 为0时）
+- 如果查询是覆盖索引，`lock in share mode` 只锁覆盖索引，不会锁主键索引，但`for update`语句不会这样，系统会认为接下来要更新数据，索引会给
+主键索引上满足查询条件的行加上行锁
 
 #### 其他问题
 ##### sql 语句偶尔的执行变慢(刷脏页 flush)  
@@ -137,6 +203,8 @@ InnoDB 刷脏页的控制策略：
 - 观察脏页比例，不要经常超过 75%
 - 配置参数`innodb_flush_neighbors`在机械硬盘中设置为 1， SSD 中设置为 0
 
+##### mysql-dump 为什么是可重复读
+TODO
 ##### 删除表数据不能回收磁盘空间
 delete 命令其实只是把记录的位置， 或者数据标记为了"可复用"， 但磁盘文件的大小是不会变的。  
 可复用但还没有被使用的空间，就像空洞，增删改都会造成这种空洞。  
@@ -155,29 +223,57 @@ InnoDB 执行count(*) 需要把数据一行行从引擎里读出来累计计算�
 优化排序：
 - 为筛选条件和排序字段建立联合索引，这样的排序不需要 `Using filesort`
 - 为返回字段，帅选条件，排序字段建立联合索引，使排序sql可以使用覆盖索引。
+##### 短连接风暴
+MySQL建立连接的成本很高，除了三次握手外，还需要验证`登录权限`和`读写权限`。负载较高时，连接可能会超过 `max_connections`   
+###### 调高 `max_connections`
+ 会暂时解决问题，但可能使系统负载进一步扩大，甚至已经连接的线程拿不到CPU资源去执行SQL，不推荐
+###### 服务器端断开空闲连接
+- `show processlist` 找到 `sleep` 的 `id` 集合 `A` 
+- `information_schema.innodb_trx` 表中找到处于事务中的 `id` 集合 B, 
+- 先 kill 掉 `A` 中不属于 `B` 的 `id`， 在进一步视情况 `kill` 掉 `B` 中的 `id`
+ 
+`被kill掉的连接会给应用端返回 `Error ERROR 2013 (HY000): Lost connection to MySQL server during query`， 应用端收到这个错误后
+要对数据库重新发起连接，而不是已经失效的句柄重试`
 
-##### 排查查询慢的原因
-###### MDL 锁
-执行 `show processlist` 命令查看当前语句的状态
-state 处于 `waiting for table metadata lock` 表示有一个线程持有 MDL 写锁，通过查询 sys.schema_table_lock_waits 这张表， 
-可以找出造成阻塞的 process id， 把这个连接用 kill 命令断开即可。
+###### 减少连接过程的消耗 
+使用`–skip-grant-tables`参数重启，使数据库跳过权限验证阶段。 8.0 版本中会这样操作会默认把 `--skip-networking` 打开，表示只允许本地客户端连接
 
-###### 等 flush
-当 `flush tables` 被阻塞后，再执行查询语句，也会被阻塞
-###### 等行锁
-当一个事务持有某一行的行锁且没有提交，那么关于这一行的查询语句将会被阻塞，可以如此排查：
+##### 应用上线前应该预先做的工作
+在测试环境，把慢查询日志（slow log）打开，并且把`long_query_time`设置成0，确保每个语句都会被记录入慢查询日志；
+在测试表里插入模拟线上的数据，做一遍回归测试；
+观察慢查询日志里每类语句的输出，特别留意Rows_examined字段是否与预期一致
 
-`select * from t sys.innodb_lock_waits where locked_table=`'{db_name}'.'{table_namn}'`\G`  
+##### join 问题
+- 如果可以使用被驱动表的索引，join语句是可以接受的
+- 不能使用被驱动表的索引， 就尽量不要 join
+- 在使用join的时候，应该让小表做驱动表。
 
-###### 没有利用索引
+##### group by 问题
+- 如果对group by语句的结果没有排序要求，要在语句后面加 order by null
+- 尽量让group by过程用上表的索引，确认方法是explain结果里没有Using temporary 和 Using filesort；
+- 如果group by需要统计的数据量不大，尽量只使用内存临时表；也可以通过适当调大tmp_table_size参数，来避免用到磁盘临时表；
+- 如果数据量实在太大，使用SQL_BIG_RESULT这个提示，来告诉优化器直接使用排序算法得到group by的结果。
 
-###### 一致性读，需要执行大量的 redo log
+##### 自增主键不一定是连续的
+- 5.7 版本的自增值没有做持久化
+- 如果插入数据时指定了 id，且指定的 id >= 自增值， 就会更改自增值
+- 自增值的修改在执行插入操作之前，所以对于一些没有插入成功的行，也会修改自增值
+- 事务回滚也会只能更加自增值
 
-##### `lock in share mode` vs `for update`
+##### 特殊的 insert 语句
+普通的 insert 语句是很轻量的操作，自增锁也会在申请到自增id后立即释放，而一些特殊的 insert 语句却是比较耗时的
 
-lock in share mode适用于两张表存在业务关系时的一致性要求，for  update适用于操作同一张表时的一致性要求。  
+- 可重复读隔离级别下，需要对表的所有行加锁，对所有间隙锁加锁
+- insert 语句如果出现唯一键冲突，会在冲突的唯一值上加共享的next-key lock(S锁)。因此，碰到由于唯一键约束导致报错后，要尽快提交或回滚事务，避免加锁时间过长。
 
-使用 SELECT FOR UPDATE 为 update 操作锁定行，只适用于 autocommit 被禁用（当使用 START TRANSACTION 开始事务或者设置 autocommit 为0时）
+
+
+
+
+
+
+
+
 
 
 
