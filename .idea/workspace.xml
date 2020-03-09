@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27f2264d-2b8b-4e20-992a-46be4e9ef38a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/learn-network/base/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -100,13 +101,13 @@
     <proxy>direct</proxy>
   </component>
   <component name="WindowStateProjectService">
-    <state x="653" y="358" key="com.intellij.ide.util.TipDialog" timestamp="1583137746816">
+    <state x="653" y="358" key="com.intellij.ide.util.TipDialog" timestamp="1583716903130">
       <screen x="0" y="23" width="1920" height="1005" />
     </state>
-    <state x="653" y="358" key="com.intellij.ide.util.TipDialog/0.23.1920.1005/1920.23.1440.877@0.23.1920.1005" timestamp="1583137746816" />
-    <state x="145" y="245" width="670" height="676" key="search.everywhere.popup" timestamp="1583118758026">
+    <state x="653" y="358" key="com.intellij.ide.util.TipDialog/0.23.1920.1005/1920.23.1440.877@0.23.1920.1005" timestamp="1583716903130" />
+    <state x="145" y="245" width="670" height="676" key="search.everywhere.popup" timestamp="1583741261862">
       <screen x="0" y="23" width="1920" height="1005" />
     </state>
-    <state x="145" y="245" width="670" height="676" key="search.everywhere.popup/0.23.1920.1005/1920.23.1440.877@0.23.1920.1005" timestamp="1583118758026" />
+    <state x="145" y="245" width="670" height="676" key="search.everywhere.popup/0.23.1920.1005/1920.23.1440.877@0.23.1920.1005" timestamp="1583741261862" />
   </component>
 </project>
