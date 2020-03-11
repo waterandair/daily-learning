@@ -4,6 +4,7 @@
     <list default="true" id="27f2264d-2b8b-4e20-992a-46be4e9ef38a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/learn-docker/base/discuss.md" beforeDir="false" afterPath="$PROJECT_DIR$/learn-docker/base/discuss.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-docker/base/network.md" beforeDir="false" afterPath="$PROJECT_DIR$/learn-docker/base/network.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,16 +71,29 @@
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/learn-docker/base/images" />
-      <recent name="$PROJECT_DIR$/learn-redis/base" />
-      <recent name="$PROJECT_DIR$/learn-kubernetes/base" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/learn-etcd" />
       <recent name="$PROJECT_DIR$/learn-redis" />
       <recent name="$PROJECT_DIR$/learn-kafka/base" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\go\src\github.com\waterandair\daily-learning\learn-docker\base\images" />
+      <recent name="$PROJECT_DIR$/learn-docker/base/images" />
+      <recent name="$PROJECT_DIR$/learn-redis/base" />
+      <recent name="$PROJECT_DIR$/learn-kubernetes/base" />
+    </key>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />

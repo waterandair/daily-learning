@@ -81,14 +81,5 @@ CMD exec_cmd p1_cmd | /bin/sh -c exec_cmd p1_cmd | /bin/sh -c exec_entry p1_entr
 - 一个容器的 Namespace 信息可以在宿主机看到,它们在 `/proc/容器pid/ns` 目录下.
 - 利用系统调用 `setns` 将当前进程加入到某个 Namespace 中
 
-##### docker 网络
-- docker 服务启动后，会在宿主机创建一个网桥 `docker0`
-- docker 容器和 `docker0` 网桥两端会创建一对虚拟网卡 `veth`， 称为 `veth pair`， 从而实现`容器与宿主机间的通信`
-- 因为每个 docker 容器的虚拟网卡 `veth` 都连接在 `docker0` 网桥上，所以实现了 `同一宿主机上的容器间的通信` 
-
-##### docker 容器间网络 Flannel
-
-
-##### docker 容器间网络 
 
  
