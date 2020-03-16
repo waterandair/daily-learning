@@ -119,6 +119,8 @@ KiB Swap:        0 total,        0 free,        0 used.  3709332 avail Mem
 #### strace 追踪进程的系统调用
 ```shell script
 # 查看 pid 为 6082 的进程的系统调用
-# -f 显示线程追踪
+# -f 显示子线程子进程追踪
+# -T 显示系统调用的时长
+# -tt 表示显示跟踪时间
 strace -p 6082
 ```
