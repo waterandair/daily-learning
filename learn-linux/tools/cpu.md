@@ -80,15 +80,6 @@ usr sys idl wai stl| read  writ| recv  send|  in   out | int   csw
   0   0 100   0   0|   0     0 | 132B  436B|   0     0 |   7     9
 ```
 
-
-
-
-
-
-
-
-
-
 #### top 查看总体的 CPU 和内存，以及各进程的资源使用情况
 
 ```
@@ -128,5 +119,6 @@ KiB Swap:        0 total,        0 free,        0 used.  3709332 avail Mem
 #### strace 追踪进程的系统调用
 ```shell script
 # 查看 pid 为 6082 的进程的系统调用
+# -f 显示线程追踪
 strace -p 6082
 ```
