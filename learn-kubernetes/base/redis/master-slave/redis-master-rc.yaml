@@ -13,7 +13,6 @@ spec:
       labels:
         app: redis-master
     spec:
-      type:
       containers:
         - name: master
           image: redis:latest

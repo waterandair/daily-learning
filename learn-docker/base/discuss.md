@@ -81,5 +81,18 @@ CMD exec_cmd p1_cmd | /bin/sh -c exec_cmd p1_cmd | /bin/sh -c exec_entry p1_entr
 - 一个容器的 Namespace 信息可以在宿主机看到,它们在 `/proc/容器pid/ns` 目录下.
 - 利用系统调用 `setns` 将当前进程加入到某个 Namespace 中
 
+##### 注意镜像的分层概念
+`Note that each instruction is run independently, and causes a new image to be created - so RUN cd /tmp will not have any effect on the next instructions.`  
 
- 
+每个指令都是独立运行的，都会构建一个新的镜像，所以不能用写 shell 的习惯写 Dockerfile， 比如在 Dockerfile 中写入执行 `RUN cd /tmp`， 并不会对后面的指令产生影响。    
+##### docker build -f /path/dir
+build 指令并不是由命令行程序完成的，而是转发给 `docker daemon` 完成的，因为执行此命令，会递归的将 `/path/dir`所有的文件和文件夹发送给 `docker daemon`
+
+##### 来自 dockerfile_best-practices 的注意点
+- 使用 alpine 作为基础镜像
+- `apt-get update` 和 `apt-get install -y` 要在一个 RUN 中运行， 在运行完后，要执行 
+- 使用`pipe`要注意，docker 只会判断 `pipe` 中的最后一个命令，即使前面的命令有错误，也会构建成功。如果要避免这种情况，可以在指令最前面加 `set -o pipefail`
+- `ADD`和`COPY`作用很像，但`COPY`的含义更清晰，永远建议使用`COPY`。如有多个文件需要`COPY`,仅在需要用到的时候分别`COPY`
+- `WORKDIR` 永远是绝对路径
+- `EXPOSE` 仅仅是声明，方便使用者理解，或者是在 `docker run -P`的时候不需要默认指定 `EXPOSE`的端口。
+- `VOLUME` 定义匿名卷，确保应用不会再容器内写入数据，在启动容器时，可以为它们指定 volume
