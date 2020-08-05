@@ -1,3 +1,7 @@
+---
+typora-copy-images-to: ./images/flannel.jpg
+---
+
 ##### docker 网络
 - docker 服务启动后，会在宿主机创建一个网桥 `docker0`
 - docker 容器和 `docker0` 网桥两端会创建一对虚拟网卡 `veth`， 称为 `veth pair`， 从而实现`容器与宿主机间的通信`
@@ -5,9 +9,10 @@
 
 #### 容器间网络 Flannel
 
-![images](./images/flannel.jpg)
+![flannel](/Users/zj/go/src/github.com/waterandair/daily-learning/learn-docker/base/images/flannel.jpg)
 物理机间的容器网络通信需要使用 Overlay 网络模型。  
 Flannel 是跨节点容器网络方案之一，它提供的 Overlay 方案有两种方式：
+
 - 使用 UDP 在用户态封装数据包
 - 使用 VXLAN 在内核态封装，性能相对较好
 
@@ -36,7 +41,7 @@ IP `169.254.1.1` 是默认网关，但实际上并不存在这样一个 IP 地�
 172.17.8.2 dev veth1 scope link 
 172.17.8.3 dev veth2 scope link 
 172.17.9.0/24 via 192.168.100.101 dev eth0 proto bird onlink
-``` 
+```
 前两行表示去两个本机容器的路由，用于容器A1，A2 接收网络包。  
 第三行表示访问 `172.17.9.0/24` 网段要通过 IP 为 `192.168.100.101` 的网卡 eth0， 这样就可以将网络包发送到对方主机。
 
@@ -45,7 +50,7 @@ IP `169.254.1.1` 是默认网关，但实际上并不存在这样一个 IP 地�
 172.17.9.2 dev veth1 scope link 
 172.17.9.3 dev veth2 scope link 
 172.17.8.0/24 via 192.168.100.100 dev eth0 proto bird onlink
-``` 
+```
 与物理机A相似  
 前两行表示去访问本地容器的路由，第三行表示访问网段为 `172.17.8.0/24` 要通过 IP 为`192.168.100.100`的物理机A
 
@@ -53,16 +58,16 @@ IP `169.254.1.1` 是默认网关，但实际上并不存在这样一个 IP 地�
  - 路由配置组件 Felix： 在物理机上负责配置路由的组件
  - 路由广播组件BGP Speaker： 广播路由信息， 没当有路由变化，就要通知集群中的所有机器
  - 安全策略组件：使用 iptables 实现的，将策略嵌入处理点
- 
+
  ![images](./images/calico-2.jpg)
- 
+
 ##### BGP全连接的复杂性
 引入 BGP Router Reflector 解决
 
 ##### 跨网段访问问题
 假设物理机B的ip为192.168.200.101/24， 不再同一网段。  
 使用 IPIP 模式。  
-  
+
 在物理机A和物理机B之间打一个隧道，这个隧道有两个端点，在端点上进行封装，
 将容器的IP作为乘客协议放在隧道里面，而物理主机的IP放在外面作为承载协议。
 这样不管外层的IP通过传统的物理网络，走多少跳到达目标物理机，从隧道两端看起来，
@@ -81,7 +86,7 @@ IPIP 模式下物理机A的路由：
 - 物理机 B 上的 tun0 会对网络包解封，找到内源ip和目标ip，从而可以转发给相应的容器
 
 
- 
+
 
 
 

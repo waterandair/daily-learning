@@ -1,0 +1,49 @@
+apiVersion: "clickhouse.altinity.com/v1"
+kind: "ClickHouseInstallation"
+metadata:
+  name: "settings-01"
+spec:
+  configuration:
+    users:
+      # test user has 'password' specified, while admin user has 'password_sha256_hex' specified
+      test/password: qwerty
+      test/networks/ip:
+        - "127.0.0.1/32"
+        - "192.168.74.1/24"
+      test/profile: test_profile
+      test/quota: test_quota
+      test/allow_databases/database:
+        - "dbname1"
+        - "dbname2"
+        - "dbname3"
+      # admin use has 'password_sha256_hex' so actual password value is not published
+      admin/password_sha256_hex: 8bd66e4932b4968ec111da24d7e42d399a05cb90bf96f587c3fa191c56c401f8
+      admin/networks/ip: "127.0.0.1/32"
+      admin/profile: default
+      admin/quota: default
+      # readonly user has 'password' field specified, not 'password_sha256_hex' as admin user above
+      readonly/password: readonly_password
+      readonly/profile: readonly
+      readonly/quota: default
+    profiles:
+      test_profile/max_memory_usage: "1000000000"
+      test_profile/readonly: "1"
+      readonly/readonly: "1"
+    quotas:
+      test_quota/interval/duration: "3600"
+    settings:
+      compression/case/method: zstd
+      disable_internal_dns_cache: 1
+    files:
+      dict1.xml: |
+        <yandex>
+            <!-- ref to file /etc/clickhouse-data/config.d/source1.csv -->
+        </yandex>
+      source1.csv: |
+        a1,b1,c1,d1
+        a2,b2,c2,d2
+    clusters:
+      - name: "standard"
+        layout:
+          shardsCount: 1
+          replicasCount: 1

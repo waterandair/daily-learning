@@ -1,0 +1,24 @@
+apiVersion: "clickhouse.altinity.com/v1"
+kind: "ClickHouseInstallation"
+metadata:
+  name: "version-update"
+spec:
+  configuration:
+    clusters:
+      - name: update
+        templates:
+          podTemplate: clickhouse:19.3.7
+        layout:
+          shards:
+            - replicas:
+                - tcpPort: 9000
+                - tcpPort: 9000
+                - tcpPort: 9000
+
+  templates:
+    podTemplates:
+      - name: clickhouse:19.3.7
+        spec:
+          containers:
+            - name: clickhouse-pod
+              image: yandex/clickhouse-server:19.3.7

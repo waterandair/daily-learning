@@ -1,0 +1,44 @@
+apiVersion: clickhouse.altinity.com/v1
+kind: ClickHouseInstallation
+metadata:
+  name: test-017-multi-version
+spec:
+  templates:
+    podTemplates:
+    - name: v19.11
+      spec:
+        containers:
+        - name: clickhouse-pod
+          image: yandex/clickhouse-server:19.11
+    - name: v19.16
+      spec:
+        containers:
+        - name: clickhouse
+          image: yandex/clickhouse-server:19.16
+    - name: v20.1
+      spec:
+        containers:
+        - name: clickhouse
+          image: yandex/clickhouse-server:20.1
+    - name: v20.3
+      spec:
+        containers:
+        - name: clickhouse
+          image: yandex/clickhouse-server:20.3
+  configuration:
+    clusters:
+    - name: default
+      layout:
+        shards:
+         - shard0:
+           templates:
+             podTemplate: v19.11
+         - shard1:
+           templates:
+             podTemplate: v19.16
+         - shard2:
+           templates:
+             podTemplate: v20.1
+         - shard3:
+           templates:
+             podTemplate: v20.3

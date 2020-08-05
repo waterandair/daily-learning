@@ -51,8 +51,6 @@ CMD ["sh", "-c", "echo $HOME"]
 ###### shell 模式
 - shell 会以 `/bin/sh -c "command"` 执行命令,所以容器中 pid 为 1 的进程是 bash 进程,而不是任务进程
 
-
-
 ##### 区别 Dockerfile 中 CMD 和 ENTRYPOINT 指令
 - docker 提供这两个作用相似的命令,是为了处理容器启动时,命令行参数的行为.
 - CMD 和 ENTRYPOINT 都支持 exec 模式和 shell 模式

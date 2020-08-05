@@ -2,10 +2,89 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27f2264d-2b8b-4e20-992a-46be4e9ef38a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/learn-clickhouse/base/playground.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/learn-docker/base/discuss.md" beforeDir="false" afterPath="$PROJECT_DIR$/learn-docker/base/discuss.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-kubernetes/base/redis/master-slave/redis-master-rc.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/learn-kubernetes/base/redis/master-slave/redis-master-rc.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/learn-kubernetes/resources-detail/deployment/deployment.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-docker/base/network.md" beforeDir="false" afterPath="$PROJECT_DIR$/learn-docker/base/network.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-docker/base/temp.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-etcd/raft/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/learn-etcd/raft/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/go-pkg-base/fmt/sscan.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/go-pkg-base/fmt/sscanf.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/go-pkg-base/json/unmarshal.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/go-pkg-base/time/time.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/assets/js/vue.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/conf/config.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/controllers/controller.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/controllers/follow.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/controllers/like.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/controllers/post.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/controllers/user.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/follow.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/like.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/main/main.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/middleware/middleware.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/pkg/auth/auth.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/pkg/errno/code.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/pkg/errno/errno.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/pkg/token/token.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/post.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/proto/like/like.pb.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/proto/like/like.proto" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/rpc/service.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/services/follow.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/services/like.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/services/post.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/services/user.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/sql/weibo.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/unit/config.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/unit/db.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/unit/grpc-like-client.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/unit/rabbitmq.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/unit/redis.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/user.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/css/app.6fe1ebdd.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/css/app.b6a6b614.css" beforeDir="false" afterPath="$PROJECT_DIR$/temp/golang.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/css/chunk-22d96099.90cdf1aa.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/css/chunk-2f141ab3.7ced67d1.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/css/chunk-3a597210.fcc2e8c0.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/css/chunk-6ff350c0.70781715.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/css/chunk-81c79cca.ef26908d.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/js/app.763218c2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/js/app.763218c2.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/js/chunk-22d96099.9ea12fa2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/js/chunk-22d96099.9ea12fa2.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/js/chunk-3a597210.613b5887.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/js/chunk-3a597210.613b5887.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/js/chunk-6ff350c0.e6fbe85a.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/js/chunk-6ff350c0.e6fbe85a.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/js/chunk-81c79cca.361cdad3.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/js/chunk-81c79cca.361cdad3.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/js/chunk-vendors.c10a8727.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/js/chunk-vendors.c10a8727.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-go/base/training-web/src/weibo/views/success.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-kafka/base/discuss.md" beforeDir="false" afterPath="$PROJECT_DIR$/learn-kafka/base/discuss.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-kubernetes/base/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/learn-kubernetes/base/k8s.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-network/base/2-Data_Link.md" beforeDir="false" afterPath="$PROJECT_DIR$/learn-network/base/2-Data_Link.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-network/base/7-Application.md" beforeDir="false" afterPath="$PROJECT_DIR$/learn-network/base/7-Application.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-program/theme/seckill/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/learn-program/theme/seckill/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-rpc/grpc/go/test/src/helloworld/client/main" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-rpc/grpc/go/test/src/helloworld/client/main.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-rpc/grpc/go/test/src/helloworld/helloworld.pb.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-rpc/grpc/go/test/src/helloworld/proto/helloworld.proto" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-rpc/grpc/go/test/src/helloworld/service/main.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-rpc/grpc/go/test/src/route_guide/client/main.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-rpc/grpc/go/test/src/route_guide/routeguide/routeguide.pb.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-rpc/grpc/go/test/src/route_guide/routeguide/routeguide.proto" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-rpc/grpc/go/test/src/route_guide/routeguide/routeguide.proto.bak3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-rpc/grpc/go/test/src/route_guide/server/main.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-rpc/grpc/go/test/src/route_guide/testdata/ca.pem" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-rpc/grpc/go/test/src/route_guide/testdata/route_guide_db.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-rpc/grpc/go/test/src/route_guide/testdata/server1.key" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-rpc/grpc/go/test/src/route_guide/testdata/server1.pem" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/learn-rpc/grpc/go/test/src/route_guide/testdata/testdata.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,15 +107,21 @@
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
         <item name="kube-mysql" type="feb32156:DbDataSourceImpl" />
       </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="kube-mysql" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
     </expand>
     <select />
   </component>
-  <component name="GOROOT" path="C:\Go" />
+  <component name="ExportToHTMLSettings">
+    <option name="printScope" value="1" />
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/learn-docker" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="/usr/local/go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -55,7 +140,8 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="DatabaseDriversLRU" value="mysql&#10;clickhouse" />
+    <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -66,25 +152,25 @@
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/learn-clickhouse" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="go.vgo" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/ivory/kafka/single" />
-      <recent name="$PROJECT_DIR$/learn-kubernetes/base/redis/single" />
-      <recent name="$PROJECT_DIR$/learn-linux/tools" />
-      <recent name="$PROJECT_DIR$/learn-etcd" />
-      <recent name="$PROJECT_DIR$/learn-redis" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/ivory/kafka/single" />
       <recent name="$PROJECT_DIR$/ivory" />
       <recent name="$PROJECT_DIR$/learn-kubernetes/base/mysql/stateful" />
       <recent name="$PROJECT_DIR$/learn-linux/tools" />
       <recent name="$PROJECT_DIR$/learn-linux/base" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/learn-clickhouse" />
+      <recent name="$PROJECT_DIR$/questions" />
+      <recent name="$PROJECT_DIR$/ivory/kafka/single" />
+      <recent name="$PROJECT_DIR$/learn-kubernetes/base/redis/single" />
+      <recent name="$PROJECT_DIR$/learn-linux/tools" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -117,39 +203,50 @@
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
-    <proxy>direct</proxy>
+    <proxy>https://goproxy.io</proxy>
   </component>
   <component name="WindowStateProjectService">
-    <state x="420" y="341" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584493961638">
+    <state x="560" y="202" key="#GOROOT" timestamp="1591780230071">
+      <screen x="0" y="23" width="1920" height="1005" />
+    </state>
+    <state x="560" y="202" key="#GOROOT/0.23.1920.1005/1920.23.1440.877@0.23.1920.1005" timestamp="1591780230071" />
+    <state x="420" y="341" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1591780521291">
       <screen x="0" y="23" width="1920" height="1005" />
     </state>
     <state x="420" y="161" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.825@0.23.1440.825" timestamp="1584452851280" />
     <state x="560" y="191" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1005/1920.155.1440.877@0.23.1920.1005" timestamp="1584442635051" />
-    <state x="420" y="341" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1005/1920.23.1440.877@0.23.1920.1005" timestamp="1584493961638" />
-    <state x="676" y="335" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1584415671993">
+    <state x="420" y="341" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1005/1920.23.1440.877@0.23.1920.1005" timestamp="1591780521291" />
+    <state x="676" y="335" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1590978445612">
       <screen x="0" y="23" width="1920" height="1005" />
     </state>
     <state x="676" y="335" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1920.1005/1920.155.1440.877@0.23.1920.1005" timestamp="1584415671993" />
+    <state x="676" y="335" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1920.1005/1920.23.1440.877@0.23.1920.1005" timestamp="1590978445612" />
+    <state x="463" y="707" key="FileChooserDialogImpl" timestamp="1587281045482">
+      <screen x="0" y="23" width="1080" height="1845" />
+    </state>
+    <state x="463" y="707" key="FileChooserDialogImpl/0.23.1080.1845/1080.80.1440.877@0.23.1080.1845" timestamp="1587281045481" />
     <state x="727" y="243" key="RollbackChangesDialog" timestamp="1584416392462">
       <screen x="0" y="23" width="1920" height="1005" />
     </state>
     <state x="727" y="243" key="RollbackChangesDialog/0.23.1920.1005/1920.155.1440.877@0.23.1920.1005" timestamp="1584416392462" />
-    <state x="469" y="164" key="SettingsEditor" timestamp="1584580650581">
+    <state x="469" y="164" key="SettingsEditor" timestamp="1591833274660">
       <screen x="0" y="23" width="1920" height="1005" />
     </state>
+    <state x="352" y="126" key="SettingsEditor/0.23.1440.825@0.23.1440.825" timestamp="1589990756582" />
     <state x="469" y="164" key="SettingsEditor/0.23.1920.1005/1920.155.1440.877@0.23.1920.1005" timestamp="1584415258374" />
-    <state x="469" y="164" key="SettingsEditor/0.23.1920.1005/1920.23.1440.877@0.23.1920.1005" timestamp="1584580650581" />
+    <state x="469" y="164" key="SettingsEditor/0.23.1920.1005/1920.23.1440.877@0.23.1920.1005" timestamp="1591833274660" />
     <state x="653" y="358" key="com.intellij.ide.util.TipDialog" timestamp="1584580664595">
       <screen x="0" y="23" width="1920" height="1005" />
     </state>
     <state x="653" y="358" key="com.intellij.ide.util.TipDialog/0.23.1920.1005/1920.155.1440.877@0.23.1920.1005" timestamp="1584415341046" />
     <state x="653" y="358" key="com.intellij.ide.util.TipDialog/0.23.1920.1005/1920.23.1440.877@0.23.1920.1005" timestamp="1584580664595" />
-    <state x="504" y="229" width="932" height="593" key="find.popup" timestamp="1584735882625">
+    <state x="504" y="229" width="932" height="593" key="find.popup" timestamp="1590994368691">
       <screen x="0" y="23" width="1920" height="1005" />
     </state>
+    <state x="263" y="401" width="817" height="1089" key="find.popup/0.23.1080.1845/1080.80.1440.877@0.23.1080.1845" timestamp="1587300917509" />
     <state x="378" y="192" width="699" height="486" key="find.popup/0.23.1440.825@0.23.1440.825" timestamp="1584325175012" />
     <state x="504" y="229" width="932" height="593" key="find.popup/0.23.1920.1005/1920.155.1440.877@0.23.1920.1005" timestamp="1584617297179" />
-    <state x="504" y="229" width="932" height="593" key="find.popup/0.23.1920.1005/1920.23.1440.877@0.23.1920.1005" timestamp="1584735882625" />
+    <state x="504" y="229" width="932" height="593" key="find.popup/0.23.1920.1005/1920.23.1440.877@0.23.1920.1005" timestamp="1590994368691" />
     <state x="145" y="245" width="670" height="676" key="search.everywhere.popup" timestamp="1584454414137">
       <screen x="0" y="23" width="1920" height="1005" />
     </state>
